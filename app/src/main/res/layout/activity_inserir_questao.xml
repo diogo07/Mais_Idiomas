@@ -64,8 +64,9 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/tvPerg"
-        android:layout_margin="20dp"
+        android:id="@+id/tvQuest"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -98,11 +99,37 @@
         android:inputType="textPersonName" />
 
     <TextView
+        android:id="@+id/tvTrad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Tradução" />
+
+    <EditText
+        android:id="@+id/edtTrad"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <TextView
         android:id="@+id/tvImage"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Imagem:" />
+
+    <Button
+        android:id="@+id/btImg"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..." />
 
 </LinearLayout>
