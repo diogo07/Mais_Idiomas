@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.ConfiguracoesActivity">
+
+    <TextView
+        android:id="@+id/tvConf"
+        android:textSize="20dp"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Configurações" />
+
+    <TextView
+        android:id="@+id/tvAltNome"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alterar Nome" />
+
+    <TextView
+        android:id="@+id/tvAltLogin"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alterar Login" />
+
+    <TextView
+        android:id="@+id/tvAltSenha"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alterar Senha" />
+
+    <TextView
+        android:id="@+id/tvAltAvatar"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alterar Avatar" />
+</LinearLayout>

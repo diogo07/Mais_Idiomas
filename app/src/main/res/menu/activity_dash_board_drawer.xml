@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_jogar"
+            android:icon="@drawable/ic_play_game"
+            android:title="Jogar" />
+        <item
+            android:id="@+id/nav_sobre"
+            android:icon="@drawable/ic_info"
+            android:title="Sobre" />
+        <item
+            android:id="@+id/nav_conf"
+            android:icon="@drawable/ic_conf"
+            android:title="Configurações" />
+        <item
+            android:id="@+id/nav_add_quest"
+            android:icon="@drawable/ic_add_quest"
+            android:title="Inserir questões" />
+        <item
+            android:id="@+id/nav_sair"
+            android:icon="@drawable/ic_logout"
+            android:title="Sair" />
+    </group>
+
+    <item android:title="Ajuda">
+        <menu>
+            <item
+                android:id="@+id/nav_exemplo"
+                android:icon="@drawable/ic_help"
+                android:title="Como jogar" />
+            <item
+                android:id="@+id/nav_dicionario"
+                android:icon="@drawable/ic_dicionario"
+                android:title="Dicionário" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_perfil"
+        android:layout_width="77dp"
+        android:layout_height="76dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tv_posicao"
+        app:srcCompat="@mipmap/ic_avatar4"
+        tools:layout_editor_absoluteX="83dp" />
+
+    <TextView
+        android:id="@+id/tv_posicao"
+        android:layout_width="53dp"
+        android:layout_height="76dp"
+        android:gravity="center"
+        android:text="1"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tv_nome"
+        android:layout_width="227dp"
+        android:layout_height="17dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/img_perfil"
+        android:text="Diogo"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/tv_pontuacao"
+        android:layout_width="228dp"
+        android:layout_height="17dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="42dp"
+        android:layout_toEndOf="@+id/img_perfil"
+        android:text="Pontuação: 1000 pontos"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="46dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:backgroundTint="@color/colorLine"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="76dp"></View>
+</RelativeLayout>
