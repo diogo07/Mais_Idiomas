@@ -92,7 +92,11 @@ public class ControllerFase1 implements View.OnClickListener{
                         this.faseActivity.exibirFase1("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
                         //fase.setPontuacao(fase.getPontuacao()+10);
                         usuario.setPontuacao(usuario.getPontuacao()+10);
-                        new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                        try {
+                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }else{
                         fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                         this.faseActivity.exibirUltimo("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);

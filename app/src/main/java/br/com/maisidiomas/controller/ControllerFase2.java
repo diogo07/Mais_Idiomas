@@ -84,13 +84,21 @@ public class ControllerFase2 implements View.OnClickListener{
                         this.faseActivity.exibirFase2("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
                         //fase.setPontuacao(fase.getPontuacao()+20);
                         usuario.setPontuacao(usuario.getPontuacao()+20);
-                        new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                        try {
+                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }else{
                         fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                         this.faseActivity.exibirUltimo("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
                         //fase.setPontuacao(fase.getPontuacao()+20);
                         usuario.setPontuacao(usuario.getPontuacao()+20);
-                        new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                        try {
+                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }else {
                     if (fase.getQuestaoAtual() < 5) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.view.View;
+import android.widget.Toast;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.UsuarioDAOMySQL;
@@ -22,6 +23,7 @@ public class ControllerCadastro implements View.OnClickListener{
         this.cadastroActivity = cadastroActivity;
         this.cadastroActivity.getBtCadastrar().setOnClickListener(this);
         this.cadastroActivity.getBtLimpar().setOnClickListener(this);
+        this.cadastroActivity.getBtAvatar().setOnClickListener(this);
     }
 
     @Override
@@ -32,6 +34,10 @@ public class ControllerCadastro implements View.OnClickListener{
         }
         if(id == R.id.btLimpar){
 
+        }
+        if(id == R.id.btEscolhaAvatar){
+            //Toast.makeText(cadastroActivity, "deu certo", Toast.LENGTH_SHORT).show();
+            this.cadastroActivity.escolherAvatar();
         }
     }
 
@@ -58,11 +64,12 @@ public class ControllerCadastro implements View.OnClickListener{
                             cadastroActivity.getEdtNome().getText().toString());
                     usuario.setPontuacao(0);
 
-                    if(usuarioDAO.insert(usuario)){
+                    try{
+                        usuarioDAO.insert(usuario);
                         cadastroActivity.AlertSucessoCadastro();
                         cadastroActivity.limparCampos();
                         cadastroActivity.finish();
-                    }else{
+                    }catch (Exception e){
                         cadastroActivity.AlertErroCadastro();
                     }
                 }

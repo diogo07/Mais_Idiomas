@@ -19,7 +19,9 @@ public class UsuarioDAOSQLite implements UsuarioDAO{
         this.sqLiteDatabase = sqLiteDatabase;
     }
 
-    public boolean insert(Usuario usuario) {
+
+    @Override
+    public void insert(Usuario usuario) throws Exception{
         ContentValues values = new ContentValues();
         values.put("nome", usuario.getNome());
         values.put("login", usuario.getLogin());
@@ -27,16 +29,16 @@ public class UsuarioDAOSQLite implements UsuarioDAO{
         values.put("pontuacao", usuario.getPontuacao());
         values.put("foto", usuario.getFoto());
         if (this.sqLiteDatabase.insert("usuario", null, values) > 0) {
-            //this.sqLiteDatabase.close();
-            return true;
+            this.sqLiteDatabase.close();
+            return;
         } else {
-            //this.sqLiteDatabase.close();
-            return false;
+            this.sqLiteDatabase.close();
+            throw new Exception("Erro ao inserir usuário");
         }
     }
 
     @Override
-    public boolean update(Usuario usuario) {
+    public void update(Usuario usuario) throws Exception{
 
         ContentValues values = new ContentValues();
         values.put("nome", usuario.getNome());
@@ -50,10 +52,10 @@ public class UsuarioDAOSQLite implements UsuarioDAO{
 
         if (sqLiteDatabase.update("usuario", values, where, argumentos) > 0) {
             sqLiteDatabase.close();
-            return true;
+            return;
         } else {
             sqLiteDatabase.close();
-            return false;
+            throw new Exception("Erro: não foi possível atualizar");
         }
     }
 
@@ -77,8 +79,8 @@ public class UsuarioDAOSQLite implements UsuarioDAO{
     }
 
     @Override
-    public boolean remove(int id) {
-        return false;
+    public void remove(int id) throws Exception {
+        return;
     }
 
     @Override

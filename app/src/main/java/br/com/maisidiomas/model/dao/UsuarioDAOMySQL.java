@@ -26,7 +26,7 @@ public class UsuarioDAOMySQL extends AsyncTask<String, Void, String> implements 
     }
 
     @Override
-    public boolean insert(Usuario usuario) throws Exception {
+    public void insert(Usuario usuario) throws Exception {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo != null && networkInfo.isConnected()){
@@ -34,15 +34,15 @@ public class UsuarioDAOMySQL extends AsyncTask<String, Void, String> implements 
                     usuario.getNome()+"&login="+usuario.getLogin()+"&senha="+usuario.getSenha()+
                     "&avatar="+usuario.getFoto()};
             execute(dados);
-            return true;
+            return;
         }else{
-            return false;
+            throw new Exception("Erro ao inserir usuário");
         }
     }
 
     @Override
-    public boolean update(Usuario usuario) {
-        return false;
+    public void update(Usuario usuario) {
+        return;
     }
 
     @Override
@@ -51,8 +51,8 @@ public class UsuarioDAOMySQL extends AsyncTask<String, Void, String> implements 
     }
 
     @Override
-    public boolean remove(int id) {
-        return false;
+    public void remove(int id) {
+        return;
     }
 
     @Override
