@@ -16,23 +16,21 @@ import br.com.maisidiomas.view.FaseActivity;
 public class ControllerFase2 implements View.OnClickListener{
 
     private FaseActivity faseActivity;
-    private int id_usuario;
     private Usuario usuario;
     private Fase fase;
 
-    public ControllerFase2(FaseActivity faseActivity, int id_usuario) {
+    public ControllerFase2(FaseActivity faseActivity) {
         this.faseActivity = faseActivity;
         try {
             this.usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).findByLogin(this.faseActivity.getLogin());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.id_usuario = id_usuario;
         ArrayList<Palavra> p = new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listar(2);
        if(p == null){
            this.faseActivity.exibirMensagem("lista vazia");
        }else{
-           this.fase = new Fase(id_usuario,0,p);
+           this.fase = new Fase(usuario.getId(),0,p);
            this.fase.gerarQuestoesNivel2();
            iniciarQuestao();
        }

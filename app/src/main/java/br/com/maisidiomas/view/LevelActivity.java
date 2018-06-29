@@ -18,7 +18,6 @@ public class LevelActivity extends ModeloActivity {
     private TextView tvTitulo, tvNivel1, tvNivel2, tvNivel3;
     private ImageView imgNivel1, imgNivel2, imgNivel3;
     private Button btIniciar;
-    private int id;
     private String login;
 
 
@@ -26,8 +25,6 @@ public class LevelActivity extends ModeloActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String i = getIntent().getStringExtra("id").toString();
-        id = Integer.parseInt(i);
         login = getIntent().getStringExtra("login").toString();
         setContentView(R.layout.activity_level);
 
@@ -91,6 +88,7 @@ public class LevelActivity extends ModeloActivity {
             chamarTelaFase(2);
         }else{
             Intent i = new Intent(LevelActivity.this, Fase3Activity.class);
+            i.putExtra("login", ""+login);
             startActivity(i);
         }
     }
@@ -99,7 +97,6 @@ public class LevelActivity extends ModeloActivity {
         Intent i = new Intent(LevelActivity.this, FaseActivity.class);
         i.putExtra("nivel", ""+nivel);
         i.putExtra("login", ""+login);
-        i.putExtra("id", ""+id);
         startActivity(i);
     }
 

@@ -14,7 +14,7 @@ import android.widget.Toolbar;
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerLogin;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends ModeloActivity{
 
     private EditText etLogin, etSenha;
     private Button btEntrar;
@@ -28,6 +28,11 @@ public class LoginActivity extends AppCompatActivity{
         etSenha = findViewById(R.id.etSenha);
         btEntrar = findViewById(R.id.btEntrar);
         tvCadastro = findViewById(R.id.tvCadastro);
+
+        etLogin.setTypeface(getFont());
+        etSenha.setTypeface(getFont());
+        tvCadastro.setTypeface(getFont());
+        btEntrar.setTypeface(getFont());
         new ControllerLogin(this);
     }
 

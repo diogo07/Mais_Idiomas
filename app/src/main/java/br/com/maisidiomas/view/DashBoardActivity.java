@@ -1,19 +1,20 @@
 package br.com.maisidiomas.view;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerDashBoard;
@@ -21,8 +22,11 @@ import br.com.maisidiomas.controller.ControllerDashBoard;
 public class DashBoardActivity extends ModeloActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String nome, login;
+    private String nome, login, avatar, pontuacao;
+    private ControllerDashBoard controllerDashBoard;
     private int id;
+    private ImageView imgAvatar;
+    private TextView tvScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,11 @@ public class DashBoardActivity extends ModeloActivity
 
         nome = getIntent().getStringExtra("nome");
         login = getIntent().getStringExtra("login");
+        avatar = getIntent().getStringExtra("avatar");
+        pontuacao = getIntent().getStringExtra("pontuacao");
         String i = getIntent().getStringExtra("id").toString();
         id = Integer.parseInt(i);
+
 
         setContentView(R.layout.activity_dash_board);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -45,7 +52,7 @@ public class DashBoardActivity extends ModeloActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        new ControllerDashBoard(this, id);
+        controllerDashBoard = new ControllerDashBoard(this, id);
 
         TextView novaFonte = (TextView) findViewById(R.id.tv_ranking);
         novaFonte.setTypeface(getFont());
@@ -58,6 +65,45 @@ public class DashBoardActivity extends ModeloActivity
 
         TextView tvLogin = headerView.findViewById(R.id.tv_login);
         tvLogin.setText(login);
+
+        tvScore = findViewById(R.id.tvScore);
+        tvScore.setText("SCORE: "+pontuacao);
+        tvScore.setTypeface(getFont());
+
+        imgAvatar = headerView.findViewById(R.id.imageView);
+
+        alterarAvatar();
+    }
+
+    private void alterarAvatar() {
+        if(avatar != null && imgAvatar != null){
+            switch (avatar){
+                case "avatar1":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar1);
+                    break;
+                case "avatar2":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar2);
+                    break;
+                case "avatar3":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar3);
+                    break;
+                case "avatar4":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar4);
+                    break;
+                case "avatar5":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar5);
+                    break;
+                case "avatar6":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar6);
+                    break;
+                case "avatar7":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar7);
+                    break;
+                case "avatar8":
+                    imgAvatar.setImageResource(R.mipmap.ic_avatar8);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -103,6 +149,12 @@ public class DashBoardActivity extends ModeloActivity
         return true;
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        controllerDashBoard.atualizarPontuacao();
+    }
+
     public void exibirMensagem(String mensagem){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
@@ -126,5 +178,13 @@ public class DashBoardActivity extends ModeloActivity
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public TextView getTvScore() {
+        return tvScore;
+    }
+
+    public void setTvScore(TextView tvScore) {
+        this.tvScore = tvScore;
     }
 }

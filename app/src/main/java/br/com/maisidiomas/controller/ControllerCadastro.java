@@ -36,7 +36,6 @@ public class ControllerCadastro implements View.OnClickListener{
 
         }
         if(id == R.id.btEscolhaAvatar){
-            //Toast.makeText(cadastroActivity, "deu certo", Toast.LENGTH_SHORT).show();
             this.cadastroActivity.escolherAvatar();
         }
     }
@@ -63,6 +62,7 @@ public class ControllerCadastro implements View.OnClickListener{
                             cadastroActivity.getEdtSenha().getText().toString(),
                             cadastroActivity.getEdtNome().getText().toString());
                     usuario.setPontuacao(0);
+                    usuario.setFoto(this.cadastroActivity.getAvatar());
 
                     try{
                         usuarioDAO.insert(usuario);

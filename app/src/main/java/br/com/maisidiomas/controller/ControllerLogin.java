@@ -82,6 +82,8 @@ public class ControllerLogin implements View.OnClickListener{
         Intent i = new Intent(loginActivity.getBaseContext(), DashBoardActivity.class);
         i.putExtra("nome", usuario.getNome());
         i.putExtra("login", usuario.getLogin());
+        i.putExtra("pontuacao", usuario.getPontuacao()+"");
+        i.putExtra("avatar", usuario.getFoto());
         i.putExtra("id", usuario.getId()+"");
         loginActivity.startActivity(i);
     }

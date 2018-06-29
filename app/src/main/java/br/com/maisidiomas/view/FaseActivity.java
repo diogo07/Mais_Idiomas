@@ -1,5 +1,6 @@
 package br.com.maisidiomas.view;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerFase1;
@@ -21,7 +23,6 @@ public class FaseActivity extends ModeloActivity {
     private TextView tvQuestao, tvNivel, tvPontosQuestao, tvPergunta, tvPalavra, tvScore;
     private Button btProximo;
     private ImageView imgOpc1, imgOpc2, imgOpc3, imgOpc4;
-    private int id;
     private String nivel, login;
     private AlertDialog alerta;
     private ProgressDialog progressDialog;
@@ -32,8 +33,6 @@ public class FaseActivity extends ModeloActivity {
 
         nivel = getIntent().getStringExtra("nivel");
         login = getIntent().getStringExtra("login");
-        String i = getIntent().getStringExtra("id").toString();
-        id = Integer.parseInt(i);
 
         setContentView(R.layout.activity_fase);
 
@@ -51,22 +50,14 @@ public class FaseActivity extends ModeloActivity {
 
         tvNivel.setText("Nível "+nivel);
 
-        if(Integer.parseInt(nivel) == 2){
-            imgOpc1.setImageResource(R.mipmap.ic_nivel2_climb_the_ladder);
-            imgOpc2.setImageResource(R.mipmap.ic_nivel2_dance_the_music);
-            imgOpc3.setImageResource(R.mipmap.ic_nivel2_drink_beer);
-            imgOpc4.setImageResource(R.mipmap.ic_nivel2_hit_the_target);
-            tvPalavra.setText("DANCE THE MUSIC");
-        }
-
         if(Integer.parseInt(nivel) == 1){
             tvPontosQuestao.setText("Pontos da questão: 10");
-            new ControllerFase1(this, id);
+            new ControllerFase1(this);
         }
 
         if(Integer.parseInt(nivel) == 2){
             tvPontosQuestao.setText("Pontos da questão: 20");
-            new ControllerFase2(this, id);
+            new ControllerFase2(this);
         }
 
         if(Integer.parseInt(nivel) == 3){
@@ -261,21 +252,28 @@ public class FaseActivity extends ModeloActivity {
         btProx.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 alerta.dismiss();
-                progressDialog = ProgressDialog.show(FaseActivity.this, "", "Iniciando nova fase ...", true);
+                progressDialog = ProgressDialog.show(FaseActivity.this, "", "Carregando ...", true);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                            progressDialog.setMessage("Carregando componentes...");
+                            progressDialog.setMessage("Iniciando nova fase...");
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 public void run() {
                                     progressDialog.dismiss();
-                                    Intent i = new Intent(FaseActivity.this, FaseActivity.class);
-                                    finish();
-                                    i.putExtra("nivel", ""+2);
-                                    i.putExtra("id", ""+id);
-                                    i.putExtra("login", ""+login);
-                                    startActivity(i);
+                                    if(nivel.equals("1")){
+                                        Intent i = new Intent(FaseActivity.this, FaseActivity.class);
+                                        finish();
+                                        i.putExtra("nivel", ""+2);
+                                        i.putExtra("login", ""+login);
+                                        startActivity(i);
+                                    }else{
+                                        Intent i = new Intent(FaseActivity.this, Fase3Activity.class);
+                                        finish();
+                                        i.putExtra("nivel", ""+3);
+                                        i.putExtra("login", ""+login);
+                                        startActivity(i);
+                                    }
                                 }
                             }, 2000);
 

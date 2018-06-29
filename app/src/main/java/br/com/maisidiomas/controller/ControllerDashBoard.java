@@ -9,8 +9,11 @@ import br.com.maisidiomas.R;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
+import br.com.maisidiomas.model.dao.QuestaoNivel3DAOSQLite;
+import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Opcao;
+import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Ranking;
 import br.com.maisidiomas.model.vo.RankingAdapter;
 import br.com.maisidiomas.model.vo.Usuario;
@@ -139,8 +142,36 @@ public class ControllerDashBoard {
         }
 
         ArrayList<Opcao> opcoes = new ArrayList<>();
-        opcoes.add(new Opcao("", new String[]{"", "", ""}, new String[]{"", "", ""}, 1));
+        ArrayList<QuestaoNivel3> questoes = new ArrayList<>();
+        questoes.add(new QuestaoNivel3(0, new String[]{"fork", "umbrella", "spoon", "knife"}, new String[]{"garfo", "guarda-chuva", "colher", "faca"}));
+        questoes.add(new QuestaoNivel3(0, new String[]{"bag", "ear", "nose", "mouth"}, new String[]{"bolsa", "olho", "nariz", "boca"}));
+        questoes.add(new QuestaoNivel3(2, new String[]{"cow", "donkey", "carrot", "sheep"}, new String[]{"vaca", "burro", "cenoura", "ovelha"}));
+        questoes.add(new QuestaoNivel3(1, new String[]{"pineapple", "coat", "guava", "pear"}, new String[]{"abacaxi", "casaco", "goiaba", "pêra"}));
+        questoes.add(new QuestaoNivel3(2, new String[]{"leaf", "root", "three", "tree"}, new String[]{"folha", "raiz", "três", "arvore"}));
+        questoes.add(new QuestaoNivel3(3, new String[]{"dress", "shirt", "skirt", "bottle"}, new String[]{"vestido", "camisa", "saia", "garrafa"}));
+        questoes.add(new QuestaoNivel3(0, new String[]{"avocado", "bag", "hat", "sneakers"}, new String[]{"abacate", "bolsa", "chapeú", "tênis"}));
+        questoes.add(new QuestaoNivel3(2, new String[]{"brick", "tile", "book", "ciment"}, new String[]{"tijolo", "telha", "livro", "cimento"}));
+        questoes.add(new QuestaoNivel3(1, new String[]{"student", "bank", "teacher", "school"}, new String[]{"estudante", "banco", "professor", "escola"}));
+        questoes.add(new QuestaoNivel3(3, new String[]{"car", "motorcycle", "truk", "grape"}, new String[]{"carro", "motocicleta", "caminhão", "uva"}));
+        questoes.add(new QuestaoNivel3(2, new String[]{"airplane", "helipocter", "lamp", "jet"}, new String[]{"avião", "helicóptero", "lâmpada", "jato"}));
+        questoes.add(new QuestaoNivel3(0, new String[]{"motorcycle", "city", "state", "country"}, new String[]{"motocicleta", "cidade", "estado", "país"}));
+        questoes.add(new QuestaoNivel3(0, new String[]{"bird", "soccer", "tennis", "volleyball"}, new String[]{"pássaro", "futebol", "tênis", "voleibol"}));
+        questoes.add(new QuestaoNivel3(2, new String[]{"cock", "ostrich", "cow", "owl"}, new String[]{"galo", "avestruz", "vaca", "coruja"}));
+        questoes.add(new QuestaoNivel3(1, new String[]{"water", "city", "juice", "soda"}, new String[]{"água", "cidade", "suco", "refrigerante"}));
+        questoes.add(new QuestaoNivel3(1, new String[]{"snack bar", "state", "pizzeria", "restaurant"}, new String[]{"lanchonete", "estado", "pizzaria", "restaurante"}));
 
+        QuestaoNivel3DAOSQLite questaoNivel3DAOSQLite = new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity));
+        for(QuestaoNivel3 q: questoes){
+            if(questaoNivel3DAOSQLite.questaoIsCadastrada(q)){
+
+            }else{
+                try {
+                    questaoNivel3DAOSQLite.insert(q);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 
@@ -148,5 +179,10 @@ public class ControllerDashBoard {
         ArrayAdapter arrayAdapter =  new RankingAdapter(this.dashBoardActivity, (ArrayList<Ranking>) Ranking.getListRanking());
         ListView lvOpcoes = (ListView) dashBoardActivity.findViewById(R.id.list_ranking);
         lvOpcoes.setAdapter(arrayAdapter);
+    }
+
+    public void atualizarPontuacao(){
+        Usuario usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).findByLogin(this.dashBoardActivity.getLogin());
+        this.dashBoardActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
     }
 }

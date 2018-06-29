@@ -32,19 +32,21 @@ public class ConexaoSQLite extends SQLiteOpenHelper{
         query_tabela_palavras.append("nome varchar(100), ");
         query_tabela_palavras.append("traducao varchar(100));");
         db.execSQL(query_tabela_palavras.toString());
-/*
+
         StringBuilder query_tabela_questao_nivel3 = new StringBuilder();
-        query_tabela_palavras.append("create table questao_nivel_3( ");
-        query_tabela_palavras.append("id integer primary key, ");
-        query_tabela_palavras.append("palavra1 varchar(30), ");
-        query_tabela_palavras.append("palavra2 varchar(30), ");
-        query_tabela_palavras.append("palavra3 varchar(30), ");
-        query_tabela_palavras.append("traducao1 varchar(30), ");
-        query_tabela_palavras.append("traducao2 varchar(30), ");
-        query_tabela_palavras.append("traducao3 varchar(30), ");
-        query_tabela_palavras.append("indice_resposta integer);");
+        query_tabela_questao_nivel3.append("create table questao_nivel_3( ");
+        query_tabela_questao_nivel3.append("id integer primary key, ");
+        query_tabela_questao_nivel3.append("palavra1 varchar(20), ");
+        query_tabela_questao_nivel3.append("palavra2 varchar(20), ");
+        query_tabela_questao_nivel3.append("palavra3 varchar(20), ");
+        query_tabela_questao_nivel3.append("palavra4 varchar(20), ");
+        query_tabela_questao_nivel3.append("traducao1 varchar(20), ");
+        query_tabela_questao_nivel3.append("traducao2 varchar(20), ");
+        query_tabela_questao_nivel3.append("traducao3 varchar(20), ");
+        query_tabela_questao_nivel3.append("traducao4 varchar(20), ");
+        query_tabela_questao_nivel3.append("indice_resposta integer);");
         db.execSQL(query_tabela_questao_nivel3.toString());
-*/
+
     }
 
     @Override

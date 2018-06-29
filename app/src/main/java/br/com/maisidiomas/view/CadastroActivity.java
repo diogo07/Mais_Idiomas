@@ -22,8 +22,10 @@ import br.com.maisidiomas.controller.ControllerCadastro;
 public class CadastroActivity extends ModeloActivity {
 
     private EditText edtNome, edtLogin, edtSenha, edtConfirmSenha;
+    private TextView tvAvatar;
     private Button btCadastrar, btLimpar, btAvatar;
     private AlertDialog alertaAvatar;
+    private String avatar;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -37,6 +39,16 @@ public class CadastroActivity extends ModeloActivity {
         btCadastrar = findViewById(R.id.btCadastrar);
         btLimpar = findViewById(R.id.btLimpar);
         btAvatar = findViewById(R.id.btEscolhaAvatar);
+        tvAvatar = findViewById((R.id.tvAvt));
+
+        edtNome.setTypeface(getFont());
+        edtLogin.setTypeface(getFont());
+        edtSenha.setTypeface(getFont());
+        edtConfirmSenha.setTypeface(getFont());
+        tvAvatar.setTypeface(getFont());
+        btCadastrar.setTypeface(getFont());
+        btLimpar.setTypeface(getFont());
+
         new ControllerCadastro(this);
 
     }
@@ -77,6 +89,9 @@ public class CadastroActivity extends ModeloActivity {
 
         View view = li.inflate(R.layout.escolha_avatar, null);
 
+        TextView textView = view.findViewById(R.id.tvEscolha);
+        textView.setTypeface(getFont());
+
         ImageView avatar1 = view.findViewById(R.id.imgAvatar1);
         ImageView avatar2 = view.findViewById(R.id.imgAvatar2);
         ImageView avatar3 = view.findViewById(R.id.imgAvatar3);
@@ -107,44 +122,6 @@ public class CadastroActivity extends ModeloActivity {
             });
         }
 
-        Button btEscolha = view.findViewById(R.id.btEscolha);
-
-        btEscolha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = 0;
-                for(int i = 0; i < avatares.size(); i++){
-                    if(avatares.get(i).isFocusable()){
-                       if(i == 0){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar1);
-                       }
-                       if(i == 1){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar2);
-                       }
-                       if(i == 2){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar3);
-                       }
-                       if(i == 3){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar4);
-                       }
-                       if(i == 4){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar5);
-                       }
-                       if(i == 5){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar6);
-                       }
-                       if(i == 6){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar7);
-                       }
-                       if(i == 7){
-                           btAvatar.setBackgroundResource(R.mipmap.ic_avatar8);
-                       }
-                       alertaAvatar.dismiss();
-                    }
-                }
-            }
-        });
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("");
         builder.setView(view);
@@ -159,11 +136,46 @@ public class CadastroActivity extends ModeloActivity {
             if(id-1 == i){
                 avt.get(i).setFocusable(true);
                 avt.get(i).setBackgroundResource(R.drawable.estilo_opcao_questao);
+
+                if(i == 0){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar1);
+                    avatar = "avatar1";
+                }
+                if(i == 1){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar2);
+                    avatar = "avatar2";
+                }
+                if(i == 2){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar3);
+                    avatar = "avatar3";
+                }
+                if(i == 3){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar4);
+                    avatar = "avatar4";
+                }
+                if(i == 4){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar5);
+                    avatar = "avatar5";
+                }
+                if(i == 5){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar6);
+                    avatar = "avatar6";
+                }
+                if(i == 6){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar7);
+                    avatar = "avatar7";
+                }
+                if(i == 7){
+                    btAvatar.setBackgroundResource(R.mipmap.ic_avatar8);
+                    avatar = "avatar8";
+                }
             }else{
                 avt.get(i).setFocusable(false);
                 avt.get(i).setBackgroundResource(R.drawable.estilo_opcao_no_select);
             }
         }
+
+        alertaAvatar.dismiss();
     }
 
 
@@ -221,6 +233,14 @@ public class CadastroActivity extends ModeloActivity {
 
     public void setBtLimpar(Button btLimpar) {
         this.btLimpar = btLimpar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Button getBtAvatar() {

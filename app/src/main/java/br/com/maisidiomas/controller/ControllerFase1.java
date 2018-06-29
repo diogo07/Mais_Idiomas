@@ -17,18 +17,16 @@ public class ControllerFase1 implements View.OnClickListener{
 
     private FaseActivity faseActivity;
     private Usuario usuario;
-    private int id_usuario;
     private Fase fase;
 
-    public ControllerFase1(FaseActivity faseActivity, int id_usuario) {
+    public ControllerFase1(FaseActivity faseActivity) {
         this.faseActivity = faseActivity;
         try {
             this.usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).findByLogin(this.faseActivity.getLogin());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.id_usuario = id_usuario;
-        this.fase = new Fase(id_usuario,0, new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listar(1));
+        this.fase = new Fase(usuario.getId(),0, new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listar(1));
         this.fase.gerarQuestoesNivel1();
         iniciarQuestao();
 
