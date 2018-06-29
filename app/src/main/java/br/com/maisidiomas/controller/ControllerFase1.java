@@ -54,7 +54,6 @@ public class ControllerFase1 implements View.OnClickListener{
     }
 
     private String retirarCaracteresEspeciais(String palavra) {
-
         String p1 = palavra.replace("ç", "c");
         String p2 = p1.replace("ã", "a");
         String p3 = p2.replace("ê", "e");
@@ -88,7 +87,6 @@ public class ControllerFase1 implements View.OnClickListener{
                     if(fase.getQuestaoAtual() < 9){
                         fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                         this.faseActivity.exibirFase1("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
-                        //fase.setPontuacao(fase.getPontuacao()+10);
                         usuario.setPontuacao(usuario.getPontuacao()+10);
                         try {
                             new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
@@ -97,10 +95,13 @@ public class ControllerFase1 implements View.OnClickListener{
                         }
                     }else{
                         fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
-                        this.faseActivity.exibirUltimo("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
-                        //fase.setPontuacao(fase.getPontuacao()+10);
                         usuario.setPontuacao(usuario.getPontuacao()+10);
-
+                        try {
+                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        this.faseActivity.exibirUltimo("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
                     }
                 }else {
                     if (fase.getQuestaoAtual() < 9) {
@@ -108,7 +109,7 @@ public class ControllerFase1 implements View.OnClickListener{
                         this.faseActivity.exibirFase1("Infelizmente você errou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", false, this);
                     }else{
                         fase.setQuestaoAtual(fase.getQuestaoAtual() + 1);
-                        this.faseActivity.exibirUltimo("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
+                        this.faseActivity.exibirUltimo("Infelizmente você errou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
                     }
                 }
                 break;
