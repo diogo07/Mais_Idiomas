@@ -150,7 +150,7 @@ public class FaseActivity extends ModeloActivity {
 
     }
 
-    public void exibirFase1(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase1 controllerFase) {
+    public void exibirMensagemFase1(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase1 controllerFase) {
 
         LayoutInflater li = getLayoutInflater();
 
@@ -188,7 +188,7 @@ public class FaseActivity extends ModeloActivity {
         alerta.show();
     }
 
-    public void exibirFase2(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase2 controllerFase) {
+    public void exibirMensagemFase2(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase2 controllerFase) {
 
         LayoutInflater li = getLayoutInflater();
 
@@ -226,7 +226,7 @@ public class FaseActivity extends ModeloActivity {
         alerta.show();
     }
 
-    public void exibirUltimo(String mensagemInicio, String mensagemFim, boolean acertou) {
+    public void exibirMensagemUltimaQuestao(String mensagemInicio, String mensagemFim, boolean acertou) {
 
         LayoutInflater li = getLayoutInflater();
 
@@ -392,7 +392,7 @@ public class FaseActivity extends ModeloActivity {
             return R.mipmap.ic_cerveja;
         }
 
-        if (endImg.equals("ic_cesta de lixo")) {
+        if (endImg.equals("ic_cesta_de_lixo")) {
             return R.mipmap.ic_cesta_de_lixo;
         }
 
@@ -460,7 +460,7 @@ public class FaseActivity extends ModeloActivity {
             return R.mipmap.ic_janela;
         }
 
-        if (endImg.equals("ic_lapis de cera")) {
+        if (endImg.equals("ic_lapis_de_cera")) {
             return R.mipmap.ic_lapis_de_cera;
         }
 
@@ -548,11 +548,11 @@ public class FaseActivity extends ModeloActivity {
             return R.mipmap.ic_regua;
         }
 
-        if (endImg.equals("ic_relogio de parede")) {
+        if (endImg.equals("ic_relogio_de_parede")) {
             return R.mipmap.ic_relogio_de_parede;
         }
 
-        if (endImg.equals("ic_relogio de pulso")) {
+        if (endImg.equals("ic_relogio_de_pulso")) {
             return R.mipmap.ic_relogio_de_pulso;
         }
 
@@ -607,79 +607,79 @@ public class FaseActivity extends ModeloActivity {
 
 
     public int idImagemNivel2(String endImg) {
-        if (endImg.equals("open_the_door")) {
+        if (endImg.equals("ic_open_the_door")) {
             return R.mipmap.ic_nivel2_open_the_door;
         }
-        if (endImg.equals("push_the_table")) {
+        if (endImg.equals("ic_push_the_table")) {
             return R.mipmap.ic_nivel2_push_the_table;
         }
-        if (endImg.equals("pull_the_table")) {
+        if (endImg.equals("ic_pull_the_table")) {
             return R.mipmap.ic_nivel2_pull_the_table;
         }
-        if (endImg.equals("kick_the_ball")) {
+        if (endImg.equals("ic_kick_the_ball")) {
             return R.mipmap.ic_nivel2_kick_the_ball;
         }
-        if (endImg.equals("open_the_book")) {
+        if (endImg.equals("ic_open_the_book")) {
             return R.mipmap.ic_nivel2_open_the_book;
         }
-        if (endImg.equals("open_the_mind")) {
+        if (endImg.equals("ic_open_the_mind")) {
             return R.mipmap.ic_nivel2_open_the_mind;
         }
-        if (endImg.equals("open_the_window")) {
+        if (endImg.equals("ic_open_the_window")) {
             return R.mipmap.ic_nivel2_open_the_window;
         }
-        if (endImg.equals("the_woman_is_cooking")) {
+        if (endImg.equals("ic_the_woman_is_cooking")) {
             return R.mipmap.ic_nivel2_the_woman_is_cooking;
         }
-        if (endImg.equals("writing_on_the_sheet")) {
+        if (endImg.equals("ic_writing_on_the_sheet")) {
             return R.mipmap.ic_nivel2_writing_on_the_sheet;
         }
-        if (endImg.equals("hit_the_target")) {
+        if (endImg.equals("ic_hit_the_target")) {
             return R.mipmap.ic_nivel2_hit_the_target;
         }
-        if (endImg.equals("dance_the_music")) {
+        if (endImg.equals("ic_dance_the_music")) {
             return R.mipmap.ic_nivel2_dance_the_music;
         }
-        if (endImg.equals("i_am_swimming")) {
+        if (endImg.equals("ic_i_am_swimming")) {
             return R.mipmap.ic_nivel2_i_am_swimming;
         }
-        if (endImg.equals("i_am_running")) {
+        if (endImg.equals("ic_i_am_running")) {
             return R.mipmap.ic_nivel2_i_am_running;
         }
-        if (endImg.equals("turn_on_the_light")) {
+        if (endImg.equals("ic_turn_on_the_light")) {
             return R.mipmap.ic_nivel2_turn_on_the_light;
         }
-        if (endImg.equals("take_care_of_the_tree")) {
+        if (endImg.equals("ic_take_care_of_the_tree")) {
             return R.mipmap.ic_nivel2_take_care_of_the_tree;
         }
-        if (endImg.equals("take_a_bath")) {
+        if (endImg.equals("ic_take_a_bath")) {
             return R.mipmap.ic_nivel2_take_a_bath;
         }
-        if (endImg.equals("climb_the_ladder")) {
+        if (endImg.equals("ic_climb_the_ladder")) {
             return R.mipmap.ic_nivel2_climb_the_ladder;
         }
-        if (endImg.equals("drive_the_car")) {
+        if (endImg.equals("ic_drive_the_car")) {
             return R.mipmap.ic_nivel2_drive_the_car;
         }
-        if (endImg.equals("press_the_ringer")) {
+        if (endImg.equals("ic_press_the_ringer")) {
             return R.mipmap.ic_nivel2_press_the_ringer;
         }
-        if (endImg.equals("drink_water")) {
+        if (endImg.equals("ic_drink_water")) {
             return R.mipmap.ic_nivel2_drink_water;
         }
-        if (endImg.equals("raise_the_hand")) {
+        if (endImg.equals("ic_raise_the_hand")) {
             return R.mipmap.ic_nivel2_raise_the_hand;
         }
-        if (endImg.equals("wash_the_dishes")) {
+        if (endImg.equals("ic_wash_the_dishes")) {
             return R.mipmap.ic_nivel2_wash_the_dishes;
         }
-        if (endImg.equals("watch_tv")) {
+        if (endImg.equals("ic_watch_tv")) {
             return R.mipmap.ic_nivel2_watch_tv;
         }
-        if (endImg.equals("drink_beer")) {
+        if (endImg.equals("ic_drink_beer")) {
             return R.mipmap.ic_nivel2_drink_beer;
         }
-        if (endImg.equals("think")) {
+        if (endImg.equals("ic_think")) {
             return R.mipmap.ic_nivel2_think;
         }
         else{

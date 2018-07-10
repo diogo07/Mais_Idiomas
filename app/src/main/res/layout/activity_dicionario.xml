@@ -12,14 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/estilo_campo_busca"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp">
 
-    <LinearLayout
+    </SearchView>
+
+
+    <TextView
+        android:id="@+id/tvInformacao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:layout_weight="0"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:id="@+id/ltCabecalho"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorMenu"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/tvName"
@@ -39,5 +50,6 @@
     <ListView
         android:id="@+id/lv_dicionario"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+    </ListView>
 </LinearLayout>

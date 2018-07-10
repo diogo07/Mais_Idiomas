@@ -1,15 +1,14 @@
 package br.com.maisidiomas.controller;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.view.View;
 
+import java.util.List;
+
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
-import br.com.maisidiomas.model.dao.UsuarioDAOMySQL;
 import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.view.CadastroActivity;
 //import br.com.maisidiomas.view.HomeActivity;
 import br.com.maisidiomas.view.DashBoardActivity;
@@ -30,13 +29,21 @@ public class ControllerLogin implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-
+        usuarioDAO = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.loginActivity));
         switch (v.getId()){
             case R.id.btEntrar:
                 validarLogin();
+                /*try {
+                    FirebaseConecty.salvar(usuarioDAO.findById(2));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                */
                 break;
             case R.id.tvCadastro:
                 abrirTelaCadastro();
+                //List<Usuario> lista = FirebaseConecty.getListUsuarios();
+
                 break;
             default:
                 break;
@@ -53,17 +60,6 @@ public class ControllerLogin implements View.OnClickListener{
             }else{
                 loginActivity.alertarDadosInvalidos();
             }
-
-/*
-            Usuario usuario = new UsuarioDAOMySQL(this.loginActivity).findByLoginEsenha(loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString());
-
-            if(usuario != null){
-                this.loginActivity.limparCampos();
-                abrirTelaHome(usuario);
-            }else{
-                loginActivity.alertarDadosInvalidos();
-            }
-*/
         }else {
             loginActivity.alertarCamposVazios();
         }

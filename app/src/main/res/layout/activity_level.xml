@@ -41,7 +41,7 @@
                     android:layout_weight="1"
                     android:textSize="20dp"
                     android:textAlignment="center"
-                    android:text="Nível 1" />
+                    android:text="Fase 1" />
 
                 <TextView
                     android:id="@+id/tv_level2"
@@ -50,7 +50,7 @@
                     android:layout_weight="1"
                     android:textSize="20dp"
                     android:textAlignment="center"
-                    android:text="Nível 2" />
+                    android:text="Fase 2" />
 
                 <TextView
                     android:id="@+id/tv_level3"
@@ -59,7 +59,7 @@
                     android:layout_weight="1"
                     android:textSize="20dp"
                     android:textAlignment="center"
-                    android:text="Nível 3" />
+                    android:text="Fase 3" />
 
             </LinearLayout>
             <LinearLayout

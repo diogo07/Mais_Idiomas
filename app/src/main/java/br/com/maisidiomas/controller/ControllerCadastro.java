@@ -1,15 +1,13 @@
 package br.com.maisidiomas.controller;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.view.View;
-import android.widget.Toast;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
-import br.com.maisidiomas.model.dao.UsuarioDAOMySQL;
+import br.com.maisidiomas.model.dao.FabricaDeDAOSFirebase;
+import br.com.maisidiomas.model.dao.UsuarioDAOFirebase;
 import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.view.CadastroActivity;
 
 import br.com.maisidiomas.R;
@@ -43,14 +41,12 @@ public class ControllerCadastro implements View.OnClickListener{
     private void cadastrar() {
         if(!camposVazios()){
             if(senhasConferem()){
-                /*Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
+/*                Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
                         cadastroActivity.getEdtSenha().getText().toString(),
                         cadastroActivity.getEdtNome().getText().toString());
-                try {
-                    new UsuarioDAOMySQL(this.cadastroActivity).insert(usuario);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
+                usuario.setPontuacao(0);
+                usuario.setFoto(this.cadastroActivity.getAvatar());
+                FirebaseConecty.salvar(usuario);
 
                 usuarioDAO = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(cadastroActivity));
 
@@ -73,6 +69,27 @@ public class ControllerCadastro implements View.OnClickListener{
                         cadastroActivity.AlertErroCadastro();
                     }
                 }
+
+
+*/
+
+                FabricaDeDAOSFirebase fabricaDeDAOSFirebase = new FabricaDeDAOSFirebase();
+                UsuarioDAOFirebase usuarioDAOFirebase = (UsuarioDAOFirebase) fabricaDeDAOSFirebase.criarUsuarioDAO(this.cadastroActivity);
+                Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
+                        cadastroActivity.getEdtSenha().getText().toString(),
+                        cadastroActivity.getEdtNome().getText().toString());
+                usuario.setPontuacao(0);
+                usuario.setFoto(this.cadastroActivity.getAvatar());
+                try {
+                    usuarioDAOFirebase.insert(usuario);
+                    cadastroActivity.AlertSucessoCadastro();
+                    cadastroActivity.limparCampos();
+                    cadastroActivity.finish();
+                } catch (Exception e) {
+                    this.cadastroActivity.AlertErroCadastro();
+                }
+
+
             }else{
                 cadastroActivity.alertarSenhasIncompativeis();
             }

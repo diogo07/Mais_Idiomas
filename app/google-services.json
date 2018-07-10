@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "380665772232",
+    "firebase_url": "https://mais-idiomas.firebaseio.com",
+    "project_id": "mais-idiomas",
+    "storage_bucket": "mais-idiomas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380665772232:android:3f313095a37b27e0",
+        "android_client_info": {
+          "package_name": "br.com.maisidiomas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380665772232-7k9uqqoj2h4alj0q5spf0f1bte3nj2qu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.maisidiomas",
+            "certificate_hash": "0cb473e2b281176ae37fa05824175ad6b3022380"
+          }
+        },
+        {
+          "client_id": "380665772232-41bkb1kp8gobdan8ptfc39jrjlikh28l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaWIobpg_jW_dbkqDM0qXyFHDj3GdWQeA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380665772232-41bkb1kp8gobdan8ptfc39jrjlikh28l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

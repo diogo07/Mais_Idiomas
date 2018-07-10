@@ -132,6 +132,7 @@
                     android:layout_weight="1"
                     android:padding="8dp"
                     app:srcCompat="@mipmap/ic_aviao" />
+
             </LinearLayout>
 
             <Button
@@ -141,7 +142,6 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/estilo_botao"
                 android:text="PRÓXIMO" />
-
 
 
         </LinearLayout>

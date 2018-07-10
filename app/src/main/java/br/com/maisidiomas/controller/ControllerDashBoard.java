@@ -134,10 +134,14 @@ public class ControllerDashBoard {
         PalavraDAOSQLite palavraDAOSQLite = new PalavraDAOSQLite(ConexaoSQLite.getInstance(dashBoardActivity));
 
         for(Palavra p: palavras){
-            if(palavraDAOSQLite.palavraIsCadastrada(p.getNome())){
+            try {
+                if(palavraDAOSQLite.palavraIsCadastra(p.getNome())){
 
-            }else{
-                palavraDAOSQLite.insert(p);
+                }else{
+                    palavraDAOSQLite.insert(p);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
@@ -175,8 +179,9 @@ public class ControllerDashBoard {
 
     }
 
-    private void inserirRanking() {
-        ArrayAdapter arrayAdapter =  new RankingAdapter(this.dashBoardActivity, (ArrayList<Ranking>) Ranking.getListRanking());
+    public void inserirRanking() {
+        ArrayList<Usuario> usuarios = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).listarPorPontuacao();
+        ArrayAdapter arrayAdapter =  new RankingAdapter(this.dashBoardActivity, (ArrayList<Ranking>) Ranking.getListRanking(usuarios));
         ListView lvOpcoes = (ListView) dashBoardActivity.findViewById(R.id.list_ranking);
         lvOpcoes.setAdapter(arrayAdapter);
     }

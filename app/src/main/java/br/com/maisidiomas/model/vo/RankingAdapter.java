@@ -40,7 +40,7 @@ public class RankingAdapter extends ArrayAdapter<Ranking> {
 
         tvPosicao.setText(lista.get(position).getPosicao()+"");
         tvPontuacao.setText("Pontuação: "+lista.get(position).getPontuacao()+" pontos");
-        tvNome.setText("Nome: "+lista.get(position).getUsuario().getNome());
+        tvNome.setText(lista.get(position).getUsuario().getNome());
         imgPerfil.setImageResource(idAvatar(lista.get(position).getUsuario().getFoto()));
 
         tvPosicao.setTypeface(font);
@@ -52,29 +52,31 @@ public class RankingAdapter extends ArrayAdapter<Ranking> {
 
 
     public int idAvatar(String nome){
-        if(nome.equals("ic_avatar1")){
+        if(nome.equals("avatar1")){
             return R.mipmap.ic_avatar1;
         }
-        if(nome.equals("ic_avatar2")){
+        if(nome.equals("avatar2")){
             return R.mipmap.ic_avatar2;
         }
-        if(nome.equals("ic_avatar3")){
+        if(nome.equals("avatar3")){
             return R.mipmap.ic_avatar3;
         }
-        if(nome.equals("ic_avatar4")){
+        if(nome.equals("avatar4")){
             return R.mipmap.ic_avatar4;
         }
-        if(nome.equals("ic_avatar5")){
+        if(nome.equals("avatar5")){
             return R.mipmap.ic_avatar5;
         }
-        if(nome.equals("ic_avatar6")){
+        if(nome.equals("avatar6")){
             return R.mipmap.ic_avatar6;
         }
-        if(nome.equals("ic_avatar7")){
+        if(nome.equals("avatar7")){
             return R.mipmap.ic_avatar7;
         }
-        else{
+        if(nome.equals("avatar8")){
             return R.mipmap.ic_avatar8;
+        }else{
+            return R.drawable.ic_perfil;
         }
     }
 }

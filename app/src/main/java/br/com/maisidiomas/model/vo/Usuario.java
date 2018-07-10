@@ -61,4 +61,17 @@ public class Usuario {
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", pontuacao=" + pontuacao +
+                ", login='" + login + '\'' +
+                ", senha='" + senha + '\'' +
+                ", nome='" + nome + '\'' +
+                ", foto='" + foto + '\'' +
+                ", fases=" + fases +
+                '}';
+    }
 }

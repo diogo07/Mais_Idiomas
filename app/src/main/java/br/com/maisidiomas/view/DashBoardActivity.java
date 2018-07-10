@@ -62,9 +62,11 @@ public class DashBoardActivity extends ModeloActivity
 
         TextView tvNome = headerView.findViewById(R.id.tv_nome);
         tvNome.setText(nome);
+        tvNome.setTypeface(getFont());
 
         TextView tvLogin = headerView.findViewById(R.id.tv_login);
         tvLogin.setText(login);
+        tvLogin.setTypeface(getFont());
 
         tvScore = findViewById(R.id.tvScore);
         tvScore.setText("SCORE: "+pontuacao);
@@ -153,6 +155,7 @@ public class DashBoardActivity extends ModeloActivity
     protected void onRestart() {
         super.onRestart();
         controllerDashBoard.atualizarPontuacao();
+        controllerDashBoard.inserirRanking();
     }
 
     public void exibirMensagem(String mensagem){
