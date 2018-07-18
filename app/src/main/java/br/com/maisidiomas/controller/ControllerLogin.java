@@ -3,14 +3,14 @@ package br.com.maisidiomas.controller;
 import android.content.Intent;
 import android.view.View;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Usuario;
 import br.com.maisidiomas.utils.FirebaseConecty;
+import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.CadastroActivity;
-//import br.com.maisidiomas.view.HomeActivity;
 import br.com.maisidiomas.view.DashBoardActivity;
 import br.com.maisidiomas.view.LoginActivity;
 
@@ -27,23 +27,16 @@ public class ControllerLogin implements View.OnClickListener{
         this.loginActivity.getTvCadastro().setOnClickListener(this);
     }
 
+
     @Override
     public void onClick(View v) {
         usuarioDAO = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.loginActivity));
         switch (v.getId()){
             case R.id.btEntrar:
                 validarLogin();
-                /*try {
-                    FirebaseConecty.salvar(usuarioDAO.findById(2));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                */
                 break;
             case R.id.tvCadastro:
                 abrirTelaCadastro();
-                //List<Usuario> lista = FirebaseConecty.getListUsuarios();
-
                 break;
             default:
                 break;
@@ -56,6 +49,7 @@ public class ControllerLogin implements View.OnClickListener{
             Usuario usuario = usuarioDAO.findByLoginEsenha(loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString());
             if(usuario != null){
                 this.loginActivity.limparCampos();
+                FirebaseConecty.salvar(usuario);
                 abrirTelaHome(usuario);
             }else{
                 loginActivity.alertarDadosInvalidos();
@@ -75,17 +69,25 @@ public class ControllerLogin implements View.OnClickListener{
     }
 
     private void abrirTelaHome(Usuario usuario) {
-        Intent i = new Intent(loginActivity.getBaseContext(), DashBoardActivity.class);
+        Intent i = new Intent(loginActivity, DashBoardActivity.class);
         i.putExtra("nome", usuario.getNome());
         i.putExtra("login", usuario.getLogin());
         i.putExtra("pontuacao", usuario.getPontuacao()+"");
         i.putExtra("avatar", usuario.getFoto());
         i.putExtra("id", usuario.getId()+"");
         loginActivity.startActivity(i);
+        loginActivity.finish();
     }
 
     private void abrirTelaCadastro() {
         Intent i = new Intent(loginActivity.getBaseContext(), CadastroActivity.class);
         loginActivity.startActivity(i);
+    }
+
+    public void imprimirLista() {
+        ArrayList<Usuario> usuarios = UtilsParametros.getListaUsuarios();
+        for (Usuario u: usuarios) {
+            System.out.println("Nome: "+u.getNome());
+        }
     }
 }

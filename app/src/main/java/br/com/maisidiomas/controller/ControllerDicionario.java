@@ -7,14 +7,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
-import br.com.maisidiomas.model.vo.DicionarioAdapter;
+import br.com.maisidiomas.utils.DicionarioAdapter;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.view.DicionarioActivity;
 

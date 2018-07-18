@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuItemView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerDashBoard;
+import br.com.maisidiomas.utils.UtilsParametros;
 
 public class DashBoardActivity extends ModeloActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,10 +31,10 @@ public class DashBoardActivity extends ModeloActivity
     private ImageView imgAvatar;
     private TextView tvScore;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         nome = getIntent().getStringExtra("nome");
         login = getIntent().getStringExtra("login");
         avatar = getIntent().getStringExtra("avatar");
@@ -74,7 +77,13 @@ public class DashBoardActivity extends ModeloActivity
 
         imgAvatar = headerView.findViewById(R.id.imageView);
 
+
         alterarAvatar();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
     }
 
     private void alterarAvatar() {
@@ -138,6 +147,8 @@ public class DashBoardActivity extends ModeloActivity
             Intent i = new Intent(DashBoardActivity.this, InserirQuestaoActivity.class);
             startActivity(i);
         }else if (id == R.id.nav_sair) {
+            Intent i = new Intent(DashBoardActivity.this, LoginActivity.class);
+            startActivity(i);
             finish();
         } else if (id == R.id.nav_exemplo) {
 

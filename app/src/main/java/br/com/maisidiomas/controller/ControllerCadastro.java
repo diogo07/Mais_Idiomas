@@ -41,13 +41,13 @@ public class ControllerCadastro implements View.OnClickListener{
     private void cadastrar() {
         if(!camposVazios()){
             if(senhasConferem()){
-/*                Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
+   /*             Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
                         cadastroActivity.getEdtSenha().getText().toString(),
                         cadastroActivity.getEdtNome().getText().toString());
                 usuario.setPontuacao(0);
                 usuario.setFoto(this.cadastroActivity.getAvatar());
                 FirebaseConecty.salvar(usuario);
-
+*/
                 usuarioDAO = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(cadastroActivity));
 
 
@@ -70,8 +70,8 @@ public class ControllerCadastro implements View.OnClickListener{
                     }
                 }
 
+/*
 
-*/
 
                 FabricaDeDAOSFirebase fabricaDeDAOSFirebase = new FabricaDeDAOSFirebase();
                 UsuarioDAOFirebase usuarioDAOFirebase = (UsuarioDAOFirebase) fabricaDeDAOSFirebase.criarUsuarioDAO(this.cadastroActivity);
@@ -88,7 +88,7 @@ public class ControllerCadastro implements View.OnClickListener{
                 } catch (Exception e) {
                     this.cadastroActivity.AlertErroCadastro();
                 }
-
+*/
 
             }else{
                 cadastroActivity.alertarSenhasIncompativeis();

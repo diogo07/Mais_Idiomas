@@ -47,8 +47,8 @@ public class UsuarioDAOFirebase implements UsuarioDAO {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String key = dataSnapshot.getKey();
-                    for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    usuarios.add(postSnapshot.getValue(Usuario.class));
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                   usuarios.add(postSnapshot.getValue(Usuario.class));
                 }
             }
             @Override
@@ -85,5 +85,10 @@ public class UsuarioDAOFirebase implements UsuarioDAO {
             }
         }
         return usuarios;
+    }
+
+    @Override
+    public Usuario findByLogin(String login) throws Exception {
+        return null;
     }
 }

@@ -10,12 +10,12 @@ public class FabricaDeDAOSSQLite extends FabricaDeDAOS {
     }
 
     @Override
-    public FaseDAO criarFaseDAO(Context context) {
-        return null;
+    public PalavraDAO criarPalavraDAO(Context context) {
+        return new PalavraDAOSQLite(ConexaoSQLite.getInstance(context));
     }
 
     @Override
-    public PalavraDAO criarPalavraDAO(Context context) {
-        return new PalavraDAOSQLite(ConexaoSQLite.getInstance(context));
+    public QuestaoNivel3DAO criarQuestaoNivel3DAO(Context context) {
+        return new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(context));
     }
 }

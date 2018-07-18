@@ -3,8 +3,10 @@ package br.com.maisidiomas.view;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +26,10 @@ public class LevelActivity extends ModeloActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         login = getIntent().getStringExtra("login").toString();
         setContentView(R.layout.activity_level);
@@ -49,6 +55,11 @@ public class LevelActivity extends ModeloActivity {
         new ControllerLevel(this);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
+    }
 
     public void inserirFocoImagemNivel(int nivel){
         switch (nivel){

@@ -12,4 +12,5 @@ public interface UsuarioDAO {
     public abstract void remove(int id) throws Exception;
     public abstract ArrayList<Usuario> listar();
     public abstract ArrayList<Usuario> listarPorPontuacao();
+    public abstract Usuario findByLogin(String login) throws Exception;
 }

@@ -2,11 +2,14 @@ package br.com.maisidiomas.view;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,6 +17,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerFase2;
@@ -33,6 +39,10 @@ public class Fase3Activity extends ModeloActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fase_3);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         login = getIntent().getStringExtra("login");
 
@@ -59,10 +69,45 @@ public class Fase3Activity extends ModeloActivity {
         rbOpc2.setTypeface(getFont());
         rbOpc3.setTypeface(getFont());
         rbOpc4.setTypeface(getFont());
+/*
 
+        FloatingActionMenu fab = findViewById(R.id.menu_yellow);
+        fab.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+            @Override
+            public void onMenuToggle(boolean opened) {
+                System.out.println("clicou");
+            }
+        });
+
+        FloatingActionButton fab1 = findViewById(R.id.fab12);
+        FloatingActionButton fab2 = findViewById(R.id.fab22);
+        FloatingActionButton fab3 = findViewById(R.id.fab32);
+*/
         new ControllerFase3(this);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
+    }
+
+    public void exibirMensagem(String mensagem){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+        alertDialogBuilder.setTitle("Resposta");
+        alertDialogBuilder
+                .setMessage(mensagem)
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+    }
 
     public void exibirFase3(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase3 controllerFase3) {
 
@@ -98,6 +143,7 @@ public class Fase3Activity extends ModeloActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("");
         builder.setView(view);
+        builder.setCancelable(false);
         alerta = builder.create();
         alerta.show();
     }

@@ -1,4 +1,4 @@
-package br.com.maisidiomas.model.vo;
+package br.com.maisidiomas.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
+import br.com.maisidiomas.model.vo.Palavra;
 
 public class DicionarioAdapter extends ArrayAdapter<Palavra>{
     private  final Context context;

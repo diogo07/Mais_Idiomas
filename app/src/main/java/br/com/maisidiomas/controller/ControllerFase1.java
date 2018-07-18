@@ -1,15 +1,20 @@
 package br.com.maisidiomas.controller;
 
 import android.view.View;
+import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
 import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.view.FaseActivity;
 import br.com.maisidiomas.R;
 
@@ -22,12 +27,12 @@ public class ControllerFase1 implements View.OnClickListener{
     public ControllerFase1(FaseActivity faseActivity) {
         this.faseActivity = faseActivity;
         try {
-            this.usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).findByLogin(this.faseActivity.getLogin());
+            this.usuario = Fachada.findByLogin(faseActivity, faseActivity.getLogin());
         } catch (Exception e) {
-            e.printStackTrace();
+           faseActivity.exibirMensagem("O sistema encontrou problemas ao iniciar a fase");
         }
         try {
-            this.fase = new Fase(usuario.getId(),0, new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listByLevel(1));
+            this.fase = new Fase(usuario.getLogin(),0, new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listByLevel(1));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,7 +47,11 @@ public class ControllerFase1 implements View.OnClickListener{
     }
 
     public void iniciarQuestao() {
-       faseActivity.getImgOpc1().setImageResource(faseActivity.idImagemNivel1(fase.getQuestoes().get(fase.getQuestaoAtual()).getPalavras()[0].getTraducaoSemAcento()));
+        if((fase.getQuestaoAtual()%3) == 0 && fase.getQuestaoAtual() != 0 && fase.getQuestaoAtual() < 8){
+            String ajuda = "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()+2).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()+2).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()+2).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()+2).getNumeroResposta()].getTraducao()+"";
+            this.faseActivity.exibirMensagemCompra(this, ajuda);
+        }
+        faseActivity.getImgOpc1().setImageResource(faseActivity.idImagemNivel1(fase.getQuestoes().get(fase.getQuestaoAtual()).getPalavras()[0].getTraducaoSemAcento()));
         faseActivity.getImgOpc2().setImageResource(faseActivity.idImagemNivel1(fase.getQuestoes().get(fase.getQuestaoAtual()).getPalavras()[1].getTraducaoSemAcento()));
         faseActivity.getImgOpc3().setImageResource(faseActivity.idImagemNivel1(fase.getQuestoes().get(fase.getQuestaoAtual()).getPalavras()[2].getTraducaoSemAcento()));
         faseActivity.getImgOpc4().setImageResource(faseActivity.idImagemNivel1(fase.getQuestoes().get(fase.getQuestaoAtual()).getPalavras()[3].getTraducaoSemAcento()));
@@ -81,17 +90,19 @@ public class ControllerFase1 implements View.OnClickListener{
                         this.faseActivity.exibirMensagemFase1("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
                         usuario.setPontuacao(usuario.getPontuacao()+10);
                         try {
-                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                            Fachada.atualizarUsuario(faseActivity, usuario);
+                            FirebaseConecty.salvar(usuario);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                         }
                     }else{
                         fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                         usuario.setPontuacao(usuario.getPontuacao()+10);
                         try {
-                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                            Fachada.atualizarUsuario(faseActivity, usuario);
+                            FirebaseConecty.salvar(usuario);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                         }
                         this.faseActivity.exibirMensagemUltimaQuestao("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
                     }
@@ -108,4 +119,28 @@ public class ControllerFase1 implements View.OnClickListener{
         }
     }
 
+
+    public FaseActivity getFaseActivity() {
+        return faseActivity;
+    }
+
+    public void setFaseActivity(FaseActivity faseActivity) {
+        this.faseActivity = faseActivity;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Fase getFase() {
+        return fase;
+    }
+
+    public void setFase(Fase fase) {
+        this.fase = fase;
+    }
 }

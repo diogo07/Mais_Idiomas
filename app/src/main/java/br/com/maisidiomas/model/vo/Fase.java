@@ -3,23 +3,31 @@ package br.com.maisidiomas.model.vo;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import br.com.maisidiomas.controller.ControllerDashBoard;
+import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.Fachada;
+import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
+import br.com.maisidiomas.utils.UtilsParametros;
+
 public class Fase {
 
     private int id_usuario;
+    private String login;
+    private Usuario usuario;
     private ArrayList<Questao> questoes;
     private ArrayList<Palavra> palavras;
     private int questaoAtual;
-    private ArrayList<Opcao> questoesNivel3;
 
-    public Fase(int id_usuario, int questaoAtual, ArrayList<Palavra> palavras) {
-        this.id_usuario = id_usuario;
+    public Fase(String login_usuario, int questaoAtual, ArrayList<Palavra> palavras) {
+        this.login = login_usuario;
         this.questaoAtual = questaoAtual;
         this.palavras = palavras;
     }
 
-    public Fase(int questaoAtual, ArrayList<Opcao> questoesNivel3) {
+    public Fase(String login, ArrayList<Palavra> palavras, int questaoAtual) {
+        this.login = login;
+        this.palavras = palavras;
         this.questaoAtual = questaoAtual;
-        this.questoesNivel3 = questoesNivel3;
     }
 
     public void gerarQuestoesNivel1(){
@@ -72,6 +80,16 @@ public class Fase {
         }
     }
 
+    public Usuario getUsuario() {
+        if(usuario == null){
+            usuario = Fachada.findByLogin(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), login);
+        }
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public int getId_usuario() {
         return id_usuario;

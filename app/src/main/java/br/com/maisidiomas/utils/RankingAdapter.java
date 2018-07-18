@@ -1,4 +1,4 @@
-package br.com.maisidiomas.model.vo;
+package br.com.maisidiomas.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 
 import br.com.maisidiomas.R;
+import br.com.maisidiomas.model.vo.Ranking;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class RankingAdapter extends ArrayAdapter<Ranking> {
         Typeface font = Typeface.createFromAsset(context.getAssets(), "BowlbyOneSC-Regular.ttf");
 
         tvPosicao.setText(lista.get(position).getPosicao()+"");
-        tvPontuacao.setText("Pontuação: "+lista.get(position).getPontuacao()+" pontos");
+        tvPontuacao.setText("Score: "+lista.get(position).getUsuario().getPontuacao());
         tvNome.setText(lista.get(position).getUsuario().getNome());
         imgPerfil.setImageResource(idAvatar(lista.get(position).getUsuario().getFoto()));
 

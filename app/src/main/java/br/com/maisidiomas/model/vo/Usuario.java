@@ -6,7 +6,6 @@ public class Usuario {
 
     private int id, pontuacao;
     private String login, senha, nome, foto;
-    private ArrayList<Fase> fases;
 
 
     public Usuario(String login, String senha, String nome) {
@@ -43,12 +42,6 @@ public class Usuario {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public ArrayList<Fase> getFases() {
-        return fases;
-    }
-    public void setFases(ArrayList<Fase> fases) {
-        this.fases = fases;
-    }
     public String getFoto() {
         return foto;
     }
@@ -71,7 +64,6 @@ public class Usuario {
                 ", senha='" + senha + '\'' +
                 ", nome='" + nome + '\'' +
                 ", foto='" + foto + '\'' +
-                ", fases=" + fases +
                 '}';
     }
 }

@@ -1,7 +1,9 @@
 package br.com.maisidiomas.view;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -18,6 +20,11 @@ public class DicionarioActivity extends ModeloActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
         setContentView(R.layout.activity_dicionario);
         tvPalavra = findViewById(R.id.tvName);
         tvTraducao = findViewById(R.id.tvTrad);
@@ -31,6 +38,12 @@ public class DicionarioActivity extends ModeloActivity {
         new ControllerDicionario(this);
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
     }
 
     public TextView getTvPalavra() {

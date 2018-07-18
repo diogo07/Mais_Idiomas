@@ -13,6 +13,7 @@ import android.widget.Toolbar;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerLogin;
+import br.com.maisidiomas.utils.UtilsParametros;
 
 public class LoginActivity extends ModeloActivity{
 
@@ -31,8 +32,18 @@ public class LoginActivity extends ModeloActivity{
 
         etLogin.setTypeface(getFont());
         etSenha.setTypeface(getFont());
+
+        etLogin.setText("d");
+
+        etSenha.setText("1");
+
+
         tvCadastro.setTypeface(getFont());
         btEntrar.setTypeface(getFont());
+
+
+        UtilsParametros.carregarListaUsuarios(null);
+
         new ControllerLogin(this);
     }
 

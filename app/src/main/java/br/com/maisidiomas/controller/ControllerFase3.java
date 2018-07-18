@@ -2,15 +2,14 @@ package br.com.maisidiomas.controller;
 
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.dao.QuestaoNivel3DAOSQLite;
-import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase3;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Usuario;
@@ -27,12 +26,11 @@ public class ControllerFase3 implements View.OnClickListener {
         this.fase3Activity = fase3Activity;
         this.fase3Activity.getBtProximo().setOnClickListener(this);
         this.questoes = new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(this.fase3Activity)).listar();
-        this.usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.fase3Activity)).findByLogin(this.fase3Activity.getLogin());
+        this.usuario = Fachada.findByLogin(fase3Activity, fase3Activity.getLogin());
         if(questoes != null){
             fase3 = new Fase3(questoes);
             inserirQuestoes();
         }
-
     }
 
     public void inserirQuestoes() {
@@ -65,9 +63,9 @@ public class ControllerFase3 implements View.OnClickListener {
            if(this.usuario != null) {
                usuario.setPontuacao(usuario.getPontuacao() + 30);
                try {
-                   new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.fase3Activity)).update(this.usuario);
+                   Fachada.atualizarUsuario(fase3Activity, usuario);
                } catch (Exception e) {
-                   e.printStackTrace();
+                   fase3Activity.exibirMensagem("Problemas na atualização da pontuação");
                }
            }
         }else{
@@ -75,8 +73,5 @@ public class ControllerFase3 implements View.OnClickListener {
             this.fase3.setQuestaoAtual(this.fase3.getQuestaoAtual()+1);
         }
 
-    }
-
-    public void iniciarQuestao() {
     }
 }

@@ -1,10 +1,12 @@
 package br.com.maisidiomas.controller;
 
-import android.content.Intent;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import br.com.maisidiomas.R;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
@@ -15,21 +17,67 @@ import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Opcao;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Ranking;
-import br.com.maisidiomas.model.vo.RankingAdapter;
+import br.com.maisidiomas.utils.RankingAdapter;
+import br.com.maisidiomas.utils.RankingDisconectAdapter;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.FirebaseConecty;
+import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.DashBoardActivity;
-import br.com.maisidiomas.view.LoginActivity;
 
 public class ControllerDashBoard {
     private DashBoardActivity dashBoardActivity;
-    private int id_usuario;
-
 
     public ControllerDashBoard(DashBoardActivity dashBoardActivity, int id_usuario) {
         this.dashBoardActivity = dashBoardActivity;
-        this.id_usuario = id_usuario;
         inserirRanking();
         inserirPalavras();
+    }
+
+    public void inserirRanking() {
+        UtilsParametros.adicionarControleDashBoard(this);
+        FirebaseConecty.getListUsuarios();
+
+        /*ArrayList<Usuario> usuarios = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).listarPorPontuacao();
+        ArrayAdapter arrayAdapter =  new RankingAdapter(this.dashBoardActivity, (ArrayList<Ranking>) Ranking.getListRanking(usuarios));
+        ListView lvOpcoes = (ListView) dashBoardActivity.findViewById(R.id.list_ranking);
+        lvOpcoes.setAdapter(arrayAdapter);
+        */
+    }
+
+    public ArrayList<Usuario> ordenarPontuacoes(){
+        ArrayList<Usuario> usuarios = UtilsParametros.getListaUsuarios();
+        Collections.sort (usuarios, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                Usuario u1 = (Usuario) o1;
+                Usuario u2 = (Usuario) o2;
+                return u1.getPontuacao() < u2.getPontuacao() ? -1 : (u1.getPontuacao() > u2.getPontuacao() ? +1 : 0);
+            }
+        });
+        return usuarios;
+    }
+
+    public void exibirRanking(){
+        ArrayList<Usuario> usuarios = ordenarPontuacoes();
+
+        ArrayAdapter arrayAdapter =  new RankingAdapter(this.dashBoardActivity, (ArrayList<Ranking>) Ranking.getListRanking(usuarios));
+        ListView lvOpcoes = (ListView) dashBoardActivity.findViewById(R.id.list_ranking);
+        lvOpcoes.setAdapter(null);
+        lvOpcoes.setAdapter(arrayAdapter);
+    }
+
+    public void alertarFaltaDeConexao(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("Sem conexão");
+        ArrayAdapter<String> arrayAdapter = new RankingDisconectAdapter(dashBoardActivity, arrayList);
+        ListView lvOpcoes = (ListView) dashBoardActivity.findViewById(R.id.list_ranking);
+        lvOpcoes.setAdapter(null);
+        lvOpcoes.setAdapter(arrayAdapter);
+
+    }
+
+    public void atualizarPontuacao(){
+        Usuario usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).findByLogin(this.dashBoardActivity.getLogin());
+        this.dashBoardActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
     }
 
     private void inserirPalavras() {
@@ -179,15 +227,10 @@ public class ControllerDashBoard {
 
     }
 
-    public void inserirRanking() {
-        ArrayList<Usuario> usuarios = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).listarPorPontuacao();
-        ArrayAdapter arrayAdapter =  new RankingAdapter(this.dashBoardActivity, (ArrayList<Ranking>) Ranking.getListRanking(usuarios));
-        ListView lvOpcoes = (ListView) dashBoardActivity.findViewById(R.id.list_ranking);
-        lvOpcoes.setAdapter(arrayAdapter);
-    }
 
-    public void atualizarPontuacao(){
-        Usuario usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).findByLogin(this.dashBoardActivity.getLogin());
-        this.dashBoardActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
+
+
+    public DashBoardActivity getDashBoardActivity() {
+        return dashBoardActivity;
     }
 }

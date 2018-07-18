@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
 import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase;
@@ -23,9 +24,9 @@ public class ControllerFase2 implements View.OnClickListener{
     public ControllerFase2(FaseActivity faseActivity) {
         this.faseActivity = faseActivity;
         try {
-            this.usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).findByLogin(this.faseActivity.getLogin());
+            this.usuario = Fachada.findByLogin(faseActivity, faseActivity.getLogin());
         } catch (Exception e) {
-            e.printStackTrace();
+            faseActivity.exibirMensagem("O sistema encontrou problemas ao iniciar a fase");
         }
         ArrayList<Palavra> p = null;
         try {
@@ -36,7 +37,7 @@ public class ControllerFase2 implements View.OnClickListener{
         if(p == null){
            this.faseActivity.exibirMensagem("Não foi possível localizar as questões!");
        }else{
-           this.fase = new Fase(usuario.getId(),0,p);
+           this.fase = new Fase(usuario.getLogin(),0,p);
            this.fase.gerarQuestoesNivel2();
            iniciarQuestao();
        }
@@ -85,18 +86,18 @@ public class ControllerFase2 implements View.OnClickListener{
                         this.faseActivity.exibirMensagemFase2("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
                         usuario.setPontuacao(usuario.getPontuacao()+20);
                         try {
-                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                            Fachada.atualizarUsuario(faseActivity, usuario);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                         }
                     }else{
                         fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                         this.faseActivity.exibirMensagemUltimaQuestao("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
                         usuario.setPontuacao(usuario.getPontuacao()+20);
                         try {
-                            new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).update(usuario);
+                            Fachada.atualizarUsuario(faseActivity, usuario);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                         }
                     }
                 }else {

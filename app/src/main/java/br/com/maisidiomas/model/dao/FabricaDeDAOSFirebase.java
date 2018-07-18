@@ -17,12 +17,12 @@ public class FabricaDeDAOSFirebase extends FabricaDeDAOS{
     }
 
     @Override
-    public FaseDAO criarFaseDAO(Context context) {
+    public PalavraDAO criarPalavraDAO(Context context) {
         return null;
     }
 
     @Override
-    public PalavraDAO criarPalavraDAO(Context context) {
+    public QuestaoNivel3DAO criarQuestaoNivel3DAO(Context context) {
         return null;
     }
 }

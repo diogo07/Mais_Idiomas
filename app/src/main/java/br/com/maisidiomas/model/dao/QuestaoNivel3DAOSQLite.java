@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 
-public class QuestaoNivel3DAOSQLite {
+public class QuestaoNivel3DAOSQLite extends QuestaoNivel3DAO {
 
     private SQLiteDatabase sqLiteDatabase;
 
@@ -35,6 +35,21 @@ public class QuestaoNivel3DAOSQLite {
         }
     }
 
+    @Override
+    public void update(QuestaoNivel3 questaoNivel3) throws Exception {
+
+    }
+
+    @Override
+    public void delete(QuestaoNivel3 questaoNivel3) throws Exception {
+
+    }
+
+    @Override
+    public QuestaoNivel3 findById(int id) throws Exception {
+        return null;
+    }
+
     public ArrayList<QuestaoNivel3> listar(){
         ArrayList<QuestaoNivel3> questoes = new ArrayList<>();
         StringBuilder sql_listar = new StringBuilder();
@@ -47,16 +62,12 @@ public class QuestaoNivel3DAOSQLite {
                     QuestaoNivel3 questaoNivel3 = new QuestaoNivel3(Integer.parseInt(cursor.getString(cursor.getColumnIndex("indice_resposta"))), new String[]{cursor.getString(cursor.getColumnIndex("palavra1")), cursor.getString(cursor.getColumnIndex("palavra2")), cursor.getString(cursor.getColumnIndex("palavra3")), cursor.getString(cursor.getColumnIndex("palavra4"))}, new String[]{cursor.getString(cursor.getColumnIndex("traducao1")), cursor.getString(cursor.getColumnIndex("traducao2")), cursor.getString(cursor.getColumnIndex("traducao3")), cursor.getString(cursor.getColumnIndex("traducao4"))});
                     questoes.add(questaoNivel3);
                 }catch (Exception e){
-                    //this.sqLiteDatabase.close();
                     return null;
                 }
             }while (cursor.moveToNext());
-
-            //this.sqLiteDatabase.close();
             return questoes;
 
         }else{
-            //this.sqLiteDatabase.close();
             return null;
         }
     }

@@ -1,18 +1,25 @@
 package br.com.maisidiomas.view;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
+import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerFase1;
@@ -26,10 +33,16 @@ public class FaseActivity extends ModeloActivity {
     private String nivel, login;
     private AlertDialog alerta;
     private ProgressDialog progressDialog;
+    private FloatingActionMenu floatingActionMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
 
         nivel = getIntent().getStringExtra("nivel");
         login = getIntent().getStringExtra("login");
@@ -47,6 +60,10 @@ public class FaseActivity extends ModeloActivity {
         imgOpc2 = findViewById(R.id.img_opc2);
         imgOpc3 = findViewById(R.id.img_opc3);
         imgOpc4 = findViewById(R.id.img_opc4);
+
+        floatingActionMenu = findViewById(R.id.menu_yellow);
+
+        floatingActionMenu.hideMenuButton(true);
 
         tvNivel.setText("Nível "+nivel);
 
@@ -75,6 +92,11 @@ public class FaseActivity extends ModeloActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
+    }
 
     public void inserirFocoImagemNivel(int nivel){
         switch (nivel){
@@ -150,6 +172,56 @@ public class FaseActivity extends ModeloActivity {
 
     }
 
+    public void exibirMensagemCompra(final ControllerFase1 controllerFase, final String ajuda){
+
+        LayoutInflater li = getLayoutInflater();
+
+        View view = li.inflate(R.layout.modelo_compra, null);
+        TextView tvTextoCima, tvTextoBaixo;
+        tvTextoCima = view.findViewById(R.id.tvPerg);
+        tvTextoBaixo = view.findViewById(R.id.tvInform);
+        tvTextoCima.setTypeface(getFont());
+        tvTextoBaixo.setTypeface(getFont());
+        Button btSim, btNao;
+        btSim = view.findViewById(R.id.btConfirm);
+        btNao = view.findViewById(R.id.btCancel);
+
+        btSim.setTypeface(getFont());
+        btNao.setTypeface(getFont());
+
+
+        btSim.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Toast.makeText(FaseActivity.this, "Sua tradução pode ser visualizada no botão laranja ao lado", Toast.LENGTH_LONG).show();
+
+                FloatingActionButton fab1 = new FloatingActionButton(FaseActivity.this);
+                fab1.setImageResource(R.drawable.ic_light);
+                fab1.setId(controllerFase.getFase().getQuestaoAtual());
+                fab1.setLabelText(ajuda);
+                floatingActionMenu.addMenuButton(fab1);
+                floatingActionMenu.showMenuButton(true);
+                controllerFase.getUsuario().setPontuacao(controllerFase.getUsuario().getPontuacao()-8);
+                alerta.dismiss();
+
+            }
+        });
+
+        btNao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alerta.dismiss();
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("");
+        builder.setCancelable(false);
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+
+    }
+
     public void exibirMensagemFase1(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase1 controllerFase) {
 
         LayoutInflater li = getLayoutInflater();
@@ -183,6 +255,7 @@ public class FaseActivity extends ModeloActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("");
+        builder.setCancelable(false);
         builder.setView(view);
         alerta = builder.create();
         alerta.show();
@@ -222,6 +295,7 @@ public class FaseActivity extends ModeloActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("");
         builder.setView(view);
+        builder.setCancelable(false);
         alerta = builder.create();
         alerta.show();
     }
@@ -285,6 +359,7 @@ public class FaseActivity extends ModeloActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("");
+        builder.setCancelable(false);
         builder.setView(view);
         alerta = builder.create();
         alerta.show();
@@ -750,5 +825,13 @@ public class FaseActivity extends ModeloActivity {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public FloatingActionMenu getFloatingActionMenu() {
+        return floatingActionMenu;
+    }
+
+    public void setFloatingActionMenu(FloatingActionMenu floatingActionMenu) {
+        this.floatingActionMenu = floatingActionMenu;
     }
 }

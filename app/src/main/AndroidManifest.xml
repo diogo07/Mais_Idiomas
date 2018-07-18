@@ -46,11 +46,11 @@
             android:label="Nível" />
         <activity
             android:name=".view.FaseActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity android:name=".view.Fase3Activity" />
         <activity android:name=".view.ConfiguracoesActivity" />
-        <activity android:name=".view.InserirQuestaoActivity"></activity>
+        <activity android:name=".view.InserirQuestaoActivity" />
     </application>
 
 </manifest>
