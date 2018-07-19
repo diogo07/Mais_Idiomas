@@ -7,39 +7,123 @@
     android:orientation="vertical"
     tools:context=".view.ConfiguracoesActivity">
 
-    <TextView
-        android:id="@+id/tvConf"
-        android:textSize="20dp"
-        android:layout_margin="20dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Configurações" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvAltNome"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Alterar Nome" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvAltLogin"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Alterar Login" />
+            <TextView
+                android:id="@+id/tvConf"
+                android:textSize="20dp"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Configurações" />
 
-    <TextView
-        android:id="@+id/tvAltSenha"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Alterar Senha" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <ImageView
+                    android:id="@+id/imgEditNome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:background="@drawable/estilo_borda"
+                    app:srcCompat="@mipmap/ic_edit_nome" />
+                <ImageView
+                    android:id="@+id/imgEditLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:background="@drawable/estilo_borda"
+                    app:srcCompat="@mipmap/ic_edit_login" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+                <ImageView
+                    android:id="@+id/imgEditSenha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:background="@drawable/estilo_borda"
+                    app:srcCompat="@mipmap/ic_edit_senha" />
+                <ImageView
+                    android:id="@+id/imgEditAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:background="@drawable/estilo_borda"
+                    app:srcCompat="@mipmap/ic_edit_avatar" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvAltAvatar"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Alterar Avatar" />
+            <EditText
+                android:id="@+id/edtSenhaAtual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:inputType="textPassword"
+                android:hint="Senha atual" />
+
+            <EditText
+                android:id="@+id/edtEscolha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:inputType="textPersonName"
+                android:hint="Nova senha"/>
+            <LinearLayout
+                android:id="@+id/lnAvt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvAvtMod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Avatar:" />
+
+                <Button
+                    android:id="@+id/btModificarAvatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/ic_perfil" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btSalvar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/estilo_botao"
+                android:text="SALVAR" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

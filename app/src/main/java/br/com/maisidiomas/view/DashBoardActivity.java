@@ -142,6 +142,7 @@ public class DashBoardActivity extends ModeloActivity
             startActivity(i);
         } else if (id == R.id.nav_conf) {
             Intent i = new Intent(DashBoardActivity.this, ConfiguracoesActivity.class);
+            i.putExtra("avatar", avatar);
             startActivity(i);
         } else if (id == R.id.nav_add_quest) {
             Intent i = new Intent(DashBoardActivity.this, InserirQuestaoActivity.class);

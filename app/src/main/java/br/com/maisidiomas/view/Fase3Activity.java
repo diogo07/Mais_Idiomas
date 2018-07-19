@@ -69,20 +69,6 @@ public class Fase3Activity extends ModeloActivity {
         rbOpc2.setTypeface(getFont());
         rbOpc3.setTypeface(getFont());
         rbOpc4.setTypeface(getFont());
-/*
-
-        FloatingActionMenu fab = findViewById(R.id.menu_yellow);
-        fab.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-                System.out.println("clicou");
-            }
-        });
-
-        FloatingActionButton fab1 = findViewById(R.id.fab12);
-        FloatingActionButton fab2 = findViewById(R.id.fab22);
-        FloatingActionButton fab3 = findViewById(R.id.fab32);
-*/
         new ControllerFase3(this);
     }
 
