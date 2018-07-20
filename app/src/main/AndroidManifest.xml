@@ -42,14 +42,15 @@
             android:name=".view.DicionarioActivity"
             android:label="Dicionário" />
         <activity
+            android:name=".view.ConfiguracoesActivity"
+            android:label="Configurações" />
+        <activity
             android:name=".view.LevelActivity"
             android:label="Nível" />
         <activity
             android:name=".view.FaseActivity"
             android:screenOrientation="portrait" />
-
         <activity android:name=".view.Fase3Activity" />
-        <activity android:name=".view.ConfiguracoesActivity" />
         <activity android:name=".view.InserirQuestaoActivity" />
     </application>
 

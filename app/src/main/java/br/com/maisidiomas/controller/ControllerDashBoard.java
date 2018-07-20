@@ -27,7 +27,7 @@ import br.com.maisidiomas.view.DashBoardActivity;
 public class ControllerDashBoard {
     private DashBoardActivity dashBoardActivity;
 
-    public ControllerDashBoard(DashBoardActivity dashBoardActivity, int id_usuario) {
+    public ControllerDashBoard(DashBoardActivity dashBoardActivity) {
         this.dashBoardActivity = dashBoardActivity;
         inserirRanking();
         inserirPalavras();
@@ -76,8 +76,7 @@ public class ControllerDashBoard {
     }
 
     public void atualizarPontuacao(){
-        Usuario usuario = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).findByLogin(this.dashBoardActivity.getLogin());
-        this.dashBoardActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
+        this.dashBoardActivity.getTvScore().setText("SCORE: "+UtilsParametros.getUsuarioLogado().getPontuacao());
     }
 
     private void inserirPalavras() {

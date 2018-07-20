@@ -2,7 +2,6 @@ package br.com.maisidiomas.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -14,13 +13,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import br.com.maisidiomas.controller.ControllerDashBoard;
 import br.com.maisidiomas.controller.ControllerLogin;
 import br.com.maisidiomas.model.vo.Usuario;
-import br.com.maisidiomas.view.DashBoardActivity;
-import br.com.maisidiomas.view.LoginActivity;
 
 public class FirebaseConecty {
 
@@ -39,7 +34,7 @@ public class FirebaseConecty {
         if(isConected(UtilsParametros.getControllerDashBoard().getDashBoardActivity())){
             System.out.println("Tem conexao");
             final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), "", "Carregando ...", true);
-            progressDialog.setCancelable(true);
+            progressDialog.setCancelable(false);
             final ArrayList<Usuario> usuarios = new ArrayList<>();
             myRef = database.getReference().child("usuarios");
             myRef.addValueEventListener(new ValueEventListener() {
@@ -66,22 +61,33 @@ public class FirebaseConecty {
         }
     }
 
-    public static void  getUsuario(final LoginActivity loginActivity, final ProgressDialog progressDialog , final String login, final String senha) {
-
+    public static void  getUsuario(final ControllerLogin controllerLogin, final String login, final String senha, final ProgressDialog progressDialog) {
+        progressDialog.setCancelable(false);
         myRef = database.getReference().child("usuarios").child(login);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Usuario u = dataSnapshot.getValue(Usuario.class);
-                    if(u.getSenha().equalsIgnoreCase(senha)){
-                        System.out.println("OPA");
-                        System.out.println(u);
-                        UtilsParametros.carregarUsuario(u);
-                        loginActivity.startActivity(new Intent(loginActivity, DashBoardActivity.class));
-                        loginActivity.finish();
+               if(isConected(controllerLogin.getLoginActivity())){
+                   Usuario u = dataSnapshot.getValue(Usuario.class);
+                   if(u != null){
+                       if(u.getSenha().equalsIgnoreCase(senha)) {
+                           System.out.println(u);
+                           UtilsParametros.carregarUsuario(u);
+                           progressDialog.dismiss();
+                           controllerLogin.verificarUsuarioLogado();
+                       }else{
+                           progressDialog.dismiss();
+                           controllerLogin.verificarUsuarioLogado();
+                       }
 
-                }
-                progressDialog.dismiss();
+                   }else {
+                       progressDialog.dismiss();
+                       controllerLogin.verificarUsuarioLogado();
+                   }
+               }else {
+                   progressDialog.dismiss();
+                   controllerLogin.verificarUsuarioLogado();
+               }
 
 
             }
@@ -94,6 +100,27 @@ public class FirebaseConecty {
         });
     }
 
+    public static void  getUsuarioByLogin(final String login) {
+        final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), "", "Carregando ...", true);
+        progressDialog.setCancelable(false);
+        myRef = database.getReference().child("usuarios").child(login);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuario u = dataSnapshot.getValue(Usuario.class);
+                if(u != null){
+                    UtilsParametros.carregarUsuarioCadastrado(u);
+                }
+                progressDialog.dismiss();
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Erro", "Failed to read value.", error.toException());
+            }
+        });
+    }
 
     public static boolean isConected(Context cont){
         ConnectivityManager conmag = (ConnectivityManager)cont.getSystemService(Context.CONNECTIVITY_SERVICE);

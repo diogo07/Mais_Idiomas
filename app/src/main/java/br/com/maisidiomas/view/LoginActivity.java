@@ -33,11 +33,6 @@ public class LoginActivity extends ModeloActivity{
         etLogin.setTypeface(getFont());
         etSenha.setTypeface(getFont());
 
-        etLogin.setText("d");
-
-        etSenha.setText("1");
-
-
         tvCadastro.setTypeface(getFont());
         btEntrar.setTypeface(getFont());
 

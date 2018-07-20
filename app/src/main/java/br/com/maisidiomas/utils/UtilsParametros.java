@@ -8,6 +8,7 @@ import br.com.maisidiomas.model.vo.Usuario;
 public class UtilsParametros {
 
     private static Usuario usuarioLogado;
+    private static Usuario usuarioCadastrado;
     private static ArrayList<Usuario> usuariosLista;
     private static ControllerDashBoard controllerDashBoard;
 
@@ -37,4 +38,11 @@ public class UtilsParametros {
         return controllerDashBoard;
     }
 
+    public static void carregarUsuarioCadastrado(Usuario usuario){
+        usuarioCadastrado = usuario;
+    }
+
+    public static Usuario getUsuarioCadastrado(){
+        return usuarioCadastrado;
+    }
 }

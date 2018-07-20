@@ -29,7 +29,7 @@ public class DashBoardActivity extends ModeloActivity
     private ControllerDashBoard controllerDashBoard;
     private int id;
     private ImageView imgAvatar;
-    private TextView tvScore;
+    private TextView tvScore, tvNome, tvLogin;
 
 
     @Override
@@ -55,7 +55,7 @@ public class DashBoardActivity extends ModeloActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        controllerDashBoard = new ControllerDashBoard(this, id);
+        controllerDashBoard = new ControllerDashBoard(this);
 
         TextView novaFonte = (TextView) findViewById(R.id.tv_ranking);
         novaFonte.setTypeface(getFont());
@@ -63,16 +63,16 @@ public class DashBoardActivity extends ModeloActivity
 
         View headerView = navigationView.getHeaderView(0);
 
-        TextView tvNome = headerView.findViewById(R.id.tv_nome);
+        tvNome = headerView.findViewById(R.id.tv_nome);
         tvNome.setText(nome);
         tvNome.setTypeface(getFont());
 
-        TextView tvLogin = headerView.findViewById(R.id.tv_login);
+        tvLogin = headerView.findViewById(R.id.tv_login);
         tvLogin.setText(login);
         tvLogin.setTypeface(getFont());
 
         tvScore = findViewById(R.id.tvScore);
-        tvScore.setText("SCORE: "+pontuacao);
+        tvScore.setText("SEU SCORE: "+pontuacao);
         tvScore.setTypeface(getFont());
 
         imgAvatar = headerView.findViewById(R.id.imageView);
@@ -143,6 +143,7 @@ public class DashBoardActivity extends ModeloActivity
         } else if (id == R.id.nav_conf) {
             Intent i = new Intent(DashBoardActivity.this, ConfiguracoesActivity.class);
             i.putExtra("avatar", avatar);
+            i.putExtra("login", login);
             startActivity(i);
         } else if (id == R.id.nav_add_quest) {
             Intent i = new Intent(DashBoardActivity.this, InserirQuestaoActivity.class);
@@ -166,6 +167,11 @@ public class DashBoardActivity extends ModeloActivity
     @Override
     protected void onRestart() {
         super.onRestart();
+        tvScore.setText("SEU SCORE: "+UtilsParametros.getUsuarioLogado().getPontuacao());
+        avatar = UtilsParametros.getUsuarioLogado().getFoto();
+        alterarAvatar();
+        tvNome.setText(UtilsParametros.getUsuarioLogado().getNome());
+        tvLogin.setText(UtilsParametros.getUsuarioLogado().getLogin());
         controllerDashBoard.atualizarPontuacao();
         controllerDashBoard.inserirRanking();
     }

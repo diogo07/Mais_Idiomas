@@ -55,8 +55,7 @@ public class ConexaoSQLite extends SQLiteOpenHelper{
     }
 
 
-    public static SQLiteDatabase getInstance(Context context) {
-        SQLiteOpenHelper sqLiteOpenHelper;
+    public static synchronized SQLiteDatabase getInstance(Context context) {
         if (database == null || !database.isOpen()) {
             ConexaoSQLite conn = new ConexaoSQLite(context);
             database = conn.getWritableDatabase();

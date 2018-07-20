@@ -1,11 +1,13 @@
 package br.com.maisidiomas.controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.View;
 
 import java.util.ArrayList;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Usuario;
 import br.com.maisidiomas.utils.FirebaseConecty;
@@ -19,7 +21,6 @@ import br.com.maisidiomas.R;
 public class ControllerLogin implements View.OnClickListener{
 
     private LoginActivity loginActivity;
-    private UsuarioDAOSQLite usuarioDAO;
 
     public ControllerLogin(LoginActivity loginActivity) {
         this.loginActivity = loginActivity;
@@ -30,7 +31,6 @@ public class ControllerLogin implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        usuarioDAO = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.loginActivity));
         switch (v.getId()){
             case R.id.btEntrar:
                 validarLogin();
@@ -45,19 +45,30 @@ public class ControllerLogin implements View.OnClickListener{
 
     private void validarLogin() {
         if(camposPreenchidos()){
-            usuarioDAO = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(loginActivity));
-            Usuario usuario = usuarioDAO.findByLoginEsenha(loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString());
+            Usuario usuario = Fachada.findByLoginEsenha(loginActivity, loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString());
             if(usuario != null){
                 this.loginActivity.limparCampos();
                 FirebaseConecty.salvar(usuario);
+                UtilsParametros.carregarUsuario(usuario);
                 abrirTelaHome(usuario);
             }else{
-                loginActivity.alertarDadosInvalidos();
+                final ProgressDialog progressDialog = ProgressDialog.show(loginActivity, "", "Carregando ...", true);
+                FirebaseConecty.getUsuario(this, loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString(), progressDialog);
+
             }
         }else {
             loginActivity.alertarCamposVazios();
         }
 
+    }
+
+    public void verificarUsuarioLogado(){
+        Usuario usuario = UtilsParametros.getUsuarioLogado();
+        if(usuario != null){
+            abrirTelaHome(usuario);
+        }else{
+            loginActivity.alertarDadosInvalidos();
+        }
     }
 
     private boolean camposPreenchidos() {
@@ -89,5 +100,14 @@ public class ControllerLogin implements View.OnClickListener{
         for (Usuario u: usuarios) {
             System.out.println("Nome: "+u.getNome());
         }
+    }
+
+
+    public LoginActivity getLoginActivity() {
+        return loginActivity;
+    }
+
+    public void setLoginActivity(LoginActivity loginActivity) {
+        this.loginActivity = loginActivity;
     }
 }

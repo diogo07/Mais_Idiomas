@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
 
-public class UsuarioDAOSQLite implements UsuarioDAO{
+public class UsuarioDAOSQLite extends UsuarioDAO{
 
     private SQLiteDatabase sqLiteDatabase;
 

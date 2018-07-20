@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import br.com.maisidiomas.model.vo.Usuario;
 
-public class UsuarioDAOFirebase implements UsuarioDAO {
+public class UsuarioDAOFirebase extends UsuarioDAO {
 
     private DatabaseReference databaseReference;
 

@@ -1,6 +1,7 @@
 package br.com.maisidiomas.view;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.text.InputType;
@@ -29,7 +30,7 @@ public class ConfiguracoesActivity extends ModeloActivity {
     private EditText edtSenhaAtual, edtEscolha;
     private AlertDialog alertaAvatar;
     private ImageView imgEditNome, imgEditLogin, imgEditSenha, imgEdiAvatar;
-    private String avatar, avtUser;
+    private String avatar, avtUser, login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ConfiguracoesActivity extends ModeloActivity {
         setContentView(R.layout.activity_configuracoes);
 
         avtUser = getIntent().getStringExtra("avatar");
+        login = getIntent().getStringExtra("login");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -110,6 +112,23 @@ public class ConfiguracoesActivity extends ModeloActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return true;
+    }
+
+    public void exibirMensagem(String tipo, String mensagem){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+        alertDialogBuilder.setTitle(tipo);
+        alertDialogBuilder
+                .setMessage(mensagem)
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
 
     public void inserirFocoImagem(int opc){
@@ -281,6 +300,18 @@ public class ConfiguracoesActivity extends ModeloActivity {
         }
     }
 
+    public int getAlternativaSelecionada(){
+        if(imgEditNome.isFocusable()){
+            return 0;
+        }else if(imgEditLogin.isFocusable()){
+            return 1;
+        }else if(imgEditSenha.isFocusable()){
+            return 2;
+        }else{
+            return 3;
+        }
+    }
+
 
     public TextView getTvConf() {
         return tvConf;
@@ -360,5 +391,29 @@ public class ConfiguracoesActivity extends ModeloActivity {
 
     public void setImgEdiAvatar(ImageView imgEdiAvatar) {
         this.imgEdiAvatar = imgEdiAvatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvtUser() {
+        return avtUser;
+    }
+
+    public void setAvtUser(String avtUser) {
+        this.avtUser = avtUser;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -18,8 +17,6 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-
-import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerFase1;
@@ -97,6 +94,7 @@ public class FaseActivity extends ModeloActivity {
         finish();
         return true;
     }
+
 
     public void inserirFocoImagemNivel(int nivel){
         switch (nivel){

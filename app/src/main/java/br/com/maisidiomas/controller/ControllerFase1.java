@@ -91,7 +91,6 @@ public class ControllerFase1 implements View.OnClickListener{
                         usuario.setPontuacao(usuario.getPontuacao()+10);
                         try {
                             Fachada.atualizarUsuario(faseActivity, usuario);
-                            FirebaseConecty.salvar(usuario);
                         } catch (Exception e) {
                             faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                         }
@@ -100,7 +99,6 @@ public class ControllerFase1 implements View.OnClickListener{
                         usuario.setPontuacao(usuario.getPontuacao()+10);
                         try {
                             Fachada.atualizarUsuario(faseActivity, usuario);
-                            FirebaseConecty.salvar(usuario);
                         } catch (Exception e) {
                             faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                         }
