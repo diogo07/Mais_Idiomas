@@ -26,7 +26,11 @@ public class ControllerFase3 implements View.OnClickListener {
         this.fase3Activity = fase3Activity;
         this.fase3Activity.getBtProximo().setOnClickListener(this);
         this.questoes = new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(this.fase3Activity)).listar();
-        this.usuario = Fachada.findByLogin(fase3Activity, fase3Activity.getLogin());
+        try {
+            this.usuario = Fachada.findByLogin(fase3Activity, fase3Activity.getLogin());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if(questoes != null){
             fase3 = new Fase3(questoes);
             inserirQuestoes();

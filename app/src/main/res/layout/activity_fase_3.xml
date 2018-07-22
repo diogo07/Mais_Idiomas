@@ -79,7 +79,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:textAlignment="center"
-                android:text="Selecione a a alternativa que não possui relação com as demais da lista:" />
+                android:text="Selecione a palavra intrusa nas opções abaixo:" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"

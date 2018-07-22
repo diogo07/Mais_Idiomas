@@ -52,6 +52,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.Fase3Activity" />
         <activity android:name=".view.InserirQuestaoActivity" />
+        <activity android:name=".view.CreditosActivity"></activity>
     </application>
 
 </manifest>

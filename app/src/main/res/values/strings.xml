@@ -9,6 +9,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_home">Início</string>
 
+    <string name="flaticon"><a href="http://www.flaticon.com">flaticon.com</a></string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

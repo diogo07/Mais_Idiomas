@@ -17,25 +17,23 @@ public class Fachada {
     public static final FabricaDeDAOSSQLite fabricaDeDAOSSQLite= new FabricaDeDAOSSQLite();
 
     public static void inserirUsuario(Usuario usuario, Context context) throws Exception{
-        new UsuarioDAOSQLite(ConexaoSQLite.getInstance(context)).insert(usuario);
+        fabricaDeDAOSSQLite.criarUsuarioDAO(context).insert(usuario);
     }
 
     public static void inserirPalavra(Palavra palavra, Context context) throws Exception{
-        new PalavraDAOSQLite(ConexaoSQLite.getInstance(context)).insert(palavra);
+        fabricaDeDAOSSQLite.criarPalavraDAO(context).insert(palavra);
     }
 
     public static void inserirQuestaoNivel3(QuestaoNivel3 questaoNivel3, Context context) throws Exception{
-        new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(context)).insert(questaoNivel3);
+        fabricaDeDAOSSQLite.criarQuestaoNivel3DAO(context).insert(questaoNivel3);
     }
 
-
-
     public static ArrayList<Usuario> listarUsuarios(Context context){
-        return new UsuarioDAOSQLite(ConexaoSQLite.getInstance(context)).listarPorPontuacao();
+        return fabricaDeDAOSSQLite.criarUsuarioDAO(context).listarPorPontuacao();
     }
 
     public static ArrayList<Palavra> listarPalavrasPorNivel(int nivel, Context context) throws Exception {
-        return new PalavraDAOSQLite(ConexaoSQLite.getInstance(context)).listByLevel(nivel);
+        return fabricaDeDAOSSQLite.criarPalavraDAO(context).listByLevel(nivel);
     }
 
     public static ArrayList<Ranking> getListRanking(Context context){
@@ -53,15 +51,19 @@ public class Fachada {
         return lista;
     }
 
+    public static ArrayList<QuestaoNivel3> listarQuestoesNivel3(Context context){
+        return fabricaDeDAOSSQLite.criarQuestaoNivel3DAO(context).listar();
+    }
+
 
 
     public static void atualizarUsuario(Context context, Usuario usuario) throws Exception {
-        new UsuarioDAOSQLite(ConexaoSQLite.getInstance(context)).update(usuario);
+        fabricaDeDAOSSQLite.criarUsuarioDAO(context).update(usuario);
         FirebaseConecty.salvar(usuario);
     }
 
-    public static Usuario findByLogin(Context context, String login){
-        return new UsuarioDAOSQLite(ConexaoSQLite.getInstance(context)).findByLogin(login);
+    public static Usuario findByLogin(Context context, String login) throws Exception {
+        return fabricaDeDAOSSQLite.criarUsuarioDAO(context).findByLogin(login);
     }
 
     public static boolean loginDisponivel(Context context, String login){
@@ -78,8 +80,7 @@ public class Fachada {
     }
 
     public static Usuario findByLoginEsenha(Context context, String login, String senha){
-        UsuarioDAOSQLite usuarioDAO = (UsuarioDAOSQLite) fabricaDeDAOSSQLite.criarUsuarioDAO(context);
-        return usuarioDAO.findByLoginEsenha(login, senha);
+        return  ((UsuarioDAOSQLite) fabricaDeDAOSSQLite.criarUsuarioDAO(context)).findByLoginEsenha(login, senha);
     }
 
 }

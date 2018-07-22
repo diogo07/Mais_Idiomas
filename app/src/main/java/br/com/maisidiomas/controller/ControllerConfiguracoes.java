@@ -60,7 +60,12 @@ public class ControllerConfiguracoes implements View.OnClickListener{
 
         if(alternativa == 0){
             if(!configuracoesActivity.getEdtEscolha().getText().toString().equals("")){
-                Usuario usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                Usuario usuario = null;
+                try {
+                    usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 usuario.setNome(configuracoesActivity.getEdtEscolha().getText().toString());
                 try {
                     Fachada.atualizarUsuario(configuracoesActivity, usuario);
@@ -76,7 +81,12 @@ public class ControllerConfiguracoes implements View.OnClickListener{
         }else if(alternativa == 1){
             if(!configuracoesActivity.getEdtEscolha().getText().toString().equals("")){
                 if(FirebaseConecty.isConected(configuracoesActivity)){
-                    Usuario usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                    Usuario usuario = null;
+                    try {
+                        usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     usuario.setLogin(configuracoesActivity.getEdtEscolha().getText().toString());
                     try {
                         Fachada.atualizarUsuario(configuracoesActivity, usuario);
@@ -94,7 +104,12 @@ public class ControllerConfiguracoes implements View.OnClickListener{
             }
         }else if(alternativa == 2){
             if(!configuracoesActivity.getEdtEscolha().getText().toString().equals("") || !configuracoesActivity.getEdtSenhaAtual().getText().toString().equals("")){
-                Usuario usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                Usuario usuario = null;
+                try {
+                    usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 usuario.setSenha(configuracoesActivity.getEdtEscolha().getText().toString());
                 try {
                     Fachada.atualizarUsuario(configuracoesActivity, usuario);
@@ -110,7 +125,12 @@ public class ControllerConfiguracoes implements View.OnClickListener{
             }
         }else{
             if(!configuracoesActivity.getAvtUser().equals(configuracoesActivity.getAvatar())){
-                Usuario usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                Usuario usuario = null;
+                try {
+                    usuario = Fachada.findByLogin(configuracoesActivity, configuracoesActivity.getLogin());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 usuario.setFoto(configuracoesActivity.getAvatar());
                 try {
                     Fachada.atualizarUsuario(configuracoesActivity, usuario);

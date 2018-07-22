@@ -4,6 +4,7 @@ import android.view.View;
 
 import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.CadastroActivity;
 
 import br.com.maisidiomas.R;
@@ -36,6 +37,7 @@ public class ControllerCadastro implements View.OnClickListener{
     private void cadastrar() {
         if(!camposVazios()){
             if(senhasConferem()){
+                UtilsParametros.carregarContexto(cadastroActivity);
                 if(Fachada.loginDisponivel(cadastroActivity,cadastroActivity.getEdtLogin().getText().toString()+"")){
                     cadastroActivity.alertarLoginIndisponivel();
                 }else{
@@ -79,5 +81,14 @@ public class ControllerCadastro implements View.OnClickListener{
         }else{
             return true;
         }
+    }
+
+
+    public CadastroActivity getCadastroActivity() {
+        return cadastroActivity;
+    }
+
+    public void setCadastroActivity(CadastroActivity cadastroActivity) {
+        this.cadastroActivity = cadastroActivity;
     }
 }

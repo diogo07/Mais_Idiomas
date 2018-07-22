@@ -145,8 +145,8 @@ public class DashBoardActivity extends ModeloActivity
             i.putExtra("avatar", avatar);
             i.putExtra("login", login);
             startActivity(i);
-        } else if (id == R.id.nav_add_quest) {
-            Intent i = new Intent(DashBoardActivity.this, InserirQuestaoActivity.class);
+        } else if (id == R.id.nav_creditos) {
+            Intent i = new Intent(DashBoardActivity.this, CreditosActivity.class);
             startActivity(i);
         }else if (id == R.id.nav_sair) {
             Intent i = new Intent(DashBoardActivity.this, LoginActivity.class);

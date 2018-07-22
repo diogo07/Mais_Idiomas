@@ -15,6 +15,7 @@ import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
 import br.com.maisidiomas.utils.FirebaseConecty;
+import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.FaseActivity;
 import br.com.maisidiomas.R;
 
@@ -27,7 +28,7 @@ public class ControllerFase1 implements View.OnClickListener{
     public ControllerFase1(FaseActivity faseActivity) {
         this.faseActivity = faseActivity;
         try {
-            this.usuario = Fachada.findByLogin(faseActivity, faseActivity.getLogin());
+            this.usuario = UtilsParametros.getUsuarioLogado();
         } catch (Exception e) {
            faseActivity.exibirMensagem("O sistema encontrou problemas ao iniciar a fase");
         }

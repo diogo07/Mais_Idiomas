@@ -1,7 +1,10 @@
 package br.com.maisidiomas.utils;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
+import br.com.maisidiomas.controller.ControllerCadastro;
 import br.com.maisidiomas.controller.ControllerDashBoard;
 import br.com.maisidiomas.model.vo.Usuario;
 
@@ -11,7 +14,7 @@ public class UtilsParametros {
     private static Usuario usuarioCadastrado;
     private static ArrayList<Usuario> usuariosLista;
     private static ControllerDashBoard controllerDashBoard;
-
+    private static Context context;
 
 
     public static void carregarUsuario(Usuario usuario){
@@ -44,5 +47,14 @@ public class UtilsParametros {
 
     public static Usuario getUsuarioCadastrado(){
         return usuarioCadastrado;
+    }
+
+
+    public static void carregarContexto(Context c){
+        context = c;
+    }
+
+    public static Context getContext(){
+        return context;
     }
 }

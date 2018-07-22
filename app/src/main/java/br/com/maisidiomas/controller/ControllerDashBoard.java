@@ -35,13 +35,8 @@ public class ControllerDashBoard {
 
     public void inserirRanking() {
         UtilsParametros.adicionarControleDashBoard(this);
+        UtilsParametros.carregarContexto(dashBoardActivity);
         FirebaseConecty.getListUsuarios();
-
-        /*ArrayList<Usuario> usuarios = new UsuarioDAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity)).listarPorPontuacao();
-        ArrayAdapter arrayAdapter =  new RankingAdapter(this.dashBoardActivity, (ArrayList<Ranking>) Ranking.getListRanking(usuarios));
-        ListView lvOpcoes = (ListView) dashBoardActivity.findViewById(R.id.list_ranking);
-        lvOpcoes.setAdapter(arrayAdapter);
-        */
     }
 
     public ArrayList<Usuario> ordenarPontuacoes(){

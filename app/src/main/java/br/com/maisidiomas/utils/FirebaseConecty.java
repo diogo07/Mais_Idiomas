@@ -31,9 +31,9 @@ public class FirebaseConecty {
 
     public static void getListUsuarios() {
 
-        if(isConected(UtilsParametros.getControllerDashBoard().getDashBoardActivity())){
+        if(isConected(UtilsParametros.getContext())){
             System.out.println("Tem conexao");
-            final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), "", "Carregando ...", true);
+            final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getContext(), "", "Carregando ...", true);
             progressDialog.setCancelable(false);
             final ArrayList<Usuario> usuarios = new ArrayList<>();
             myRef = database.getReference().child("usuarios");
@@ -63,11 +63,12 @@ public class FirebaseConecty {
 
     public static void  getUsuario(final ControllerLogin controllerLogin, final String login, final String senha, final ProgressDialog progressDialog) {
         progressDialog.setCancelable(false);
+        UtilsParametros.carregarContexto(controllerLogin.getLoginActivity());
         myRef = database.getReference().child("usuarios").child(login);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               if(isConected(controllerLogin.getLoginActivity())){
+               if(isConected(UtilsParametros.getContext())){
                    Usuario u = dataSnapshot.getValue(Usuario.class);
                    if(u != null){
                        if(u.getSenha().equalsIgnoreCase(senha)) {
@@ -101,7 +102,7 @@ public class FirebaseConecty {
     }
 
     public static void  getUsuarioByLogin(final String login) {
-        final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), "", "Carregando ...", true);
+        final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getContext(), "", "Carregando ...", true);
         progressDialog.setCancelable(false);
         myRef = database.getReference().child("usuarios").child(login);
         myRef.addValueEventListener(new ValueEventListener() {

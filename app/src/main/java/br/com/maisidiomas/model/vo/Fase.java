@@ -3,20 +3,17 @@ package br.com.maisidiomas.model.vo;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import br.com.maisidiomas.controller.ControllerDashBoard;
-import br.com.maisidiomas.model.dao.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.utils.UtilsParametros;
 
 public class Fase {
 
-    private int id_usuario;
     private String login;
     private Usuario usuario;
     private ArrayList<Questao> questoes;
     private ArrayList<Palavra> palavras;
     private int questaoAtual;
+    private int pontuacao;
 
     public Fase(String login_usuario, int questaoAtual, ArrayList<Palavra> palavras) {
         this.login = login_usuario;
@@ -82,21 +79,17 @@ public class Fase {
 
     public Usuario getUsuario() {
         if(usuario == null){
-            usuario = Fachada.findByLogin(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), login);
+            try {
+                usuario = Fachada.findByLogin(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), login);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public int getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
     }
 
     public ArrayList<Questao> getQuestoes() {
@@ -113,5 +106,21 @@ public class Fase {
 
     public void setQuestaoAtual(int questaoAtual) {
         this.questaoAtual = questaoAtual;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public int getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
     }
 }
