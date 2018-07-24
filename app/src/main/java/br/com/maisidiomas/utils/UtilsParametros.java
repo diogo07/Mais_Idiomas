@@ -15,6 +15,7 @@ public class UtilsParametros {
     private static ArrayList<Usuario> usuariosLista;
     private static ControllerDashBoard controllerDashBoard;
     private static Context context;
+    private static int idCadastro;
 
 
     public static void carregarUsuario(Usuario usuario){
@@ -49,12 +50,19 @@ public class UtilsParametros {
         return usuarioCadastrado;
     }
 
-
     public static void carregarContexto(Context c){
         context = c;
     }
 
     public static Context getContext(){
         return context;
+    }
+
+    public static void carregarIdCadastro(int idCad){
+        idCadastro =idCad;
+    }
+
+    public static int getIdCadastro(){
+        return idCadastro;
     }
 }

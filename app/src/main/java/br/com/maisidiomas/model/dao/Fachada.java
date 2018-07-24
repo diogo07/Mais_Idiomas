@@ -1,10 +1,12 @@
 package br.com.maisidiomas.model.dao;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import br.com.maisidiomas.controller.ControllerCadastro;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Ranking;
@@ -17,6 +19,9 @@ public class Fachada {
     public static final FabricaDeDAOSSQLite fabricaDeDAOSSQLite= new FabricaDeDAOSSQLite();
 
     public static void inserirUsuario(Usuario usuario, Context context) throws Exception{
+        //fabricaDeDAOSSQLite.criarUsuarioDAO(context).insert(usuario);
+        //Usuario u = fabricaDeDAOSSQLite.criarUsuarioDAO(context).findByLogin(usuario.getLogin());
+        FirebaseConecty.salvar(usuario);
         fabricaDeDAOSSQLite.criarUsuarioDAO(context).insert(usuario);
     }
 
@@ -66,17 +71,15 @@ public class Fachada {
         return fabricaDeDAOSSQLite.criarUsuarioDAO(context).findByLogin(login);
     }
 
-    public static boolean loginDisponivel(Context context, String login){
-        if(fabricaDeDAOSSQLite.criarUsuarioDAO(context).loginDisponivel(login)){
-            FirebaseConecty.getUsuarioByLogin(login);
-            if(UtilsParametros.getUsuarioCadastrado() != null){
-                return true;
-            }else{
-                return false;
-            }
+    public static void loginDisponivel(Context context, String login, ControllerCadastro controllerCadastro){
+        /*if(fabricaDeDAOSSQLite.criarUsuarioDAO(context).loginDisponivel(login)){
+            FirebaseConecty.getUsuarioByLogin(login, controllerCadastro);
         }else{
-            return false;
-        }
+            controllerCadastro.getCadastroActivity().alertarLoginIndisponivel();
+        }*/
+        final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getContext(), "", "Verificando disponibilidade ...", true);
+        FirebaseConecty.loginDisponivel(progressDialog, login, controllerCadastro);
+        //FirebaseConecty.teste(progressDialog, login, controllerCadastro);
     }
 
     public static Usuario findByLoginEsenha(Context context, String login, String senha){

@@ -18,7 +18,7 @@
             android:title="Configurações" />
         <item
             android:id="@+id/nav_creditos"
-            android:icon="@drawable/ic_add_quest"
+            android:icon="@mipmap/ic_credits"
             android:title="Créditos" />
         <item
             android:id="@+id/nav_sair"
@@ -31,7 +31,7 @@
             <item
                 android:id="@+id/nav_exemplo"
                 android:icon="@drawable/ic_help"
-                android:title="Como jogar" />
+                android:title="@string/ajuda" />
             <item
                 android:id="@+id/nav_dicionario"
                 android:icon="@drawable/ic_dicionario"

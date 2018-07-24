@@ -1,20 +1,16 @@
 package br.com.maisidiomas.controller;
 
 import android.view.View;
-import android.widget.Toast;
-
-import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import br.com.maisidiomas.model.dao.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
-import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
-import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.FaseActivity;
 import br.com.maisidiomas.R;
@@ -49,8 +45,15 @@ public class ControllerFase1 implements View.OnClickListener{
 
     public void iniciarQuestao() {
         if((fase.getQuestaoAtual()%3) == 0 && fase.getQuestaoAtual() != 0 && fase.getQuestaoAtual() < 8){
-            String ajuda = "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()+2).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()+2).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()+2).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()+2).getNumeroResposta()].getTraducao()+"";
-            this.faseActivity.exibirMensagemCompra(this, ajuda);
+            ArrayList<Palavra> palavras = new ArrayList<>();
+            try {
+                palavras = Fachada.listarPalavrasPorNivel(1, faseActivity);
+                Collections.shuffle(palavras);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String ajuda = "A tradução de "+palavras.get(10).getNome()+" é "+palavras.get(10).getTraducao()+"";
+            this.faseActivity.exibirMensagemCompraFase1(this, ajuda);
         }
         faseActivity.getImgOpc1().setImageResource(faseActivity.idImagemNivel1(fase.getQuestoes().get(fase.getQuestaoAtual()).getPalavras()[0].getTraducaoSemAcento()));
         faseActivity.getImgOpc2().setImageResource(faseActivity.idImagemNivel1(fase.getQuestoes().get(fase.getQuestaoAtual()).getPalavras()[1].getTraducaoSemAcento()));
@@ -85,46 +88,41 @@ public class ControllerFase1 implements View.OnClickListener{
                 this.faseActivity.inserirFocoImagemNivel(4);
                 break;
             case R.id.bt_proximo:
-                if(this.fase.verificarAlternativa(this.faseActivity.getAlternativaSelecionada())){
-                    if(fase.getQuestaoAtual() < 9){
-                        fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
-                        this.faseActivity.exibirMensagemFase1("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
-                        usuario.setPontuacao(usuario.getPontuacao()+10);
-                        try {
-                            Fachada.atualizarUsuario(faseActivity, usuario);
-                        } catch (Exception e) {
-                            faseActivity.exibirMensagem("Problemas na atualização da pontuação");
+                if(faseActivity.getAlternativaSelecionada() != 4){
+                    if(this.fase.verificarAlternativa(this.faseActivity.getAlternativaSelecionada())){
+                        if(fase.getQuestaoAtual() < 9){
+                            fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
+                            this.faseActivity.exibirMensagemFase1("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
+                            usuario.setPontuacao(usuario.getPontuacao()+10);
+                            try {
+                                Fachada.atualizarUsuario(faseActivity, usuario);
+                            } catch (Exception e) {
+                                faseActivity.exibirMensagem("Problemas na atualização da pontuação");
+                            }
+                        }else{
+                            fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
+                            usuario.setPontuacao(usuario.getPontuacao()+10);
+                            try {
+                                Fachada.atualizarUsuario(faseActivity, usuario);
+                            } catch (Exception e) {
+                                faseActivity.exibirMensagem("Problemas na atualização da pontuação");
+                            }
+                            this.faseActivity.exibirMensagemUltimaQuestao("Parabéns, você acertou!!!", "Clique em continuar para iniciar outra fase", true);
                         }
-                    }else{
-                        fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
-                        usuario.setPontuacao(usuario.getPontuacao()+10);
-                        try {
-                            Fachada.atualizarUsuario(faseActivity, usuario);
-                        } catch (Exception e) {
-                            faseActivity.exibirMensagem("Problemas na atualização da pontuação");
+                    }else {
+                        if (fase.getQuestaoAtual() < 9) {
+                            fase.setQuestaoAtual(fase.getQuestaoAtual() + 1);
+                            this.faseActivity.exibirMensagemFase1("Infelizmente você errou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", false, this);
+                        }else{
+                            fase.setQuestaoAtual(fase.getQuestaoAtual() + 1);
+                            this.faseActivity.exibirMensagemUltimaQuestao("Infelizmente você errou!!!", "Clique em continuar para iniciar outra fase", false);
                         }
-                        this.faseActivity.exibirMensagemUltimaQuestao("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
                     }
                 }else {
-                    if (fase.getQuestaoAtual() < 9) {
-                        fase.setQuestaoAtual(fase.getQuestaoAtual() + 1);
-                        this.faseActivity.exibirMensagemFase1("Infelizmente você errou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", false, this);
-                    }else{
-                        fase.setQuestaoAtual(fase.getQuestaoAtual() + 1);
-                        this.faseActivity.exibirMensagemUltimaQuestao("Infelizmente você errou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
-                    }
+                    faseActivity.exibirMensagem("Nenhuma alternativa selecionada!");
                 }
                 break;
         }
-    }
-
-
-    public FaseActivity getFaseActivity() {
-        return faseActivity;
-    }
-
-    public void setFaseActivity(FaseActivity faseActivity) {
-        this.faseActivity = faseActivity;
     }
 
     public Usuario getUsuario() {
@@ -137,9 +135,5 @@ public class ControllerFase1 implements View.OnClickListener{
 
     public Fase getFase() {
         return fase;
-    }
-
-    public void setFase(Fase fase) {
-        this.fase = fase;
     }
 }

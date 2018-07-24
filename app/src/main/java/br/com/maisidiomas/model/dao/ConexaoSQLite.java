@@ -47,12 +47,15 @@ public class ConexaoSQLite extends SQLiteOpenHelper{
         query_tabela_questao_nivel3.append("indice_resposta integer);");
         db.execSQL(query_tabela_questao_nivel3.toString());
 
+        /*
         StringBuilder query_tabela_fase = new StringBuilder();
         query_tabela.append("create table fase( ");
         query_tabela.append("id integer primary key, ");
         query_tabela.append("login_usuario varchar(50), ");
         query_tabela.append("pontuacao integer);");
         db.execSQL(query_tabela_fase.toString());
+
+        */
 
     }
 

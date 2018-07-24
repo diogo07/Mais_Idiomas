@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import br.com.maisidiomas.controller.ControllerCadastro;
 import br.com.maisidiomas.controller.ControllerLogin;
 import br.com.maisidiomas.model.vo.Usuario;
 
@@ -25,8 +26,7 @@ public class FirebaseConecty {
 
     public static void salvar(Usuario usuario){
         myRef = database.getReference();
-        myRef.child("usuarios").child(String.valueOf(usuario.getLogin())).setValue(usuario);
-
+        myRef.child("usuarios").child(String.valueOf(usuario.getId())).setValue(usuario);
     }
 
     public static void getListUsuarios() {
@@ -61,10 +61,10 @@ public class FirebaseConecty {
         }
     }
 
-    public static void  getUsuario(final ControllerLogin controllerLogin, final String login, final String senha, final ProgressDialog progressDialog) {
+    public static void  getUsuario(final ControllerLogin controllerLogin, final int id, final String senha, final ProgressDialog progressDialog) {
         progressDialog.setCancelable(false);
         UtilsParametros.carregarContexto(controllerLogin.getLoginActivity());
-        myRef = database.getReference().child("usuarios").child(login);
+        myRef = database.getReference().child("usuarios").child(String.valueOf(id));
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -101,18 +101,36 @@ public class FirebaseConecty {
         });
     }
 
-    public static void  getUsuarioByLogin(final String login) {
-        final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getContext(), "", "Carregando ...", true);
+
+    public static void  getUsuarioByLogin(final ControllerLogin controllerLogin, final String login, final String senha, final ProgressDialog progressDialog) {
         progressDialog.setCancelable(false);
+        UtilsParametros.carregarContexto(controllerLogin.getLoginActivity());
         myRef = database.getReference().child("usuarios").child(login);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Usuario u = dataSnapshot.getValue(Usuario.class);
-                if(u != null){
-                    UtilsParametros.carregarUsuarioCadastrado(u);
+                if(isConected(UtilsParametros.getContext())){
+                    Usuario u = dataSnapshot.getValue(Usuario.class);
+                    if(u != null){
+                        if(u.getSenha().equalsIgnoreCase(senha)) {
+                            UtilsParametros.carregarUsuario(u);
+                            progressDialog.dismiss();
+                            controllerLogin.verificarUsuarioLogado();
+                        }else{
+                            progressDialog.dismiss();
+                            controllerLogin.verificarUsuarioLogado();
+                        }
+
+                    }else {
+                        progressDialog.dismiss();
+                        controllerLogin.verificarUsuarioLogado();
+                    }
+                }else {
+                    progressDialog.dismiss();
+                    controllerLogin.verificarUsuarioLogado();
                 }
-                progressDialog.dismiss();
+
+
             }
 
 
@@ -123,7 +141,7 @@ public class FirebaseConecty {
         });
     }
 
-    public static boolean isConected(Context cont){
+     public static boolean isConected(Context cont){
         ConnectivityManager conmag = (ConnectivityManager)cont.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = conmag.getActiveNetworkInfo();
@@ -131,5 +149,43 @@ public class FirebaseConecty {
                 activeNetwork.isConnectedOrConnecting();
 
         return isConnected;
+    }
+
+     public static void loginDisponivel(final ProgressDialog progressDialog, final String login, final ControllerCadastro controllerCadastro){
+        final ArrayList<Usuario> usuarios = new ArrayList<>();
+        myRef = database.getReference().child("usuarios");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                usuarios.clear();
+                Usuario usuario = null;
+                int id = 0;
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Usuario u = postSnapshot.getValue(Usuario.class);
+
+                    if(u.getLogin().equals(login)){
+                        usuario = u;
+                    }
+
+                    if(u.getId() > id){
+                        id = u.getId();
+                    }
+                }
+
+                if(usuario == null){
+                    UtilsParametros.carregarContexto(controllerCadastro.getCadastroActivity());
+                    UtilsParametros.carregarIdCadastro(id+1);
+                    controllerCadastro.cadastrarUsuario();
+                }else{
+                    progressDialog.dismiss();
+                    controllerCadastro.getCadastroActivity().alertarLoginIndisponivel();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Erro", "Failed to read value.", error.toException());
+            }
+        });
     }
 }

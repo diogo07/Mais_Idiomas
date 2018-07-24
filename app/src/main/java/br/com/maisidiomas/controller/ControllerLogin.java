@@ -45,6 +45,7 @@ public class ControllerLogin implements View.OnClickListener{
 
     private void validarLogin() {
         if(camposPreenchidos()){
+            UtilsParametros.carregarUsuario(null);
             Usuario usuario = Fachada.findByLoginEsenha(loginActivity, loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString());
             if(usuario != null){
                 this.loginActivity.limparCampos();
@@ -53,7 +54,7 @@ public class ControllerLogin implements View.OnClickListener{
                 abrirTelaHome(usuario);
             }else{
                 final ProgressDialog progressDialog = ProgressDialog.show(loginActivity, "", "Carregando ...", true);
-                FirebaseConecty.getUsuario(this, loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString(), progressDialog);
+                FirebaseConecty.getUsuarioByLogin(this, loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString(), progressDialog);
 
             }
         }else {

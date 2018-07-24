@@ -50,8 +50,6 @@ public class RankingAdapter extends ArrayAdapter<Ranking> {
         return rowView;
     }
 
-
-
     public int idAvatar(String nome){
         if(nome.equals("avatar1")){
             return R.mipmap.ic_avatar1;
@@ -74,10 +72,8 @@ public class RankingAdapter extends ArrayAdapter<Ranking> {
         if(nome.equals("avatar7")){
             return R.mipmap.ic_avatar7;
         }
-        if(nome.equals("avatar8")){
+        else{
             return R.mipmap.ic_avatar8;
-        }else{
-            return R.drawable.ic_perfil;
         }
     }
 }

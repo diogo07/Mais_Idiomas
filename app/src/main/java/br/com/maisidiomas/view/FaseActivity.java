@@ -6,10 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +25,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerFase1;
 import br.com.maisidiomas.controller.ControllerFase2;
+import br.com.maisidiomas.utils.UtilsParametros;
 
 public class FaseActivity extends ModeloActivity {
 
@@ -31,6 +36,8 @@ public class FaseActivity extends ModeloActivity {
     private AlertDialog alerta;
     private ProgressDialog progressDialog;
     private FloatingActionMenu floatingActionMenu;
+    private static int VIBRATOR_VALUE = 1000;
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +47,13 @@ public class FaseActivity extends ModeloActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+        vibrator = (Vibrator) getApplicationContext().getSystemService(this.VIBRATOR_SERVICE);
 
         nivel = getIntent().getStringExtra("nivel");
         login = getIntent().getStringExtra("login");
 
         setContentView(R.layout.activity_fase);
+
 
         tvQuestao = findViewById(R.id.tv_questao_numero);
         tvNivel = findViewById(R.id.tv_nivel);
@@ -57,6 +66,8 @@ public class FaseActivity extends ModeloActivity {
         imgOpc2 = findViewById(R.id.img_opc2);
         imgOpc3 = findViewById(R.id.img_opc3);
         imgOpc4 = findViewById(R.id.img_opc4);
+
+        removerFoco();
 
         floatingActionMenu = findViewById(R.id.menu_yellow);
 
@@ -95,6 +106,20 @@ public class FaseActivity extends ModeloActivity {
         return true;
     }
 
+    public void vibrate() {
+        vibrator.vibrate(VIBRATOR_VALUE);
+    }
+
+    public void removerFoco(){
+        imgOpc1.setFocusable(false);
+        imgOpc1.setBackgroundResource(R.drawable.estilo_borda);
+        imgOpc2.setFocusable(false);
+        imgOpc2.setBackgroundResource(R.drawable.estilo_borda);
+        imgOpc3.setFocusable(false);
+        imgOpc3.setBackgroundResource(R.drawable.estilo_borda);
+        imgOpc4.setFocusable(false);
+        imgOpc4.setBackgroundResource(R.drawable.estilo_borda);
+    }
 
     public void inserirFocoImagemNivel(int nivel){
         switch (nivel){
@@ -148,15 +173,17 @@ public class FaseActivity extends ModeloActivity {
             return 1;
         }else if(imgOpc3.isFocusable()){
             return 2;
-        }else{
+        }else if(imgOpc4.isFocusable()){
             return 3;
+        }else{
+            return 4;
         }
     }
 
     public void exibirMensagem(String mensagem){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
-        alertDialogBuilder.setTitle("Resposta");
+        alertDialogBuilder.setTitle("");
         alertDialogBuilder
                 .setMessage(mensagem)
                 .setCancelable(false)
@@ -168,9 +195,10 @@ public class FaseActivity extends ModeloActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
+
     }
 
-    public void exibirMensagemCompra(final ControllerFase1 controllerFase, final String ajuda){
+    public void exibirMensagemCompraFase1(final ControllerFase1 controllerFase, final String ajuda){
 
         LayoutInflater li = getLayoutInflater();
 
@@ -190,7 +218,12 @@ public class FaseActivity extends ModeloActivity {
 
         btSim.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Toast.makeText(FaseActivity.this, "Sua tradução pode ser visualizada no botão laranja ao lado", Toast.LENGTH_LONG).show();
+                vibrate();
+
+                Animation deslocamento = new TranslateAnimation(0, -1000, 0, 0);
+                deslocamento.setDuration(1000);
+
+                floatingActionMenu.setAnimation(deslocamento);
 
                 FloatingActionButton fab1 = new FloatingActionButton(FaseActivity.this);
                 fab1.setImageResource(R.drawable.ic_light);
@@ -220,9 +253,66 @@ public class FaseActivity extends ModeloActivity {
 
     }
 
-    public void exibirMensagemFase1(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase1 controllerFase) {
+    public void exibirMensagemCompraFase2(final ControllerFase2 controllerFase, final String ajuda){
 
         LayoutInflater li = getLayoutInflater();
+
+        View view = li.inflate(R.layout.modelo_compra, null);
+        TextView tvTextoCima, tvTextoBaixo;
+        tvTextoCima = view.findViewById(R.id.tvPerg);
+        tvTextoBaixo = view.findViewById(R.id.tvInform);
+        tvTextoCima.setTypeface(getFont());
+        tvTextoBaixo.setTypeface(getFont());
+        Button btSim, btNao;
+        btSim = view.findViewById(R.id.btConfirm);
+        btNao = view.findViewById(R.id.btCancel);
+
+        btSim.setTypeface(getFont());
+        btNao.setTypeface(getFont());
+
+
+        btSim.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                vibrate();
+
+                Animation deslocamento = new TranslateAnimation(0, -1000, 0, 0);
+                deslocamento.setDuration(1000);
+
+                floatingActionMenu.setAnimation(deslocamento);
+
+                FloatingActionButton fab1 = new FloatingActionButton(FaseActivity.this);
+                fab1.setImageResource(R.drawable.ic_light);
+                fab1.setId(controllerFase.getFase().getQuestaoAtual());
+                fab1.setLabelText(ajuda);
+                floatingActionMenu.addMenuButton(fab1);
+                floatingActionMenu.showMenuButton(true);
+                controllerFase.getUsuario().setPontuacao(controllerFase.getUsuario().getPontuacao()-8);
+                getTvScore().setText("Score: "+controllerFase.getUsuario().getPontuacao());
+                alerta.dismiss();
+
+            }
+        });
+
+        btNao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alerta.dismiss();
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("");
+        builder.setCancelable(false);
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+
+    }
+
+
+    public void exibirMensagemFase1(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase1 controllerFase) {
+
+        /*LayoutInflater li = getLayoutInflater();
 
         View view = li.inflate(R.layout.alerta, null);
         TextView tvTextoCima, tvTextoBaixo;
@@ -233,13 +323,15 @@ public class FaseActivity extends ModeloActivity {
         tvTextoBaixo.setTypeface(getFont());
         Button btProx = view.findViewById(R.id.bt_prox);
         btProx.setTypeface(getFont());
+*/
+            Toast toast = Toast.makeText(this, mensagemInicio, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+            removerFoco();
+            getTvScore().setText("Score: "+ UtilsParametros.getUsuarioLogado().getPontuacao());
+            controllerFase.iniciarQuestao();
 
-        if(acertou){
-            img.setImageResource(R.mipmap.ic_acertou);
-        }else{
-            img.setImageResource(R.mipmap.ic_errou);
-        }
-
+        /*
         tvTextoCima.setText(mensagemInicio);
         tvTextoBaixo.setText(mensagemFim);
 
@@ -257,11 +349,13 @@ public class FaseActivity extends ModeloActivity {
         builder.setView(view);
         alerta = builder.create();
         alerta.show();
+
+        */
     }
 
     public void exibirMensagemFase2(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase2 controllerFase) {
 
-        LayoutInflater li = getLayoutInflater();
+       /* LayoutInflater li = getLayoutInflater();
 
         View view = li.inflate(R.layout.alerta, null);
         TextView tvTextoCima, tvTextoBaixo;
@@ -296,6 +390,15 @@ public class FaseActivity extends ModeloActivity {
         builder.setCancelable(false);
         alerta = builder.create();
         alerta.show();
+
+        */
+
+        Toast toast = Toast.makeText(this, mensagemInicio, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+        removerFoco();
+        getTvScore().setText("Score: "+ UtilsParametros.getUsuarioLogado().getPontuacao());
+        controllerFase.iniciarQuestao();
     }
 
     public void exibirMensagemUltimaQuestao(String mensagemInicio, String mensagemFim, boolean acertou) {

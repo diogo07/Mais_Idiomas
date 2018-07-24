@@ -4,6 +4,7 @@ import android.view.View;
 
 import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.CadastroActivity;
 
@@ -35,32 +36,59 @@ public class ControllerCadastro implements View.OnClickListener{
     }
 
     private void cadastrar() {
-        if(!camposVazios()){
-            if(senhasConferem()){
-                UtilsParametros.carregarContexto(cadastroActivity);
-                if(Fachada.loginDisponivel(cadastroActivity,cadastroActivity.getEdtLogin().getText().toString()+"")){
-                    cadastroActivity.alertarLoginIndisponivel();
-                }else{
-                    Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
-                            cadastroActivity.getEdtSenha().getText().toString(),
-                            cadastroActivity.getEdtNome().getText().toString());
-                    usuario.setPontuacao(0);
-                    usuario.setFoto(this.cadastroActivity.getAvatar());
+        if(FirebaseConecty.isConected(cadastroActivity)){
+            if(!camposVazios()){
+                if(senhasConferem()){
+                    if(!cadastroActivity.getAvatar().equals("vazio")){
+                        UtilsParametros.carregarContexto(cadastroActivity);
+                        Fachada.loginDisponivel(cadastroActivity,cadastroActivity.getEdtLogin().getText().toString()+"", this);
+                    /*if(!Fachada.loginDisponivel(cadastroActivity,cadastroActivity.getEdtLogin().getText().toString()+"", this)){
+                        cadastroActivity.alertarLoginIndisponivel();
+                    }else{
+                        Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
+                                cadastroActivity.getEdtSenha().getText().toString(),
+                                cadastroActivity.getEdtNome().getText().toString());
+                        usuario.setPontuacao(0);
+                        usuario.setFoto(this.cadastroActivity.getAvatar());
 
-                    try{
-                        Fachada.inserirUsuario(usuario, cadastroActivity);
-                        cadastroActivity.AlertSucessoCadastro();
-                        cadastroActivity.limparCampos();
-                        cadastroActivity.finish();
-                    }catch (Exception e){
-                        cadastroActivity.AlertErroCadastro();
+                        try{
+                            Fachada.inserirUsuario(usuario, cadastroActivity);
+                            cadastroActivity.AlertSucessoCadastro();
+                            cadastroActivity.limparCampos();
+                            cadastroActivity.finish();
+                        }catch (Exception e){
+                            cadastroActivity.AlertErroCadastro();
+                        }
+                    }*/
+                    }else{
+                        cadastroActivity.exibirMensagem("Selecione seu avatar!");
                     }
+                }else{
+                    cadastroActivity.alertarSenhasIncompativeis();
                 }
             }else{
-                cadastroActivity.alertarSenhasIncompativeis();
+                cadastroActivity.alertarCampoVazio();
             }
         }else{
-            cadastroActivity.alertarCampoVazio();
+            this.cadastroActivity.exibirMensagem("Sem conexão com a internet");
+        }
+    }
+
+    public void cadastrarUsuario(){
+
+        Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),cadastroActivity.getEdtSenha().getText().toString(),
+                    cadastroActivity.getEdtNome().getText().toString());
+        usuario.setPontuacao(0);
+        usuario.setFoto(this.cadastroActivity.getAvatar());
+        usuario.setId(UtilsParametros.getIdCadastro());
+
+        try{
+            Fachada.inserirUsuario(usuario, cadastroActivity);
+            cadastroActivity.AlertSucessoCadastro();
+            cadastroActivity.limparCampos();
+            cadastroActivity.finish();
+        }catch (Exception e){
+            cadastroActivity.AlertErroCadastro();
         }
     }
 

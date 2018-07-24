@@ -1,6 +1,7 @@
 package br.com.maisidiomas.view;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
@@ -39,6 +40,8 @@ public class CadastroActivity extends ModeloActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
+        avatar = "vazio";
+
         edtNome = findViewById(R.id.edtNome);
         edtLogin = findViewById(R.id.edtLogin);
         edtSenha = findViewById(R.id.edtSenha);
@@ -65,6 +68,24 @@ public class CadastroActivity extends ModeloActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return true;
+    }
+
+    public void exibirMensagem(String mensagem){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+        alertDialogBuilder.setTitle("");
+        alertDialogBuilder
+                .setMessage(mensagem)
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+
     }
 
     public void alertarCampoVazio() {
@@ -155,33 +176,36 @@ public class CadastroActivity extends ModeloActivity {
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar1);
                     avatar = "avatar1";
                 }
-                if(i == 1){
+                else if(i == 1){
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar2);
                     avatar = "avatar2";
                 }
-                if(i == 2){
+                else if(i == 2){
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar3);
                     avatar = "avatar3";
                 }
-                if(i == 3){
+                else if(i == 3){
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar4);
                     avatar = "avatar4";
                 }
-                if(i == 4){
+                else if(i == 4){
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar5);
                     avatar = "avatar5";
                 }
-                if(i == 5){
+                else if(i == 5){
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar6);
                     avatar = "avatar6";
                 }
-                if(i == 6){
+                else if(i == 6){
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar7);
                     avatar = "avatar7";
                 }
-                if(i == 7){
+                else if(i == 7){
                     btAvatar.setBackgroundResource(R.mipmap.ic_avatar8);
                     avatar = "avatar8";
+                }
+                else{
+                    avatar = "vazio";
                 }
             }else{
                 avt.get(i).setFocusable(false);
