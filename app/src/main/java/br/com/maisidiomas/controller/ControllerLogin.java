@@ -54,6 +54,7 @@ public class ControllerLogin implements View.OnClickListener{
                 abrirTelaHome(usuario);
             }else{
                 final ProgressDialog progressDialog = ProgressDialog.show(loginActivity, "", "Carregando ...", true);
+                progressDialog.setCancelable(true);
                 FirebaseConecty.getUsuarioByLogin(this, loginActivity.getEtLogin().getText().toString(), loginActivity.getEtSenha().getText().toString(), progressDialog);
 
             }

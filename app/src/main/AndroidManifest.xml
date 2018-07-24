@@ -20,7 +20,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.SplashActivity"
-            android:theme="@style/AppCompat.TelaCheia">
+            android:theme="@style/AppCompat.TelaCheia"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,32 +30,42 @@
         </activity>
         <activity
             android:name=".view.LoginActivity"
-            android:label="Acesso" />
+            android:label="Acesso"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.CadastroActivity"
-            android:label="Cadastro" />
+            android:label="Cadastro"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.DashBoardActivity"
             android:label="Início"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.SobreActivity"
-            android:label="Sobre" />
+            android:label="Sobre"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.DicionarioActivity"
-            android:label="Dicionário" />
+            android:label="Dicionário"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.ConfiguracoesActivity"
-            android:label="Configurações" />
+            android:label="Configurações"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.LevelActivity"
-            android:label="Nível" />
+            android:label="Nível"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.FaseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.Fase3Activity" />
-        <activity android:name=".view.InserirQuestaoActivity" />
-        <activity android:name=".view.CreditosActivity"></activity>
+        <activity android:name=".view.Fase3Activity"
+            android:screenOrientation="portrait"  />
+        <activity android:name=".view.InserirQuestaoActivity"
+            android:screenOrientation="portrait"  />
+        <activity android:name=".view.CreditosActivity"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

@@ -6,16 +6,21 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import br.com.maisidiomas.controller.ControllerCadastro;
 import br.com.maisidiomas.controller.ControllerLogin;
+import br.com.maisidiomas.model.dao.FabricaDeDAOSSQLite;
+import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.vo.Usuario;
 
 public class FirebaseConecty {
@@ -103,42 +108,70 @@ public class FirebaseConecty {
 
 
     public static void  getUsuarioByLogin(final ControllerLogin controllerLogin, final String login, final String senha, final ProgressDialog progressDialog) {
-        progressDialog.setCancelable(false);
-        UtilsParametros.carregarContexto(controllerLogin.getLoginActivity());
-        myRef = database.getReference().child("usuarios").child(login);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(isConected(UtilsParametros.getContext())){
-                    Usuario u = dataSnapshot.getValue(Usuario.class);
-                    if(u != null){
-                        if(u.getSenha().equalsIgnoreCase(senha)) {
+        if(isConected(controllerLogin.getLoginActivity())){
+            UtilsParametros.carregarContexto(controllerLogin.getLoginActivity());
+            myRef = (DatabaseReference) database.getReference().child("usuarios");
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        Usuario u = postSnapshot.getValue(Usuario.class);
+                        if(u.getLogin().equals(login) && u.getSenha().equals(senha)){
                             UtilsParametros.carregarUsuario(u);
                             progressDialog.dismiss();
                             controllerLogin.verificarUsuarioLogado();
-                        }else{
+
+                            return;
+                        }
+
+                    }
+                    progressDialog.dismiss();
+                    controllerLogin.verificarUsuarioLogado();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("Erro", "Failed to read value.", error.toException());
+                }
+            });
+
+
+            /*myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Usuario u = dataSnapshot.getValue(Usuario.class);
+                    controllerLogin.getLoginActivity().exibirMensagem(u.getSenha());
+
+                        if(u != null){
+                            controllerLogin.getLoginActivity().exibirMensagem("existe usuario");
+                            if(u.getSenha().equalsIgnoreCase(senha)) {
+                                UtilsParametros.carregarUsuario(u);
+                                progressDialog.dismiss();
+                                controllerLogin.verificarUsuarioLogado();
+                            }else{
+                                progressDialog.dismiss();
+                                controllerLogin.verificarUsuarioLogado();
+                            }
+
+                        }else {
+                            controllerLogin.getLoginActivity().exibirMensagem("nulo");
                             progressDialog.dismiss();
                             controllerLogin.verificarUsuarioLogado();
                         }
 
-                    }else {
-                        progressDialog.dismiss();
-                        controllerLogin.verificarUsuarioLogado();
-                    }
-                }else {
-                    progressDialog.dismiss();
-                    controllerLogin.verificarUsuarioLogado();
                 }
-
-
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("Erro", "Failed to read value.", error.toException());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("Erro", "Failed to read value.", error.toException());
+                }
+            });*/
+        }else {
+            controllerLogin.getLoginActivity().exibirMensagem("Não tem conexão");
+            progressDialog.dismiss();
+            controllerLogin.verificarUsuarioLogado();
+        }
     }
 
      public static boolean isConected(Context cont){

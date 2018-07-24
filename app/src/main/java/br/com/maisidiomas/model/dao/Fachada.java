@@ -19,8 +19,6 @@ public class Fachada {
     public static final FabricaDeDAOSSQLite fabricaDeDAOSSQLite= new FabricaDeDAOSSQLite();
 
     public static void inserirUsuario(Usuario usuario, Context context) throws Exception{
-        //fabricaDeDAOSSQLite.criarUsuarioDAO(context).insert(usuario);
-        //Usuario u = fabricaDeDAOSSQLite.criarUsuarioDAO(context).findByLogin(usuario.getLogin());
         FirebaseConecty.salvar(usuario);
         fabricaDeDAOSSQLite.criarUsuarioDAO(context).insert(usuario);
     }
@@ -72,14 +70,8 @@ public class Fachada {
     }
 
     public static void loginDisponivel(Context context, String login, ControllerCadastro controllerCadastro){
-        /*if(fabricaDeDAOSSQLite.criarUsuarioDAO(context).loginDisponivel(login)){
-            FirebaseConecty.getUsuarioByLogin(login, controllerCadastro);
-        }else{
-            controllerCadastro.getCadastroActivity().alertarLoginIndisponivel();
-        }*/
         final ProgressDialog progressDialog = ProgressDialog.show(UtilsParametros.getContext(), "", "Verificando disponibilidade ...", true);
         FirebaseConecty.loginDisponivel(progressDialog, login, controllerCadastro);
-        //FirebaseConecty.teste(progressDialog, login, controllerCadastro);
     }
 
     public static Usuario findByLoginEsenha(Context context, String login, String senha){

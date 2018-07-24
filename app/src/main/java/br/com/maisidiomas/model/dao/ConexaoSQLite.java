@@ -17,7 +17,7 @@ public class ConexaoSQLite extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         StringBuilder query_tabela = new StringBuilder();
         query_tabela.append("create table usuario( ");
-        query_tabela.append("id integer primary key, ");
+        query_tabela.append("id integer, ");
         query_tabela.append("nome varchar(50), ");
         query_tabela.append("login varchar(30), ");
         query_tabela.append("senha varchar(30), ");

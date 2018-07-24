@@ -42,24 +42,6 @@ public class ControllerCadastro implements View.OnClickListener{
                     if(!cadastroActivity.getAvatar().equals("vazio")){
                         UtilsParametros.carregarContexto(cadastroActivity);
                         Fachada.loginDisponivel(cadastroActivity,cadastroActivity.getEdtLogin().getText().toString()+"", this);
-                    /*if(!Fachada.loginDisponivel(cadastroActivity,cadastroActivity.getEdtLogin().getText().toString()+"", this)){
-                        cadastroActivity.alertarLoginIndisponivel();
-                    }else{
-                        Usuario usuario = new Usuario(cadastroActivity.getEdtLogin().getText().toString(),
-                                cadastroActivity.getEdtSenha().getText().toString(),
-                                cadastroActivity.getEdtNome().getText().toString());
-                        usuario.setPontuacao(0);
-                        usuario.setFoto(this.cadastroActivity.getAvatar());
-
-                        try{
-                            Fachada.inserirUsuario(usuario, cadastroActivity);
-                            cadastroActivity.AlertSucessoCadastro();
-                            cadastroActivity.limparCampos();
-                            cadastroActivity.finish();
-                        }catch (Exception e){
-                            cadastroActivity.AlertErroCadastro();
-                        }
-                    }*/
                     }else{
                         cadastroActivity.exibirMensagem("Selecione seu avatar!");
                     }

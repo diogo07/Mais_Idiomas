@@ -23,11 +23,8 @@ public class ControllerFase1 implements View.OnClickListener{
 
     public ControllerFase1(FaseActivity faseActivity) {
         this.faseActivity = faseActivity;
-        try {
-            this.usuario = UtilsParametros.getUsuarioLogado();
-        } catch (Exception e) {
-           faseActivity.exibirMensagem("O sistema encontrou problemas ao iniciar a fase");
-        }
+        this.usuario = UtilsParametros.getUsuarioLogado();
+
         try {
             this.fase = new Fase(usuario.getLogin(),0, new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listByLevel(1));
         } catch (Exception e) {
@@ -105,7 +102,7 @@ public class ControllerFase1 implements View.OnClickListener{
                             try {
                                 Fachada.atualizarUsuario(faseActivity, usuario);
                             } catch (Exception e) {
-                                faseActivity.exibirMensagem("Problemas na atualização da pontuação");
+                                faseActivity.exibirMensagem("Problemas na atualização da pontuação: "+e.getMessage());
                             }
                             this.faseActivity.exibirMensagemUltimaQuestao("Parabéns, você acertou!!!", "Clique em continuar para iniciar outra fase", true);
                         }

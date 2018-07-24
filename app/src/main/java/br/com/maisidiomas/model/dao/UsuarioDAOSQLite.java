@@ -24,6 +24,7 @@ public class UsuarioDAOSQLite extends UsuarioDAO{
     @Override
     public void insert(Usuario usuario) throws Exception{
         ContentValues values = new ContentValues();
+        values.put("id", usuario.getId());
         values.put("nome", usuario.getNome());
         values.put("login", usuario.getLogin());
         values.put("senha", usuario.getSenha());

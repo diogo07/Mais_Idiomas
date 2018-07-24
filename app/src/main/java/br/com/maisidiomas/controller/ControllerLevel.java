@@ -3,6 +3,8 @@ package br.com.maisidiomas.controller;
 import android.content.Intent;
 import android.view.View;
 
+import br.com.maisidiomas.model.dao.Fachada;
+import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.FaseActivity;
 import br.com.maisidiomas.view.LevelActivity;
 import br.com.maisidiomas.R;
@@ -23,6 +25,11 @@ public class ControllerLevel implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_iniciar:
+                try {
+                    Fachada.inserirUsuario(UtilsParametros.getUsuarioLogado(), levelActivity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 this.levelActivity.verificarNivel();
                 break;
             case R.id.img_level1:
