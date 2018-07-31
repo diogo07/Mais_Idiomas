@@ -1,19 +1,18 @@
 package br.com.maisidiomas.controller;
 
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import br.com.maisidiomas.R;
-import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
-import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.FaseActivity;
 
 public class ControllerFase2 implements View.OnClickListener{
@@ -99,8 +98,10 @@ public class ControllerFase2 implements View.OnClickListener{
                             fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                             this.faseActivity.exibirMensagemFase2("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
                             usuario.setPontuacao(usuario.getPontuacao()+20);
+                            faseActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
                             try {
                                 Fachada.atualizarUsuario(faseActivity, usuario);
+                                UtilsParametros.carregarUsuario(usuario);
                             } catch (Exception e) {
                                 faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                             }
@@ -108,8 +109,10 @@ public class ControllerFase2 implements View.OnClickListener{
                             fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                             this.faseActivity.exibirMensagemUltimaQuestao("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true);
                             usuario.setPontuacao(usuario.getPontuacao()+20);
+                            faseActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
                             try {
                                 Fachada.atualizarUsuario(faseActivity, usuario);
+                                UtilsParametros.carregarUsuario(usuario);
                             } catch (Exception e) {
                                 faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                             }

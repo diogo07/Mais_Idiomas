@@ -1,16 +1,15 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.sqlite;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import br.com.maisidiomas.model.dao.fabrica.PalavraDAO;
 import br.com.maisidiomas.model.vo.Palavra;
-import br.com.maisidiomas.model.vo.Usuario;
 
-public class PalavraDAOSQLite extends PalavraDAO{
+public class PalavraDAOSQLite extends PalavraDAO {
 
     private SQLiteDatabase sqLiteDatabase;
 
@@ -117,5 +116,22 @@ public class PalavraDAOSQLite extends PalavraDAO{
         }catch (Exception e){
         throw new Exception("Erro ao listar por palavra chave");
     }
+    }
+
+    public Palavra [] listaPalavras(String [] nomes){
+        Palavra [] palavras = new Palavra[4];
+
+        for(int i = 0; i < nomes.length; i++){
+            StringBuilder sql = new StringBuilder();
+            sql.append("select * from palavra where nome = '"+nomes[i]+"';");
+            Cursor cursor = this.sqLiteDatabase.rawQuery(sql.toString(), null);
+
+            if(cursor.moveToFirst()){
+                Palavra p = new Palavra(Integer.parseInt(cursor.getString(cursor.getColumnIndex("nivel"))), cursor.getString(cursor.getColumnIndex("nome")), cursor.getString(cursor.getColumnIndex("traducao")));
+                palavras[i] = p;
+            }
+        }
+
+        return palavras;
     }
 }

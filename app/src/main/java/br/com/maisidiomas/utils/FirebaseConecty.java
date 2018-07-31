@@ -6,21 +6,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import br.com.maisidiomas.controller.ControllerCadastro;
 import br.com.maisidiomas.controller.ControllerLogin;
-import br.com.maisidiomas.model.dao.FabricaDeDAOSSQLite;
-import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.model.vo.Usuario;
 
 public class FirebaseConecty {

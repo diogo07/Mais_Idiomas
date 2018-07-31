@@ -1,17 +1,15 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.sqlite;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import br.com.maisidiomas.model.vo.Palavra;
+import br.com.maisidiomas.model.dao.fabrica.UsuarioDAO;
 import br.com.maisidiomas.model.vo.Usuario;
 
-public class UsuarioDAOSQLite extends UsuarioDAO{
+public class UsuarioDAOSQLite extends UsuarioDAO {
 
     private SQLiteDatabase sqLiteDatabase;
 

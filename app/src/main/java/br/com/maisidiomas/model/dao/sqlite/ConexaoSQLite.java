@@ -1,4 +1,4 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.sqlite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -47,15 +47,15 @@ public class ConexaoSQLite extends SQLiteOpenHelper{
         query_tabela_questao_nivel3.append("indice_resposta integer);");
         db.execSQL(query_tabela_questao_nivel3.toString());
 
-        /*
         StringBuilder query_tabela_fase = new StringBuilder();
-        query_tabela.append("create table fase( ");
-        query_tabela.append("id integer primary key, ");
-        query_tabela.append("login_usuario varchar(50), ");
-        query_tabela.append("pontuacao integer);");
+        query_tabela_fase.append("create table fase( ");
+        query_tabela_fase.append("id integer primary key, ");
+        query_tabela_fase.append("login_usuario varchar(50), ");
+        query_tabela_fase.append("nivel integer, ");
+        query_tabela_fase.append("pontuacao integer);");
         db.execSQL(query_tabela_fase.toString());
 
-        */
+
 
     }
 

@@ -11,8 +11,8 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
-import br.com.maisidiomas.model.dao.ConexaoSQLite;
-import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
 import br.com.maisidiomas.utils.DicionarioAdapter;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.view.DicionarioActivity;

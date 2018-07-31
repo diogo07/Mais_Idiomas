@@ -1,4 +1,4 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.firebase;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

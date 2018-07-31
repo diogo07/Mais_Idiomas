@@ -2,11 +2,15 @@ package br.com.maisidiomas.model.dao;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
 import br.com.maisidiomas.controller.ControllerCadastro;
+import br.com.maisidiomas.model.dao.fabrica.FabricaDeDAOSSQLite;
+import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.QuestaoNivel3DAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.UsuarioDAOSQLite;
+import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Ranking;
@@ -29,6 +33,10 @@ public class Fachada {
 
     public static void inserirQuestaoNivel3(QuestaoNivel3 questaoNivel3, Context context) throws Exception{
         fabricaDeDAOSSQLite.criarQuestaoNivel3DAO(context).insert(questaoNivel3);
+    }
+
+    public static void inserirFase(Fase fase, Context context) throws Exception{
+        fabricaDeDAOSSQLite.criarFaseDAO(context).insert(fase);
     }
 
     public static ArrayList<Usuario> listarUsuarios(Context context){
@@ -58,11 +66,9 @@ public class Fachada {
         return fabricaDeDAOSSQLite.criarQuestaoNivel3DAO(context).listar();
     }
 
-
-
     public static void atualizarUsuario(Context context, Usuario usuario) throws Exception {
         fabricaDeDAOSSQLite.criarUsuarioDAO(context).update(usuario);
-        FirebaseConecty.salvar(usuario);
+        UtilsParametros.carregarUsuario(usuario);
     }
 
     public static Usuario findByLogin(Context context, String login) throws Exception {
@@ -76,6 +82,14 @@ public class Fachada {
 
     public static Usuario findByLoginEsenha(Context context, String login, String senha){
         return  ((UsuarioDAOSQLite) fabricaDeDAOSSQLite.criarUsuarioDAO(context)).findByLoginEsenha(login, senha);
+    }
+
+    public static boolean questaoNivel3IsCadastrada(QuestaoNivel3 questaoNivel3, Context context){
+        return ((QuestaoNivel3DAOSQLite) fabricaDeDAOSSQLite.criarQuestaoNivel3DAO(context)).questaoIsCadastrada(questaoNivel3);
+    }
+
+    public static Palavra [] listarPalavras(String [] nomes, Context context){
+        return ((PalavraDAOSQLite)fabricaDeDAOSSQLite.criarPalavraDAO(context)).listaPalavras(nomes);
     }
 
 }

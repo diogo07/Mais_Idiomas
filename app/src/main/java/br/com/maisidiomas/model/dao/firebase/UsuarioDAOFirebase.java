@@ -1,4 +1,4 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.firebase;
 
 import android.util.Log;
 
@@ -9,6 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import br.com.maisidiomas.model.dao.fabrica.UsuarioDAO;
 import br.com.maisidiomas.model.vo.Usuario;
 
 public class UsuarioDAOFirebase extends UsuarioDAO {

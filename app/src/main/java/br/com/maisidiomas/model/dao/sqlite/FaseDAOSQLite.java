@@ -1,10 +1,11 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.sqlite;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import br.com.maisidiomas.model.dao.fabrica.FaseDAO;
 import br.com.maisidiomas.model.vo.Fase;
 
 public class FaseDAOSQLite extends FaseDAO {

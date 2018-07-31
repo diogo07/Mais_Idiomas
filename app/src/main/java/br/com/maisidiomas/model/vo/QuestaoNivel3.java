@@ -23,23 +23,12 @@ public class QuestaoNivel3 {
         return indiceResposta;
     }
 
-    public void setIndiceResposta(int indiceResposta) {
-        this.indiceResposta = indiceResposta;
-    }
-
     public String[] getPalavras() {
         return palavras;
-    }
-
-    public void setPalavras(String[] palavras) {
-        this.palavras = palavras;
     }
 
     public String[] getTraducoes() {
         return traducoes;
     }
 
-    public void setTraducoes(String[] traducoes) {
-        this.traducoes = traducoes;
-    }
 }

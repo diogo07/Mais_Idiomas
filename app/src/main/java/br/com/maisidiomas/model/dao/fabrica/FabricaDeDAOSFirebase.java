@@ -1,13 +1,9 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.fabrica;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import br.com.maisidiomas.model.dao.firebase.ConexaoFirebase;
+import br.com.maisidiomas.model.dao.firebase.UsuarioDAOFirebase;
 
 public class FabricaDeDAOSFirebase extends FabricaDeDAOS{
 
@@ -23,6 +19,11 @@ public class FabricaDeDAOSFirebase extends FabricaDeDAOS{
 
     @Override
     public QuestaoNivel3DAO criarQuestaoNivel3DAO(Context context) {
+        return null;
+    }
+
+    @Override
+    public FaseDAO criarFaseDAO(Context context) {
         return null;
     }
 }

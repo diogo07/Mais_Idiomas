@@ -22,10 +22,6 @@ public class Fase3 {
         return questoes;
     }
 
-    public void setQuestoes(ArrayList<QuestaoNivel3> questoes) {
-        this.questoes = questoes;
-    }
-
     public int getQuestaoAtual() {
         return questaoAtual;
     }

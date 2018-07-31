@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerDashBoard;
+import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.utils.UtilsParametros;
 
 public class DashBoardActivity extends ModeloActivity
@@ -149,11 +150,10 @@ public class DashBoardActivity extends ModeloActivity
             Intent i = new Intent(DashBoardActivity.this, CreditosActivity.class);
             startActivity(i);
         }else if (id == R.id.nav_sair) {
-            Intent i = new Intent(DashBoardActivity.this, LoginActivity.class);
-            startActivity(i);
             finish();
         } else if (id == R.id.nav_exemplo) {
-
+            Intent intent = new Intent(this, AjudaActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_dicionario) {
             Intent intent = new Intent(this, DicionarioActivity.class);
             startActivity(intent);
@@ -172,6 +172,7 @@ public class DashBoardActivity extends ModeloActivity
         alterarAvatar();
         tvNome.setText(UtilsParametros.getUsuarioLogado().getNome());
         tvLogin.setText(UtilsParametros.getUsuarioLogado().getLogin());
+        FirebaseConecty.salvar(UtilsParametros.getUsuarioLogado());
         controllerDashBoard.atualizarPontuacao();
         controllerDashBoard.inserirRanking();
     }

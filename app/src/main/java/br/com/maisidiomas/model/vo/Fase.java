@@ -19,12 +19,7 @@ public class Fase {
         this.login = login_usuario;
         this.questaoAtual = questaoAtual;
         this.palavras = palavras;
-    }
-
-    public Fase(String login, ArrayList<Palavra> palavras, int questaoAtual) {
-        this.login = login;
-        this.palavras = palavras;
-        this.questaoAtual = questaoAtual;
+        this.pontuacao = 0;
     }
 
     public void gerarQuestoesNivel1(){
@@ -35,14 +30,14 @@ public class Fase {
         arr.add(2);
         arr.add(3);
         Collections.shuffle(palavras);
-        int indice = 1;
         ArrayList<Palavra> pl = new ArrayList<>();
 
         for(int i = 0; i <= 41; i++){
             pl.add(palavras.get(i));
             if(pl.size() == 4){
                 Collections.shuffle(arr);
-                questoes.add(new Questao("Selecione a imagem que corresponde a palavra:", arr.get(2), new Palavra[]{pl.get(0), pl.get(1), pl.get(2), pl.get(3)}));
+                //questoes.add(new Questao("Selecione a imagem que corresponde a palavra:", arr.get(2), new Palavra[]{pl.get(0), pl.get(1), pl.get(2), pl.get(3)}));
+                questoes.add(new Questao("Selecione a imagem que corresponde a palavra:", arr.get(2), new String[]{pl.get(0).getNome(), pl.get(1).getNome(), pl.get(2).getNome(), pl.get(3).getNome()}));
                 pl = new ArrayList<>();
             }
         }
@@ -56,7 +51,6 @@ public class Fase {
         arr.add(2);
         arr.add(3);
         Collections.shuffle(palavras);
-        int indice = 1;
         ArrayList<Palavra> pl = new ArrayList<>();
 
         for(int i = 0; i <= 25; i++){
@@ -80,7 +74,7 @@ public class Fase {
     public Usuario getUsuario() {
         if(usuario == null){
             try {
-                usuario = Fachada.findByLogin(UtilsParametros.getControllerDashBoard().getDashBoardActivity(), login);
+                usuario = Fachada.findByLogin(UtilsParametros.getContext(), login);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -94,10 +88,6 @@ public class Fase {
 
     public ArrayList<Questao> getQuestoes() {
         return questoes;
-    }
-
-    public void setQuestoes(ArrayList<Questao> questoes) {
-        this.questoes = questoes;
     }
 
     public int getQuestaoAtual() {

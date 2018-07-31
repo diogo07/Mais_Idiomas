@@ -1,4 +1,4 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.fabrica;
 
 import java.util.ArrayList;
 

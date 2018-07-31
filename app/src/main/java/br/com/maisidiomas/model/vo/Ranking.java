@@ -2,17 +2,9 @@ package br.com.maisidiomas.model.vo;
 
 import java.util.ArrayList;
 
-import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
-
 public class Ranking {
     private Usuario usuario;
     private int posicao;
-    private int id_usuario;
-
-
-    public Ranking() {
-
-    }
 
     public Ranking(Usuario usuario, int posicao) {
         this.usuario = usuario;
@@ -36,9 +28,6 @@ public class Ranking {
     }
 
     public Usuario getUsuario() {
-        if(usuario == null){
-            //this.usuario = new UsuarioDAOSQLite().findById(id_usuario);
-        }
         return usuario;
     }
 
@@ -50,7 +39,4 @@ public class Ranking {
         return posicao;
     }
 
-    public void setPosicao(int posicao) {
-        this.posicao = posicao;
-    }
 }

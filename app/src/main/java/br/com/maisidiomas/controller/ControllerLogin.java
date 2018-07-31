@@ -4,11 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.View;
 
-import java.util.ArrayList;
-
-import br.com.maisidiomas.model.dao.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
 import br.com.maisidiomas.model.vo.Usuario;
 import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.utils.UtilsParametros;
@@ -24,6 +20,8 @@ public class ControllerLogin implements View.OnClickListener{
 
     public ControllerLogin(LoginActivity loginActivity) {
         this.loginActivity = loginActivity;
+        UtilsParametros.carregarUsuario(null);
+        UtilsParametros.carregarUsuarioCadastrado(null);
         this.loginActivity.getBtEntrar().setOnClickListener(this);
         this.loginActivity.getTvCadastro().setOnClickListener(this);
     }
@@ -97,19 +95,9 @@ public class ControllerLogin implements View.OnClickListener{
         loginActivity.startActivity(i);
     }
 
-    public void imprimirLista() {
-        ArrayList<Usuario> usuarios = UtilsParametros.getListaUsuarios();
-        for (Usuario u: usuarios) {
-            System.out.println("Nome: "+u.getNome());
-        }
-    }
-
-
     public LoginActivity getLoginActivity() {
         return loginActivity;
     }
 
-    public void setLoginActivity(LoginActivity loginActivity) {
-        this.loginActivity = loginActivity;
-    }
+
 }

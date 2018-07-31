@@ -7,12 +7,13 @@ import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
 
-import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.QuestaoNivel3DAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.QuestaoNivel3DAOSQLite;
 import br.com.maisidiomas.model.vo.Fase3;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Usuario;
+import br.com.maisidiomas.utils.UtilsParametros;
 import br.com.maisidiomas.view.Fase3Activity;
 
 public class ControllerFase3 implements View.OnClickListener {
@@ -66,8 +67,10 @@ public class ControllerFase3 implements View.OnClickListener {
            this.fase3.setQuestaoAtual(this.fase3.getQuestaoAtual()+1);
            if(this.usuario != null) {
                usuario.setPontuacao(usuario.getPontuacao() + 30);
+               fase3Activity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
                try {
                    Fachada.atualizarUsuario(fase3Activity, usuario);
+                   UtilsParametros.carregarUsuario(usuario);
                } catch (Exception e) {
                    fase3Activity.exibirMensagem("Problemas na atualização da pontuação");
                }

@@ -1,4 +1,4 @@
-package br.com.maisidiomas.model.dao;
+package br.com.maisidiomas.model.dao.sqlite;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import br.com.maisidiomas.model.dao.fabrica.QuestaoNivel3DAO;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 
 public class QuestaoNivel3DAOSQLite extends QuestaoNivel3DAO {

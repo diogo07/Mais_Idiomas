@@ -28,7 +28,7 @@ public class ControllerCadastro implements View.OnClickListener{
             cadastrar();
         }
         if(id == R.id.btLimpar){
-
+            this.cadastroActivity.limparCampos();
         }
         if(id == R.id.btEscolhaAvatar){
             this.cadastroActivity.escolherAvatar();

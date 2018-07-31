@@ -9,12 +9,11 @@ import java.util.Comparator;
 
 import br.com.maisidiomas.R;
 
-import br.com.maisidiomas.model.dao.ConexaoSQLite;
-import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
-import br.com.maisidiomas.model.dao.QuestaoNivel3DAOSQLite;
-import br.com.maisidiomas.model.dao.UsuarioDAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.Fachada;
+import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.QuestaoNivel3DAOSQLite;
 import br.com.maisidiomas.model.vo.Palavra;
-import br.com.maisidiomas.model.vo.Opcao;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Ranking;
 import br.com.maisidiomas.utils.RankingAdapter;
@@ -187,7 +186,6 @@ public class ControllerDashBoard {
             }
         }
 
-        ArrayList<Opcao> opcoes = new ArrayList<>();
         ArrayList<QuestaoNivel3> questoes = new ArrayList<>();
         questoes.add(new QuestaoNivel3(0, new String[]{"fork", "umbrella", "spoon", "knife"}, new String[]{"garfo", "guarda-chuva", "colher", "faca"}));
         questoes.add(new QuestaoNivel3(0, new String[]{"bag", "ear", "nose", "mouth"}, new String[]{"bolsa", "olho", "nariz", "boca"}));
@@ -208,10 +206,9 @@ public class ControllerDashBoard {
 
         QuestaoNivel3DAOSQLite questaoNivel3DAOSQLite = new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity));
         for(QuestaoNivel3 q: questoes){
-            if(questaoNivel3DAOSQLite.questaoIsCadastrada(q)){
-
-            }else{
+            if(!Fachada.questaoNivel3IsCadastrada(q, this.dashBoardActivity)){
                 try {
+                    Fachada.inserirQuestaoNivel3(q, this.dashBoardActivity);
                     questaoNivel3DAOSQLite.insert(q);
                 }catch (Exception e){
                     e.printStackTrace();

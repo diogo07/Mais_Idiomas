@@ -5,9 +5,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import br.com.maisidiomas.model.dao.ConexaoSQLite;
+import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.PalavraDAOSQLite;
+import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
@@ -27,6 +27,7 @@ public class ControllerFase1 implements View.OnClickListener{
 
         try {
             this.fase = new Fase(usuario.getLogin(),0, new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listByLevel(1));
+            Fachada.inserirFase(fase, this.faseActivity);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,16 +92,24 @@ public class ControllerFase1 implements View.OnClickListener{
                             fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                             this.faseActivity.exibirMensagemFase1("Parabéns, você acertou!!!", "A tradução de "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getNome()+" é "+fase.getQuestoes().get(fase.getQuestaoAtual()-1).getPalavras()[fase.getQuestoes().get(fase.getQuestaoAtual()-1).getNumeroResposta()].getTraducao()+"", true, this);
                             usuario.setPontuacao(usuario.getPontuacao()+10);
+                            fase.setPontuacao(fase.getPontuacao()+10);
+                            faseActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
+
                             try {
                                 Fachada.atualizarUsuario(faseActivity, usuario);
+                                UtilsParametros.carregarUsuario(usuario);
+
                             } catch (Exception e) {
                                 faseActivity.exibirMensagem("Problemas na atualização da pontuação");
                             }
                         }else{
                             fase.setQuestaoAtual(fase.getQuestaoAtual()+1);
                             usuario.setPontuacao(usuario.getPontuacao()+10);
+                            fase.setPontuacao(fase.getPontuacao()+10);
+                            faseActivity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
                             try {
                                 Fachada.atualizarUsuario(faseActivity, usuario);
+                                UtilsParametros.carregarUsuario(usuario);
                             } catch (Exception e) {
                                 faseActivity.exibirMensagem("Problemas na atualização da pontuação: "+e.getMessage());
                             }

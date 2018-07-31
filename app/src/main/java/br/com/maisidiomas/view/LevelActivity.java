@@ -52,7 +52,18 @@ public class LevelActivity extends ModeloActivity {
         tvNivel3.setTypeface(getFont());
         btIniciar.setTypeface(getFont());
 
+        removerFoco();
+
         new ControllerLevel(this);
+    }
+
+    public void removerFoco(){
+        imgNivel1.setFocusable(false);
+        imgNivel1.setBackgroundResource(R.drawable.estilo_opcao_no_select);
+        imgNivel2.setFocusable(false);
+        imgNivel2.setBackgroundResource(R.drawable.estilo_opcao_no_select);
+        imgNivel3.setFocusable(false);
+        imgNivel3.setBackgroundResource(R.drawable.estilo_opcao_no_select);
     }
 
     @Override

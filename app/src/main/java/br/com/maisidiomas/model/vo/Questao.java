@@ -1,16 +1,15 @@
 package br.com.maisidiomas.model.vo;
 
 
+import br.com.maisidiomas.model.dao.Fachada;
+import br.com.maisidiomas.utils.UtilsParametros;
+
 public class Questao {
 
     private String pergunta;
     private int numeroResposta;
     private Palavra[] palavras;
-
-    public Questao(String pergunta, int numeroResposta) {
-        this.pergunta = pergunta;
-        this.numeroResposta = numeroResposta;
-    }
+    private String [] nomes;
 
     public Questao(String pergunta, int numeroResposta, Palavra[] palavras) {
         this.pergunta = pergunta;
@@ -18,27 +17,25 @@ public class Questao {
         this.palavras = palavras;
     }
 
-    public String getPergunta() {
-        return pergunta;
+    public Questao(String pergunta, int numeroResposta, String[] nomes) {
+        this.pergunta = pergunta;
+        this.numeroResposta = numeroResposta;
+        this.nomes = nomes;
     }
 
-    public void setPergunta(String pergunta) {
-        this.pergunta = pergunta;
+    public String getPergunta() {
+        return pergunta;
     }
 
     public int getNumeroResposta() {
         return numeroResposta;
     }
 
-    public void setNumeroResposta(int numeroResposta) {
-        this.numeroResposta = numeroResposta;
-    }
-
     public Palavra[] getPalavras() {
+        if(palavras == null){
+            palavras = Fachada.listarPalavras(nomes, UtilsParametros.getContext());
+        }
         return palavras;
     }
 
-    public void setPalavras(Palavra[] palavras) {
-        this.palavras = palavras;
-    }
 }
