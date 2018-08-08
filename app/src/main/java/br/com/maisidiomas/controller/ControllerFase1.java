@@ -5,9 +5,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
@@ -26,8 +24,7 @@ public class ControllerFase1 implements View.OnClickListener{
         this.usuario = UtilsParametros.getUsuarioLogado();
 
         try {
-            this.fase = new Fase(usuario.getLogin(),0, new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listByLevel(1));
-            Fachada.inserirFase(fase, this.faseActivity);
+            this.fase = new Fase(usuario.getLogin(),0, Fachada.listarNomesPorNivel(1, faseActivity));
         } catch (Exception e) {
             e.printStackTrace();
         }

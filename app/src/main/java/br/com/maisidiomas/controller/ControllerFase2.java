@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import br.com.maisidiomas.R;
-import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
 import br.com.maisidiomas.model.vo.Fase;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.Usuario;
@@ -30,7 +28,7 @@ public class ControllerFase2 implements View.OnClickListener{
         }
         ArrayList<Palavra> p = null;
         try {
-            p = new PalavraDAOSQLite(ConexaoSQLite.getInstance(this.faseActivity)).listByLevel(2);
+            p = Fachada.listarPalavrasPorNivel(2, faseActivity);
         } catch (Exception e) {
             e.printStackTrace();
         }

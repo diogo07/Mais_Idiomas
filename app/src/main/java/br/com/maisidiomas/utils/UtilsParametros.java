@@ -12,6 +12,7 @@ public class UtilsParametros {
 
     private static Usuario usuarioLogado;
     private static Usuario usuarioCadastrado;
+    private static Usuario usuarioAtualizado;
     private static ArrayList<Usuario> usuariosLista;
     private static ControllerDashBoard controllerDashBoard;
     private static Context context;
@@ -64,5 +65,13 @@ public class UtilsParametros {
 
     public static int getIdCadastro(){
         return idCadastro;
+    }
+
+    public static void carregarUsuarioAtualizado(Usuario usuario){
+        usuarioAtualizado = usuario;
+    }
+
+    public static Usuario getUsuarioAtualizado(){
+        return  usuarioAtualizado;
     }
 }

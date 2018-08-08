@@ -13,7 +13,7 @@ public abstract class UsuarioDAO {
     public abstract ArrayList<Usuario> listar();
     public abstract ArrayList<Usuario> listarPorPontuacao();
     public abstract Usuario findByLogin(String login) throws Exception;
-
+    public abstract Usuario findByLoginEsenha(String login, String senha);
 
     public boolean loginDisponivel(String login){
         try {

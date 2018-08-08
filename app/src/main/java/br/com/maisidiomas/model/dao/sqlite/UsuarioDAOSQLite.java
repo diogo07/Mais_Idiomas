@@ -25,6 +25,7 @@ public class UsuarioDAOSQLite extends UsuarioDAO {
         values.put("id", usuario.getId());
         values.put("nome", usuario.getNome());
         values.put("login", usuario.getLogin());
+        values.put("ajuda", usuario.getAjuda());
         values.put("senha", usuario.getSenha());
         values.put("pontuacao", usuario.getPontuacao());
         values.put("foto", usuario.getFoto());
@@ -44,6 +45,7 @@ public class UsuarioDAOSQLite extends UsuarioDAO {
         values.put("nome", usuario.getNome());
         values.put("login", usuario.getLogin());
         values.put("senha", usuario.getSenha());
+        values.put("ajuda", usuario.getAjuda());
         values.put("pontuacao", usuario.getPontuacao());
         values.put("foto", usuario.getFoto());
         String where = "id = ?";
@@ -69,6 +71,7 @@ public class UsuarioDAOSQLite extends UsuarioDAO {
             Usuario usuario = new Usuario(cursor.getString(cursor.getColumnIndex("login")), cursor.getString(cursor.getColumnIndex("senha")), cursor.getString(cursor.getColumnIndex("nome")));
             usuario.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
             usuario.setFoto(cursor.getString(cursor.getColumnIndex("foto")));
+            usuario.setAjuda(cursor.getString(cursor.getColumnIndex("ajuda")));
             usuario.setPontuacao(Integer.parseInt(cursor.getString(cursor.getColumnIndex("pontuacao"))));
             return usuario;
         }else{
@@ -100,6 +103,7 @@ public class UsuarioDAOSQLite extends UsuarioDAO {
                     Usuario usuario = new Usuario(cursor.getString(cursor.getColumnIndex("login")), cursor.getString(cursor.getColumnIndex("senha")), cursor.getString(cursor.getColumnIndex("nome")));
                     usuario.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
                     usuario.setFoto(cursor.getString(cursor.getColumnIndex("foto")));
+                    usuario.setAjuda(cursor.getString(cursor.getColumnIndex("ajuda")));
                     usuario.setPontuacao(Integer.parseInt(cursor.getString(cursor.getColumnIndex("pontuacao"))));
                     usuarios.add(usuario);
                 }catch (Exception e){
@@ -122,6 +126,7 @@ public class UsuarioDAOSQLite extends UsuarioDAO {
             Usuario usuario = new Usuario(cursor.getString(cursor.getColumnIndex("login")), cursor.getString(cursor.getColumnIndex("senha")), cursor.getString(cursor.getColumnIndex("nome")));
             usuario.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
             usuario.setFoto(cursor.getString(cursor.getColumnIndex("foto")));
+            usuario.setAjuda(cursor.getString(cursor.getColumnIndex("ajuda")));
             usuario.setPontuacao(Integer.parseInt(cursor.getString(cursor.getColumnIndex("pontuacao"))));
             return usuario;
         }else{
@@ -138,6 +143,7 @@ public class UsuarioDAOSQLite extends UsuarioDAO {
             Usuario usuario = new Usuario(cursor.getString(cursor.getColumnIndex("login")), cursor.getString(cursor.getColumnIndex("senha")), cursor.getString(cursor.getColumnIndex("nome")));
             usuario.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
             usuario.setFoto(cursor.getString(cursor.getColumnIndex("foto")));
+            usuario.setAjuda(cursor.getString(cursor.getColumnIndex("ajuda")));
             usuario.setPontuacao(Integer.parseInt(cursor.getString(cursor.getColumnIndex("pontuacao"))));
             return usuario;
         }else{

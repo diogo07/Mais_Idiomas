@@ -19,11 +19,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="fcfaff" />
                                       <entry key="backgroundLayerName" value="ic_launcher_background1" />
-                                      <entry key="foregroundImage" value="C:\Users\Diogo\Desktop\hand-touching-tablet-screen.png" />
-                                      <entry key="foregroundLayerName" value="ic_credits" />
-                                      <entry key="outputName" value="ic_c" />
+                                      <entry key="foregroundImage" value="D:\BSI\7-Periodo\Mobile\Mais Idiomas\Logo\edit_senha.png" />
+                                      <entry key="foregroundLayerName" value="ic_edit_senha" />
+                                      <entry key="outputName" value="ic_edit" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -54,7 +53,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_exposure_plus_1_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_forward_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -64,7 +63,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_pontos" />
+                            <entry key="outputName" value="ic_navagacao" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\Diogo" />
                           </map>

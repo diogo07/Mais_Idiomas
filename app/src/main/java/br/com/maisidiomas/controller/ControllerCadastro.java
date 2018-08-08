@@ -19,6 +19,7 @@ public class ControllerCadastro implements View.OnClickListener{
         this.cadastroActivity.getBtCadastrar().setOnClickListener(this);
         this.cadastroActivity.getBtLimpar().setOnClickListener(this);
         this.cadastroActivity.getBtAvatar().setOnClickListener(this);
+        this.cadastroActivity.getLnAvt().setOnClickListener(this);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class ControllerCadastro implements View.OnClickListener{
         if(id == R.id.btLimpar){
             this.cadastroActivity.limparCampos();
         }
-        if(id == R.id.btEscolhaAvatar){
+        if(id == R.id.lnAvt || id == R.id.btEscolhaAvatar){
             this.cadastroActivity.escolherAvatar();
         }
     }

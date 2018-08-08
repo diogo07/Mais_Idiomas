@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
 
-import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.sqlite.QuestaoNivel3DAOSQLite;
 import br.com.maisidiomas.model.vo.Fase3;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Usuario;
@@ -26,7 +24,7 @@ public class ControllerFase3 implements View.OnClickListener {
     public ControllerFase3(Fase3Activity fase3Activity) {
         this.fase3Activity = fase3Activity;
         this.fase3Activity.getBtProximo().setOnClickListener(this);
-        this.questoes = new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(this.fase3Activity)).listar();
+        this.questoes = Fachada.listarQuestoesNivel3(fase3Activity);
         try {
             this.usuario = Fachada.findByLogin(fase3Activity, fase3Activity.getLogin());
         } catch (Exception e) {
@@ -44,13 +42,17 @@ public class ControllerFase3 implements View.OnClickListener {
                 this.fase3Activity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
             }
             this.fase3Activity.getTvQuestao().setText("QUESTÃO "+fase3.getQuestaoAtual());
-            fase3Activity.getRbOpc1().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[0]);
-            fase3Activity.getRbOpc2().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[1]);
-            fase3Activity.getRbOpc3().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[2]);
-            fase3Activity.getRbOpc4().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[3]);
+            atualizarDados();
         }else{
             this.fase3Activity.exibirMensagemGanhouJogo();
         }
+    }
+
+    public void atualizarDados() {
+        fase3Activity.getRbOpc1().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[0]);
+        fase3Activity.getRbOpc2().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[1]);
+        fase3Activity.getRbOpc3().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[2]);
+        fase3Activity.getRbOpc4().setText(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[3]);
     }
 
     @Override
@@ -63,8 +65,9 @@ public class ControllerFase3 implements View.OnClickListener {
     private void verificarRespota() {
         RadioButton radioButtonSelecionado = this.fase3Activity.findViewById(this.fase3Activity.getRadioGroup().getCheckedRadioButtonId());
         if(radioButtonSelecionado.getText().toString().equals(fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getIndiceResposta()])){
-           this.fase3Activity.exibirFase3("Parabéns, você acertou", "A palavra "+radioButtonSelecionado.getText().toString()+" não tem relação com as demais!", true, this);
-           this.fase3.setQuestaoAtual(this.fase3.getQuestaoAtual()+1);
+            this.fase3.setQuestaoAtual(this.fase3.getQuestaoAtual()+1);
+            this.fase3Activity.exibirFase3("Parabéns, você acertou", "A palavra "+radioButtonSelecionado.getText().toString()+" não tem relação com as demais!", true, this);
+
            if(this.usuario != null) {
                usuario.setPontuacao(usuario.getPontuacao() + 30);
                fase3Activity.getTvScore().setText("SCORE: "+usuario.getPontuacao());
@@ -76,8 +79,9 @@ public class ControllerFase3 implements View.OnClickListener {
                }
            }
         }else{
-            this.fase3Activity.exibirFase3("Que pena, não foi dessa vez!", "A opção correta é "+fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getIndiceResposta()], false, this);
             this.fase3.setQuestaoAtual(this.fase3.getQuestaoAtual()+1);
+            this.fase3Activity.exibirFase3("Que pena, não foi dessa vez!", "A opção correta é "+fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getPalavras()[fase3.getQuestoes().get(fase3.getQuestaoAtual()-1).getIndiceResposta()], false, this);
+
         }
 
     }

@@ -118,6 +118,27 @@ public class PalavraDAOSQLite extends PalavraDAO {
     }
     }
 
+    @Override
+    public String[] listNomesByLevel(int nivel) {
+        String [] nomes = new String[70];
+        int cont = 0;
+        StringBuilder sql_listar = new StringBuilder();
+        sql_listar.append("select nome from palavra where nivel = "+nivel+" order by nome;");
+        Cursor cursor = sqLiteDatabase.rawQuery(sql_listar.toString(), null);
+
+        if(cursor.moveToFirst()){
+            do{
+                nomes[cont] = cursor.getString(cursor.getColumnIndex("nome"));
+                cont++;
+
+            }while (cursor.moveToNext());
+
+            return nomes;
+        }else{
+            return null;
+        }
+    }
+
     public Palavra [] listaPalavras(String [] nomes){
         Palavra [] palavras = new Palavra[4];
 

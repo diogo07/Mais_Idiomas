@@ -9,10 +9,7 @@ import java.util.Comparator;
 
 import br.com.maisidiomas.R;
 
-import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
 import br.com.maisidiomas.model.dao.Fachada;
-import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
-import br.com.maisidiomas.model.dao.sqlite.QuestaoNivel3DAOSQLite;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.model.vo.QuestaoNivel3;
 import br.com.maisidiomas.model.vo.Ranking;
@@ -172,14 +169,13 @@ public class ControllerDashBoard {
         palavras.add(new Palavra(2, "THINK", "PENSAR"));
         palavras.add(new Palavra(2, "PUT SUGAR IN THE COFFEE", "COLOCAR AÇÚCAR NO CAFÉ"));
 
-        PalavraDAOSQLite palavraDAOSQLite = new PalavraDAOSQLite(ConexaoSQLite.getInstance(dashBoardActivity));
 
         for(Palavra p: palavras){
             try {
-                if(palavraDAOSQLite.palavraIsCadastra(p.getNome())){
+                if(Fachada.palavraIsCadastrada(dashBoardActivity, p.getNome())){
 
                 }else{
-                    palavraDAOSQLite.insert(p);
+                    Fachada.inserirPalavra(dashBoardActivity, p);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -187,7 +183,7 @@ public class ControllerDashBoard {
         }
 
         ArrayList<QuestaoNivel3> questoes = new ArrayList<>();
-        questoes.add(new QuestaoNivel3(0, new String[]{"fork", "umbrella", "spoon", "knife"}, new String[]{"garfo", "guarda-chuva", "colher", "faca"}));
+        questoes.add(new QuestaoNivel3(1, new String[]{"fork", "umbrella", "spoon", "knife"}, new String[]{"garfo", "guarda-chuva", "colher", "faca"}));
         questoes.add(new QuestaoNivel3(0, new String[]{"bag", "ear", "nose", "mouth"}, new String[]{"bolsa", "olho", "nariz", "boca"}));
         questoes.add(new QuestaoNivel3(2, new String[]{"cow", "donkey", "carrot", "sheep"}, new String[]{"vaca", "burro", "cenoura", "ovelha"}));
         questoes.add(new QuestaoNivel3(1, new String[]{"pineapple", "coat", "guava", "pear"}, new String[]{"abacaxi", "casaco", "goiaba", "pêra"}));
@@ -204,12 +200,10 @@ public class ControllerDashBoard {
         questoes.add(new QuestaoNivel3(1, new String[]{"water", "city", "juice", "soda"}, new String[]{"água", "cidade", "suco", "refrigerante"}));
         questoes.add(new QuestaoNivel3(1, new String[]{"snack bar", "state", "pizzeria", "restaurant"}, new String[]{"lanchonete", "estado", "pizzaria", "restaurante"}));
 
-        QuestaoNivel3DAOSQLite questaoNivel3DAOSQLite = new QuestaoNivel3DAOSQLite(ConexaoSQLite.getInstance(this.dashBoardActivity));
         for(QuestaoNivel3 q: questoes){
             if(!Fachada.questaoNivel3IsCadastrada(q, this.dashBoardActivity)){
                 try {
                     Fachada.inserirQuestaoNivel3(q, this.dashBoardActivity);
-                    questaoNivel3DAOSQLite.insert(q);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -219,9 +213,11 @@ public class ControllerDashBoard {
     }
 
 
-
-
     public DashBoardActivity getDashBoardActivity() {
         return dashBoardActivity;
+    }
+
+    public void setDashBoardActivity(DashBoardActivity dashBoardActivity) {
+        this.dashBoardActivity = dashBoardActivity;
     }
 }

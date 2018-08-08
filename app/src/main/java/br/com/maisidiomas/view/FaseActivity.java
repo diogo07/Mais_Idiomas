@@ -233,6 +233,7 @@ public class FaseActivity extends ModeloActivity {
                 floatingActionMenu.showMenuButton(true);
                 controllerFase.getUsuario().setPontuacao(controllerFase.getUsuario().getPontuacao()-8);
                 alerta.dismiss();
+                exibirMensagem("Você pode visualizar a tradução no botão laranja abaixo.");
 
             }
         });
@@ -324,7 +325,7 @@ public class FaseActivity extends ModeloActivity {
         Button btProx = view.findViewById(R.id.bt_prox);
         btProx.setTypeface(getFont());
 */
-            Toast toast = Toast.makeText(this, mensagemInicio, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, mensagemInicio +"\n"+mensagemFim, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
             removerFoco();

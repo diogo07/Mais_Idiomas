@@ -12,14 +12,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerDashBoard;
+import br.com.maisidiomas.model.dao.Fachada;
+import br.com.maisidiomas.model.vo.Usuario;
 import br.com.maisidiomas.utils.FirebaseConecty;
 import br.com.maisidiomas.utils.UtilsParametros;
 
@@ -29,8 +36,11 @@ public class DashBoardActivity extends ModeloActivity
     private String nome, login, avatar, pontuacao;
     private ControllerDashBoard controllerDashBoard;
     private int id;
+    private int posicaoAtual;
+    private ArrayList<String> info = new ArrayList<>();
     private ImageView imgAvatar;
     private TextView tvScore, tvNome, tvLogin;
+    private AlertDialog alerta;
 
 
     @Override
@@ -193,6 +203,98 @@ public class DashBoardActivity extends ModeloActivity
         alertDialog.show();
 
     }
+
+
+    public void exibirMensagemInicio(){
+        if(UtilsParametros.getUsuarioLogado().getAjuda().equals("sim")){
+            posicaoAtual = 0;
+
+            info.add("Bem-vindo ao jogo Mais Idiomas. Este é um jogo de perguntas de inglês, onde você vai relacionar palavras com imagens!");
+            info.add("Para jogar, você deve tocar no menu acima e escolher a opção jogar!");
+            info.add("Para consultar informações de traduções, você deve tocar no menu acima e escolher a opção dicionário!");
+            info.add("Para saber mais informações, você deve tocar no menu acima e escolher a opção ajuda!");
+
+            LayoutInflater li = getLayoutInflater();
+
+            View view = li.inflate(R.layout.modelo_informacoes, null);
+
+            final TextView tvTitle, tvInfo;
+            tvTitle = view.findViewById(R.id.tvTitle);
+            tvInfo = view.findViewById(R.id.tvinfo1);
+            tvTitle.setTypeface(getFont());
+            tvInfo.setTypeface(getFont());
+
+            tvInfo.setText(info.get(0));
+
+            final Button btIr, btVoltar;
+            btIr = view.findViewById(R.id.btSeguir);
+            btVoltar = view.findViewById(R.id.btAnterior);
+
+            btIr.setTypeface(getFont());
+            btVoltar.setTypeface(getFont());
+
+            final CheckBox checkBox;
+            checkBox = view.findViewById(R.id.checkBox);
+            checkBox.setTypeface(getFont());
+
+
+            btIr.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    if(posicaoAtual < 2){
+                        btVoltar.setEnabled(true);
+                        posicaoAtual++;
+                        tvInfo.setText(info.get(posicaoAtual));
+                        return;
+                    }
+                    if(posicaoAtual == 2){
+                        posicaoAtual++;
+                        tvInfo.setText(info.get(posicaoAtual));
+                        btIr.setText("Fechar");
+                        return;
+                    }
+                    if(posicaoAtual == 3){
+                        if(checkBox.isChecked()){
+                            Usuario u = UtilsParametros.getUsuarioLogado();
+                            u.setAjuda("nao");
+                            try {
+                                Fachada.atualizarUsuario(DashBoardActivity.this, u);
+                                FirebaseConecty.salvar(u);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        alerta.dismiss();
+                    }
+                }
+            });
+
+            btVoltar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(posicaoAtual > 1){
+                        posicaoAtual--;
+                        tvInfo.setText(info.get(posicaoAtual));
+                        btIr.setText("Próximo");
+                        return;
+                    }
+                    if(posicaoAtual == 1){
+                        posicaoAtual--;
+                        tvInfo.setText(info.get(posicaoAtual));
+                        btVoltar.setEnabled(false);
+                        return;
+                    }
+                }
+            });
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("");
+            builder.setCancelable(false);
+            builder.setView(view);
+            alerta = builder.create();
+            alerta.show();
+        }
+    }
+
 
     public String getLogin() {
         return login;

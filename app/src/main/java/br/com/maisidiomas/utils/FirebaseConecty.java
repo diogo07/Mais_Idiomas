@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.com.maisidiomas.controller.ControllerCadastro;
+import br.com.maisidiomas.controller.ControllerConfiguracoes;
 import br.com.maisidiomas.controller.ControllerLogin;
 import br.com.maisidiomas.model.vo.Usuario;
 
@@ -48,6 +49,7 @@ public class FirebaseConecty {
                     UtilsParametros.carregarListaUsuarios(usuarios);
                     progressDialog.dismiss();
                     UtilsParametros.getControllerDashBoard().exibirRanking();
+                    UtilsParametros.getControllerDashBoard().getDashBoardActivity().exibirMensagemInicio();
                 }
 
                 @Override
@@ -131,37 +133,6 @@ public class FirebaseConecty {
                     Log.w("Erro", "Failed to read value.", error.toException());
                 }
             });
-
-
-            /*myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Usuario u = dataSnapshot.getValue(Usuario.class);
-                    controllerLogin.getLoginActivity().exibirMensagem(u.getSenha());
-
-                        if(u != null){
-                            controllerLogin.getLoginActivity().exibirMensagem("existe usuario");
-                            if(u.getSenha().equalsIgnoreCase(senha)) {
-                                UtilsParametros.carregarUsuario(u);
-                                progressDialog.dismiss();
-                                controllerLogin.verificarUsuarioLogado();
-                            }else{
-                                progressDialog.dismiss();
-                                controllerLogin.verificarUsuarioLogado();
-                            }
-
-                        }else {
-                            controllerLogin.getLoginActivity().exibirMensagem("nulo");
-                            progressDialog.dismiss();
-                            controllerLogin.verificarUsuarioLogado();
-                        }
-
-                }
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    Log.w("Erro", "Failed to read value.", error.toException());
-                }
-            });*/
         }else {
             controllerLogin.getLoginActivity().exibirMensagem("Não tem conexão");
             progressDialog.dismiss();
@@ -179,7 +150,45 @@ public class FirebaseConecty {
         return isConnected;
     }
 
-     public static void loginDisponivel(final ProgressDialog progressDialog, final String login, final ControllerCadastro controllerCadastro){
+     public static void loginPodeSerAtualizado(final ProgressDialog progressDialog, final String login, final ControllerConfiguracoes controllerConfiguracoes){
+        final ArrayList<Usuario> usuarios = new ArrayList<>();
+        myRef = database.getReference().child("usuarios");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                usuarios.clear();
+                Usuario usuario = null;
+                int id = 0;
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Usuario u = postSnapshot.getValue(Usuario.class);
+
+                    if(u.getLogin().equals(login)){
+                        usuario = u;
+                    }
+
+                    if(u.getId() > id){
+                        id = u.getId();
+                    }
+                }
+
+                if(usuario == null){
+                    UtilsParametros.carregarContexto(controllerConfiguracoes.getConfiguracoesActivity());
+                    controllerConfiguracoes.atualizarUsuario();
+                }else{
+                    progressDialog.dismiss();
+                    controllerConfiguracoes.getConfiguracoesActivity().exibirMensagem("", "Este login não está disponível");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Erro", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+
+    public static void loginDisponivel(final ProgressDialog progressDialog, final String login, final ControllerCadastro controllerCadastro){
         final ArrayList<Usuario> usuarios = new ArrayList<>();
         myRef = database.getReference().child("usuarios");
         myRef.addValueEventListener(new ValueEventListener() {

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -25,7 +26,8 @@ import br.com.maisidiomas.controller.ControllerCadastro;
 public class CadastroActivity extends ModeloActivity {
 
     private EditText edtNome, edtLogin, edtSenha, edtConfirmSenha;
-    private TextView tvAvatar;
+    private TextView tvAvatar,tvClique;
+    private LinearLayout lnAvt;
     private Button btCadastrar, btLimpar, btAvatar;
     private AlertDialog alertaAvatar;
     private String avatar;
@@ -50,6 +52,8 @@ public class CadastroActivity extends ModeloActivity {
         btLimpar = findViewById(R.id.btLimpar);
         btAvatar = findViewById(R.id.btEscolhaAvatar);
         tvAvatar = findViewById((R.id.tvAvt));
+        tvClique = findViewById(R.id.tvClick);
+        lnAvt = findViewById(R.id.lnAvt);
 
         edtNome.setTypeface(getFont());
         edtLogin.setTypeface(getFont());
@@ -58,6 +62,7 @@ public class CadastroActivity extends ModeloActivity {
         tvAvatar.setTypeface(getFont());
         btCadastrar.setTypeface(getFont());
         btLimpar.setTypeface(getFont());
+        tvClique.setTypeface(getFont());
 
         new ControllerCadastro(this);
 
@@ -295,5 +300,21 @@ public class CadastroActivity extends ModeloActivity {
 
     public void setAlertaAvatar(AlertDialog alertaAvatar) {
         this.alertaAvatar = alertaAvatar;
+    }
+
+    public TextView getTvAvatar() {
+        return tvAvatar;
+    }
+
+    public void setTvAvatar(TextView tvAvatar) {
+        this.tvAvatar = tvAvatar;
+    }
+
+    public LinearLayout getLnAvt() {
+        return lnAvt;
+    }
+
+    public void setLnAvt(LinearLayout lnAvt) {
+        this.lnAvt = lnAvt;
     }
 }

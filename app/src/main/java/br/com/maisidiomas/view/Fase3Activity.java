@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import br.com.maisidiomas.R;
 import br.com.maisidiomas.controller.ControllerFase2;
 import br.com.maisidiomas.controller.ControllerFase3;
+import br.com.maisidiomas.utils.UtilsParametros;
 
 public class Fase3Activity extends ModeloActivity {
 
@@ -96,7 +98,14 @@ public class Fase3Activity extends ModeloActivity {
     }
 
     public void exibirFase3(String mensagemInicio, String mensagemFim, boolean acertou, final ControllerFase3 controllerFase3) {
+        Toast toast = Toast.makeText(this, mensagemInicio, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+        getTvScore().setText("Score: "+ UtilsParametros.getUsuarioLogado().getPontuacao());
+        controllerFase3.atualizarDados();
+        controllerFase3.inserirQuestoes();
 
+        /*
         LayoutInflater li = getLayoutInflater();
 
         View view = li.inflate(R.layout.alerta, null);
@@ -131,7 +140,7 @@ public class Fase3Activity extends ModeloActivity {
         builder.setView(view);
         builder.setCancelable(false);
         alerta = builder.create();
-        alerta.show();
+        alerta.show();*/
     }
 
     public void exibirMensagemGanhouJogo(){

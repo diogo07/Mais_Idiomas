@@ -8,7 +8,8 @@ public class ConexaoSQLite extends SQLiteOpenHelper{
 
     private static SQLiteDatabase database;
 
-    public ConexaoSQLite(Context context) {
+    private ConexaoSQLite(Context context) {
+
         super(context, "banco_mais_idiomas", null, 1);
     }
 
@@ -21,6 +22,7 @@ public class ConexaoSQLite extends SQLiteOpenHelper{
         query_tabela.append("nome varchar(50), ");
         query_tabela.append("login varchar(30), ");
         query_tabela.append("senha varchar(30), ");
+        query_tabela.append("ajuda varchar(5), ");
         query_tabela.append("pontuacao integer, ");
         query_tabela.append("foto varchar(50));");
         db.execSQL(query_tabela.toString());

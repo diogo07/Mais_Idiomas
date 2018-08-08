@@ -12,4 +12,5 @@ public abstract class QuestaoNivel3DAO {
     public abstract void delete(QuestaoNivel3 questaoNivel3) throws Exception;
     public abstract QuestaoNivel3 findById(int id) throws Exception;
     public abstract ArrayList<QuestaoNivel3> listar();
+    public abstract boolean questaoIsCadastrada(QuestaoNivel3 q);
 }

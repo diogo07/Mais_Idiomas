@@ -14,4 +14,6 @@ public abstract class PalavraDAO {
     public abstract ArrayList<Palavra> listAll() throws Exception;
     public abstract boolean palavraIsCadastra(String palavra) throws Exception;
     public abstract ArrayList<Palavra> listByPalavraChave(String palavraChave) throws Exception;
+    public abstract String[] listNomesByLevel(int nivel);
+    public abstract Palavra [] listaPalavras(String [] nomes);
 }

@@ -88,14 +88,8 @@ public class ControllerConfiguracoes implements View.OnClickListener{
                         e.printStackTrace();
                     }
                     usuario.setLogin(configuracoesActivity.getEdtEscolha().getText().toString());
-                    try {
-                        Fachada.atualizarUsuario(configuracoesActivity, usuario);
-                        UtilsParametros.carregarUsuario(usuario);
-                        configuracoesActivity.exibirMensagem("", "Login alterado com sucesso!");
-                        configuracoesActivity.getEdtEscolha().setText("");
-                    } catch (Exception e) {
-                        configuracoesActivity.exibirMensagem("Erro", "O sistema não conseguiu atualizar seu login!");
-                    }
+                    UtilsParametros.carregarUsuarioAtualizado(usuario);
+                    Fachada.loginPodeAtualizar(configuracoesActivity, usuario.getLogin(), this);
                 }else{
                     configuracoesActivity.exibirMensagem("Erro", "Vocé precisa ter conexão com a internet para alterar seu login!");
                 }
@@ -143,6 +137,21 @@ public class ControllerConfiguracoes implements View.OnClickListener{
                 configuracoesActivity.exibirMensagem("Erro", "Novo avatar deve ser diferente do atual!");
             }
 
+        }
+    }
+
+    public ConfiguracoesActivity getConfiguracoesActivity() {
+        return configuracoesActivity;
+    }
+
+    public void atualizarUsuario() {
+        try {
+            Fachada.atualizarUsuario(configuracoesActivity, UtilsParametros.getUsuarioAtualizado());
+            UtilsParametros.carregarUsuario(UtilsParametros.getUsuarioAtualizado());
+            configuracoesActivity.exibirMensagem("", "Login alterado com sucesso!");
+            configuracoesActivity.getEdtEscolha().setText("");
+        } catch (Exception e) {
+            configuracoesActivity.exibirMensagem("Erro", "O sistema não conseguiu atualizar seu login!");
         }
     }
 }

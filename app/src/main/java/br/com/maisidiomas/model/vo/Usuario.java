@@ -1,11 +1,10 @@
 package br.com.maisidiomas.model.vo;
 
-import java.util.ArrayList;
 
 public class Usuario {
 
     private int id, pontuacao;
-    private String login, senha, nome, foto;
+    private String login, senha, nome, foto, ajuda;
 
 
     public Usuario(String login, String senha, String nome) {
@@ -13,6 +12,7 @@ public class Usuario {
         this.senha = senha;
         this.nome = nome;
         this.foto = "foto user";
+        this.ajuda = "sim";
     }
 
     public Usuario() {
@@ -53,6 +53,14 @@ public class Usuario {
     }
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
+    }
+
+    public String getAjuda() {
+        return ajuda;
+    }
+
+    public void setAjuda(String ajuda) {
+        this.ajuda = ajuda;
     }
 
     @Override

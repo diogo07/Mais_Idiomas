@@ -11,8 +11,8 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 
 import br.com.maisidiomas.R;
-import br.com.maisidiomas.model.dao.sqlite.ConexaoSQLite;
-import br.com.maisidiomas.model.dao.sqlite.PalavraDAOSQLite;
+
+import br.com.maisidiomas.model.dao.Fachada;
 import br.com.maisidiomas.utils.DicionarioAdapter;
 import br.com.maisidiomas.model.vo.Palavra;
 import br.com.maisidiomas.view.DicionarioActivity;
@@ -31,7 +31,7 @@ public class ControllerDicionario implements SearchView.OnQueryTextListener, Vie
     private void inserirDicionario() {
         ArrayAdapter arrayAdapter = null;
         try {
-            arrayAdapter = new DicionarioAdapter(this.dicionarioActivity, new PalavraDAOSQLite(ConexaoSQLite.getInstance(dicionarioActivity)).listByPalavraChave(""));
+            arrayAdapter = new DicionarioAdapter(this.dicionarioActivity, Fachada.listByPalavraChave("", dicionarioActivity));
             ListView lvOpcoes = (ListView) dicionarioActivity.findViewById(R.id.lv_dicionario);
             lvOpcoes.setAdapter(arrayAdapter);
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class ControllerDicionario implements SearchView.OnQueryTextListener, Vie
     public boolean onQueryTextChange(String newText) {
         ArrayList<Palavra> palavras = null;
         try {
-            palavras = new PalavraDAOSQLite(ConexaoSQLite.getInstance(dicionarioActivity)).listByPalavraChave(newText.toString());
+            palavras = Fachada.listByPalavraChave(newText.toString(), dicionarioActivity);
         } catch (Exception e) {
             e.printStackTrace();
         }

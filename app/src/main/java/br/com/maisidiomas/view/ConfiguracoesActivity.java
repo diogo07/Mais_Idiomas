@@ -70,6 +70,9 @@ public class ConfiguracoesActivity extends ModeloActivity {
         new ControllerConfiguracoes(this);
     }
 
+    public void alertarLoginIndisponivel() {
+    }
+
     public void exibirConteudoEscolha(String escolha){
         esconderConteudo();
         if(escolha.equals("nome")){
@@ -416,4 +419,6 @@ public class ConfiguracoesActivity extends ModeloActivity {
     public void setLogin(String login) {
         this.login = login;
     }
+
+
 }

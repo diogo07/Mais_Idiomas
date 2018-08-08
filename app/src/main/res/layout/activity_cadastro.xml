@@ -94,14 +94,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginTop="30dp"
                     android:text="Avatar:" />
 
-                <Button
-                    android:id="@+id/btEscolhaAvatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                <LinearLayout
+                    android:id="@+id/lnAvt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:background="@drawable/ic_perfil" />
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btEscolhaAvatar"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_perfil" />
+
+                    <TextView
+                        android:id="@+id/tvClick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:textAlignment="center"
+                        android:text="Clique aqui" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout

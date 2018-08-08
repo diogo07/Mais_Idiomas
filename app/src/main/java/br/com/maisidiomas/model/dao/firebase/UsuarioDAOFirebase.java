@@ -92,4 +92,9 @@ public class UsuarioDAOFirebase extends UsuarioDAO {
     public Usuario findByLogin(String login) throws Exception {
         return null;
     }
+
+    @Override
+    public Usuario findByLoginEsenha(String login, String senha) {
+        return null;
+    }
 }

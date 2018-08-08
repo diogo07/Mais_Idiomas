@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Você pode trocar uma tradução por 8 pontos, que pode ou não, ser útil nas próximas perguntas"
+        android:text="Você pode trocar uma tradução por 8 pontos que pode, ou não ser útil nas próximas perguntas"
         android:textAlignment="center"
         android:textSize="15dp" />
 
